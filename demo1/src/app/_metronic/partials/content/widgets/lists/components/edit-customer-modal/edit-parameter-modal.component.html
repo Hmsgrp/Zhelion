@@ -1,0 +1,206 @@
+<div class="modal-content">
+  <div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{errorText}}
+    <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{postSuccessText}}
+     <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+  {{updateMessage}}
+   <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+   <span aria-hidden="true">&times;</span>
+ </button>
+ </div>
+    <div class="modal-header">
+      <div class="modal-title h4" id="example-modal-sizes-title-lg">
+         Add Parameter
+      </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body">
+        <form
+          class="form form-label-right"
+         [formGroup]="parameterRegistration"
+         novalidate="novalidate"
+         id="kt_hospital_form"
+         (ngSubmit)="submitData()">
+         
+          <div class="form-group row">
+            <div class="col-lg-6">
+              <label for="normalValueStart" class="font-weight-bolder">Parameter Name</label>
+              <input type="text" class="form-control"
+                id="parameterName" 
+                formControlName="parameterName" 
+                autocomplete="off"
+                aria-describedby="parameterName" autocomplete="off" placeholder="Parameter Name">
+
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Parameter Name is required',
+                  control: parameterRegistration.controls['parameterName']
+                }"
+              ></ng-container> 
+              <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'minlength',
+                message: 'Parameter Name should have at least 5 symbols',
+                control: parameterRegistration.controls['parameterName']
+              }"
+            ></ng-container>
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Parameter Name should have maximum 30 symbols',
+              control: parameterRegistration.controls['parameterName']
+            }"
+          ></ng-container>
+
+            </div>
+          </div>
+           <div class="form-group row">
+              <div class="col-lg-6">
+                <label for="rangesFrom" class="font-weight-bolder">Ranges From</label>
+                <input type="number" class="form-control"
+                id="rangesFrom" 
+                formControlName="rangesFrom" 
+                autocomplete="off"
+                 aria-describedby="rangesFrom" autocomplete="off" placeholder="Range Start">
+
+                 <ng-container
+                 [ngTemplateOutlet]="formError"
+                 [ngTemplateOutletContext]="{
+                   validation: 'required',
+                   message: 'Parameter Name is required',
+                   control: parameterRegistration.controls['rangesFrom']
+                 }"
+               ></ng-container> 
+               <ng-container
+               [ngTemplateOutlet]="formError"
+               [ngTemplateOutletContext]="{
+                 validation: 'minlength',
+                 message: 'Parameter Name should have at least 5 symbols',
+                 control: parameterRegistration.controls['rangesFrom']
+               }"
+             ></ng-container>
+             <ng-container
+             [ngTemplateOutlet]="formError"
+             [ngTemplateOutletContext]="{
+               validation: 'maxLength',
+               message: 'Parameter Name should have maximum 10 symbols',
+               control: parameterRegistration.controls['rangesFrom']
+             }"
+           ></ng-container>
+                 
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-lg-6">
+                <label for="rangesTo" class="font-weight-bolder">Ranges To</label>
+                <input type="number" class="form-control" 
+                id="rangesTo" 
+                formControlName="rangesTo" 
+                aria-describedby="rangesTo" autocomplete="off" placeholder="Ranges End">
+                
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Ranges To is required',
+                  control: parameterRegistration.controls['rangesTo']
+                }"
+              ></ng-container> 
+              <ng-container
+              [ngTemplateOutlet]="formError"
+              [ngTemplateOutletContext]="{
+                validation: 'minlength',
+                message: 'Ranges To should have at least 5 symbols',
+                control: parameterRegistration.controls['rangesTo']
+              }"
+            ></ng-container>
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Ranges To should have maximum 10 symbols',
+              control: parameterRegistration.controls['rangesTo']
+            }"
+          ></ng-container>
+
+
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-light btn-elevate mr-2" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-elevate">Save</button>
+        </form>
+<hr>
+<div class="row">
+  <div class="table-responsive angular-bootstrap-table">
+    <table class="table table-head-custom table-vertical-center overflow-hidden">
+      <thead>
+        <th>
+           Parameter Name
+        </th>
+        <th>ACTIONS</th>
+      </thead>
+      <tbody>
+        <tr *ngIf="testParameters.length==0">
+          <td style="color: red;">No Records Found</td>
+        </tr>
+        <tr *ngFor="let testParameter of testParameters; let i =index" >
+         <td>{{testParameter.parameterName}}</td>
+          <td>
+            <div> 
+              <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+              (click)="edit(hospital.hospitalId,hospital.hospitalName,hospital.hospitalAddress,hospital.contactPerson,hospital.phoneNumber)">
+              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-primary">
+              </span>
+            </button> -->
+            <button title="Delete Role" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+              (click)="delete(testParameter.testParameterId)">
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-danger">
+              </span>
+            </button>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+ </div>
+    <div class="modal-footer">
+     
+    </div>
+  </div>
+
+  <ng-template
+#formError
+let-control="control"
+let-message="message"
+let-validation="validation"
+>
+<ng-container
+  *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+>
+  <div class="fv-plugins-message-container">
+    <div class="fv-help-block">
+      {{ message }}
+    </div>
+  </div>
+</ng-container>
+</ng-template>
+
+  

@@ -1,0 +1,43 @@
+<div class="card card-custom card-stretch gutter-b">
+  <!-- Header -->
+  <div class="card-header align-items-center border-0 mt-4">
+    <h3 class="card-title align-items-start flex-column">
+      <span class="font-weight-bolder text-dark">User Management</span>
+      <span class="text-muted mt-3 font-weight-bold font-size-sm"
+        >Add New User and map roles</span
+      >
+    </h3>
+  </div>
+  <!-- Body -->
+  <div class="card-body pt-4">
+    <form>
+      <div class="form-group">
+        <label for="roleName" class="font-weight-bolder">User Name</label>
+        <input type="text" class="form-control" id="roleName" aria-describedby="roleName" placeholder="Role Name">
+      </div>
+      <div class="form-group">
+        <label for="roleDescription" class="font-weight-bolder">Password</label>
+        <input type="password" class="form-control" id="password" aria-describedby="password" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label for="roleDescription" class="font-weight-bolder">Mobile Number</label>
+        <input type="number" class="form-control" id="mobileNumber" aria-describedby="roleName" placeholder="Mobile Number">
+      </div>
+      <div class="form-group">
+        <label for="roleSelection" class="font-weight-bolder">Role Selection</label>
+        <select id="roleSelection" class="form-control" data-role="select-dropdown">
+         <option>text1</option>
+         <option>text2</option>
+         <option>text3</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="roleName" class="font-weight-bolder">Email ID</label>
+      <input type="text" class="form-control" id="emailID" aria-describedby="roleName" placeholder="Email ID">
+      </div>
+      <div class="form-check">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

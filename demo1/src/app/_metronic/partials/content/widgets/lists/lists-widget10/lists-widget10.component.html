@@ -1,0 +1,157 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{errorText}}
+  <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Map Roles</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Map Roles</span
+          >
+        </h3>
+        <button type="button" class="btn btn-primary" (click)="openModel()">Add menus</button>
+      </div>
+      <!-- Body -->
+      
+      <div class="card-body pt-4">
+        <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{postSuccessText}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <form #roleMap="ngForm" (ngSubmit)="submitForm()">
+        <div class="form-group">
+          <label for="selectRole" class="font-weight-bolder">Select Role</label>
+          <select class="form-control"
+           id="selectRole" 
+            name="selectRole"  
+            #selectRole="ngModel" 
+            placeholder="Select Role" 
+            ngModel 
+            class="form-control form-control-lg" 
+            required
+           >
+            <option value="">--Please Select--</option>
+           <option *ngFor="let role of roles" [ngValue]="role.roleId">{{role.roleName}}</option>
+         </select>
+         <div *ngIf="selectRole.invalid && (selectRole.dirty || selectRole.touched)"
+         style="color: red;">
+          <div *ngIf="selectRole.errors.required">
+            Please select any role
+          </div>
+      </div>
+      </div>
+
+    <div class="form-group">
+      <label for="selectMenu" class="font-weight-bolder">Select Menu</label>
+      <ng-select  
+      #MyNgSelect            
+      bindLabel="name"
+      placeholder="Select Menus required for this Role"
+      [(ngModel)]="selected"
+      name="selectMenu"
+      [multiple]="true"
+      required
+      >
+      <ng-option [value]="item.menuId" *ngFor="let item of menu"> 
+          {{item.menuLink}}
+      </ng-option>
+    </ng-select>
+
+  </div>
+
+        <button class="btn btn-primary" [disabled]="!roleMap.valid" type="submit">Submit</button>
+      </form>
+      
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="col-md-6">
+    <div class="card card-custom">
+      <!-- Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder text-dark">View</h3>
+        <div class="card-toolbar">
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-0">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+         </div>
+
+         <!-- <div style="color: red;" *ngIf="user.length==0">
+          <hr>   
+          No records found
+        </div> -->
+        <!--begin::Item-->
+        <div *ngFor="let map of menuRoleMappingmodel" class="mb-10">
+          <!--begin::Section-->
+          <div class="d-flex align-items-center">
+            <!--begin::Symbol-->
+            <div class="symbol symbol-45 symbol-light mr-5">
+              <span class="symbol-label">
+                <img
+                  alt=""
+                  src="./assets/media/svg/misc/006-plurk.svg"
+                  class="h-50 align-self-center"
+                />
+              </span>
+            </div>
+            <!--end::Symbol-->
+    
+            <!--begin::Text-->
+            <div class="d-flex flex-column flex-grow-1">
+              <a
+                class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
+                >{{map.menuId}}</a
+              >
+              <!-- <span class="text-muted font-weight-bold">Mapped Hospitals</span> -->
+
+              <div>
+                <!-- <label *ngFor="let mappedhospital of DoctorReferral.userHospitalMaps ">
+                <span>{{mappedhospital.hospitalId}} </span>
+            </label> -->
+            </div>
+            </div>
+            <!--end::Text-->
+            <div> 
+              <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+              (click)="edit(hospital.hospitalId,hospital.hospitalName,hospital.hospitalAddress,hospital.contactPerson,hospital.phoneNumber)">
+              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-primary">
+              </span>
+            </button> -->
+            <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+            
+            >
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-danger">
+              </span>
+            </button>
+          </div>
+          </div>
+
+          <!--end::Section-->
+        </div>
+        <!--end::Item-->
+      </div>
+      <hr>
+      <!--   <div id="pagination" class="pagination justify-content-end marginRight10px">
+            <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>  -->
+    </div>
+  </div>
+</div>

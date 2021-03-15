@@ -1,0 +1,382 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{errorText}}
+  <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Lab Management</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Add New Lab</span
+          >
+        </h3>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-4">
+        <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{postSuccessText}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+        <form class="form"
+        [formGroup]="LabRegistration"
+        novalidate="novalidate"
+        id="kt_hospital_form"
+        (ngSubmit)="submitData()"
+        >
+          <div class="form-group">
+            <label for="userName" class="font-weight-bolder">User Name</label>
+            <input type="text" class="form-control" id="userName"
+            formControlName="userName" 
+            autocomplete="off"
+            aria-describedby="roleName" placeholder="Role Name">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'User Name is required',
+              control: LabRegistration.controls['userName']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'User Name should have at least 5 symbols',
+              control: LabRegistration.controls['userName']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'User Name should have maximum 15 symbols',
+              control: LabRegistration.controls['userName']
+            }"
+            ></ng-container>
+
+
+          </div>
+          <div class="form-group">
+            <label for="roleDescription" class="font-weight-bolder">Password</label>
+            <input type="password" class="form-control" id="password" 
+            formControlName="password" 
+            autocomplete="off"
+            aria-describedby="password" placeholder="Password">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Password is required',
+              control: LabRegistration.controls['password']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Password should have at least 5 symbols',
+              control: LabRegistration.controls['password']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Password should have maximum 15 symbols',
+              control: LabRegistration.controls['password']
+            }"
+            ></ng-container>
+
+          </div>
+          <div class="form-group">
+            <label for="LabName" class="font-weight-bolder">Lab Name</label>
+            <input type="text" class="form-control" id="labName"
+            formControlName="labName" 
+            autocomplete="off"
+            aria-describedby="labName" placeholder="Lab Name">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Lab Name is required',
+              control: LabRegistration.controls['labName']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Lab Name should have at least 5 symbols',
+              control: LabRegistration.controls['labName']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Lab Name should have maximum 15 symbols',
+              control: LabRegistration.controls['labName']
+            }"
+            ></ng-container>
+
+          </div>
+          <div class="form-group">
+            <label for="labAddress" class="font-weight-bolder">Lab Address</label>
+            <textarea type="text" class="form-control" 
+          rows="5" 
+          id="labAddress"
+          name="labAddress"
+          formControlName="labAddress"
+          autocomplete="off"
+          placeholder="Lab Address"></textarea>
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Lab Address is required',
+            control: LabRegistration.controls['labAddress']
+          }"
+        ></ng-container> 
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'minlength',
+            message: 'Lab Address should have at least 5 symbols',
+            control: LabRegistration.controls['labAddress']
+          }"
+           ></ng-container>
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'maxLength',
+            message: 'Lab Address should have maximum 15 symbols',
+            control: LabRegistration.controls['labAddress']
+          }"
+          ></ng-container>
+          
+          </div>
+          <div class="form-group">
+            <label for="contactPerson" class="font-weight-bolder">Contact Person</label>
+            <input type="text" class="form-control" id="contactPerson" 
+            formControlName="contactPerson" 
+            autocomplete="off"
+            aria-describedby="contactPerson" autocomplete="off" placeholder="Contact Person">
+
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Contact Person is required',
+              control: LabRegistration.controls['contactPerson']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Contact Person should have at least 5 symbols',
+              control: LabRegistration.controls['contactPerson']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Contact Person should have maximum 15 symbols',
+              control: LabRegistration.controls['contactPerson']
+            }"
+            ></ng-container>
+
+          </div>
+          <div class="form-group">
+            <label for="roleDescription" class="font-weight-bolder">Mobile Number</label>
+            <input type="number" class="form-control" id="mobileNumber"
+            formControlName="mobileNumber" 
+            autocomplete="off"
+            aria-describedby="mobileNumber" placeholder="Mobile Number">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Mobile Number  is required',
+              control: LabRegistration.controls['mobileNumber']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Mobile Number User Name should have at least 5 symbols',
+              control: LabRegistration.controls['mobileNumber']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Mobile Number should have maximum 15 symbols',
+              control: LabRegistration.controls['mobileNumber']
+            }"
+            ></ng-container>
+
+          </div>
+          <div class="form-group">
+            <label for="landlineNumber" class="font-weight-bolder">Landline Number</label>
+            <input type="number" class="form-control" id="landlineNumber"
+            formControlName="landlineNumber" 
+            autocomplete="off"
+            aria-describedby="landlineNumber" placeholder="Landline Number">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Landline Number is required',
+              control: LabRegistration.controls['landlineNumber']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Landline Number should have at least 5 symbols',
+              control: LabRegistration.controls['landlineNumber']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Landline Number should have maximum 15 symbols',
+              control: LabRegistration.controls['landlineNumber']
+            }"
+            ></ng-container>
+
+          </div>
+          <div class="form-check">
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="LabRegistration.invalid">{{buttontext}}</button>
+          &nbsp;
+          <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card card-custom" [ngClass]="cssClass">
+      <!-- Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder text-dark">Added Labs</h3>
+        <div class="card-toolbar">
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-0">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+         </div>
+
+         <div style="color: red;" *ngIf="Labs.length==0">
+          <hr>   
+          No records found
+        </div>
+        <!--begin::Item-->
+        <div *ngFor="let lab of Labs | paginate:{itemsPerPage: 5, currentPage:page}" class="mb-10">
+          <!--begin::Section-->
+          <div class="d-flex align-items-center">
+            <!--begin::Symbol-->
+            <div class="symbol symbol-45 symbol-light mr-5">
+              <span class="symbol-label">
+                <img
+                  alt=""
+                  src="./assets/media/svg/misc/006-plurk.svg"
+                  class="h-50 align-self-center"
+                />
+              </span>
+            </div>
+            <!--end::Symbol-->
+    
+            <!--begin::Text-->
+            <div class="d-flex flex-column flex-grow-1">
+              <a
+                class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
+                >{{lab.labName}}</a
+              >
+              <span class="text-muted font-weight-bold">{{lab.labAddress}}</span>
+            </div>
+            <!--end::Text-->
+            <div> 
+              <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+              (click)="edit(hospital.hospitalId,hospital.hospitalName,hospital.hospitalAddress,hospital.contactPerson,hospital.phoneNumber)">
+              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-primary">
+              </span>
+            </button> -->
+            <button title="Delete Role" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+              (click)="delete(lab.labId)">
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-danger">
+              </span>
+            </button>
+          </div>
+          </div>
+
+          <!--end::Section-->
+        </div>
+        <!--end::Item-->
+      </div>
+      <hr>
+        <div id="pagination" class="pagination justify-content-end marginRight10px">
+            <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div> 
+    </div>
+  </div>
+
+</div>
+
+<ng-template
+#formError
+let-control="control"
+let-message="message"
+let-validation="validation"
+>
+<ng-container
+  *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+>
+  <div class="fv-plugins-message-container">
+    <div class="fv-help-block">
+      {{ message }}
+    </div>
+  </div>
+</ng-container>
+</ng-template>

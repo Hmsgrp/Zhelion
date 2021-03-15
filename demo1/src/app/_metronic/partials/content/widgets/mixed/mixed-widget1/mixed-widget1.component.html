@@ -1,0 +1,112 @@
+<div class="card card-custom bg-gray-100 card-stretch gutter-b">
+  <!-- Header -->
+  <div class="card-header border-0 bg-success py-5">
+    <h3 class="card-title font-weight-bolder text-white">Management</h3>
+    <div class="card-toolbar">
+      <div
+        ngbDropdown
+        placement="bottom-right"
+        class="dropdown dropdown-inline"
+        title="Quick actions"
+      >
+
+        <div
+          ngbDropdownMenu
+          class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+          <app-dropdown-menu2></app-dropdown-menu2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Body -->
+  <div class="card-body p-0 position-relative overflow-hidden" >
+    <div
+      class="card-rounded-bottom bg-success"
+      [style.height]="'100px'"
+    ></div>
+  
+    <!--begin::Stats-->
+    <div class="card-spacer mt-n25">
+      <!--begin::Row-->
+      <div class="row m-0"> 
+        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          
+          <a (click)="setActiveTab(1)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+             Role Management
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Roles : 4</span>
+        </div>
+        <div class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
+            class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(2)" class="text-primary font-weight-bold font-size-h6" style="cursor: pointer;">
+            User Management
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Users : 2</span>
+        </div>
+        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(3)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+            Hospital Management
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active hospitals : 3</span>
+        </div>
+        <div class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(4)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
+            Lab Management
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Labs : 1</span>
+        </div>
+        <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-danger d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(5)" class="text-danger font-weight-bold font-size-h6" style="cursor: pointer;">
+            Test Management
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Tests : 4</span>
+        </div>
+        
+        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(6)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+            Doctor Referral
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Refferred Doctors : 4</span>
+        </div>
+
+        <div class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(7)" class="text-primary font-weight-bold font-size-h6" style="cursor: pointer;">
+            Role Map
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Mapped Roles : 4</span>
+        </div>
+       
+      </div>
+    
+      <!--end::Row-->
+    </div>
+    <!--end::Stats-->
+  </div>
+</div>

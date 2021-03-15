@@ -1,0 +1,111 @@
+<div class="modal-content">
+  <div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{errorText}}
+    <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{postSuccessText}}
+     <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+  {{updateMessage}}
+   <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+   <span aria-hidden="true">&times;</span>
+ </button>
+ </div>
+    <div class="modal-header">
+      <div class="modal-title h4" id="example-modal-sizes-title-lg">
+         Add Menu
+      </div>
+    </div>
+    <div class="overlay overlay-block cursor-default modal-body">
+        <form
+          class="form form-label-right"
+         [formGroup]="MenuRegistration"
+         novalidate="novalidate"
+         id="kt_menu_form"
+         (ngSubmit)="submitData()">
+         
+          <div class="form-group row">
+            <div class="col-lg-6">
+              <label for="normalValueStart" class="font-weight-bolder">Menu Name</label>
+              <input type="text" class="form-control"
+                id="menuName" 
+                formControlName="menuName" 
+                autocomplete="off"
+                aria-describedby="menuName" autocomplete="off" placeholder="Menu Name">
+
+                <ng-container
+                [ngTemplateOutlet]="formError"
+                [ngTemplateOutletContext]="{
+                  validation: 'required',
+                  message: 'Menu Name is required',
+                  control: MenuRegistration.controls['menuName']
+                }"
+              ></ng-container> 
+            </div>
+          </div>
+
+            <button type="button" class="btn btn-light btn-elevate mr-2" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-elevate">Save</button>
+        </form>
+<hr>
+ <div class="row">
+  <div class="table-responsive angular-bootstrap-table">
+    <table class="table table-head-custom table-vertical-center overflow-hidden">
+      <thead>
+        <th>
+           Menu Name
+        </th>
+        <th>ACTIONS</th>
+      </thead>
+      <tbody>
+        <tr *ngIf="Menu.length==0">
+          <td style="color: red;">No Records Found</td>
+        </tr>
+        <tr *ngFor="let menu of Menu; let i =index" >
+         <td>{{menu.menuLink}}</td>
+          <td>
+            <div> 
+            <button title="Delete Role" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+              (click)="delete(menu.menuId)">
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-danger">
+              </span>
+            </button>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 
+
+ </div>
+    <div class="modal-footer">
+      <a  class="btn btn-light btn-elevate mr-2" (click)="closeModal()">Close</a>
+    </div>
+  </div>
+
+  <ng-template
+#formError
+let-control="control"
+let-message="message"
+let-validation="validation"
+>
+<ng-container
+  *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+>
+  <div class="fv-plugins-message-container">
+    <div class="fv-help-block">
+      {{ message }}
+    </div>
+  </div>
+</ng-container>
+</ng-template>
+
+  

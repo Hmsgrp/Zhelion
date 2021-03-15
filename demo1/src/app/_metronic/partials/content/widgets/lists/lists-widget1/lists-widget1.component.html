@@ -1,0 +1,191 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+   {{ErrorOccuredtext}}
+   <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+   <span aria-hidden="true">&times;</span>
+ </button>
+</div>
+<div class=row>
+   <div class="col-md-6">
+  <div class="card card-custom card-stretch gutter-b">
+    <!-- Header -->
+    <div class="card-header align-items-center border-0 mt-4">
+      <h3 class="card-title align-items-start flex-column">
+        <span class="font-weight-bolder text-dark">Role Management</span>
+        <span class="text-muted mt-3 font-weight-bold font-size-sm"
+          >Add you new roles and customize you roles</span
+        >
+      </h3>
+    </div>
+      <!-- begin::Alert info-->
+
+
+    <!-- end::Alert info -->
+
+    <!-- Body -->
+    <div class="card-body pt-4">
+
+      <div *ngIf="showSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+       Role Added Successfully.
+        <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+      <form  class="form"
+      [formGroup]="RoleRegistration"
+      novalidate="novalidate"
+      id="kt_role_reg_form"
+      (ngSubmit)="submitRole()">
+      <div class="form-group">
+        <label for="roleName" class="font-weight-bolder">Role Name</label>
+          <input type="text" class="form-control" 
+          id="roleName"
+          name="roleName"
+          formControlName="roleName"
+          autocomplete="off"
+          placeholder="Role Name"
+          >
+          <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'required',
+          message: 'Role Name is required',
+          control: RoleRegistration.controls['roleName']
+        }"
+      ></ng-container> 
+      <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'minlength',
+          message: 'Role Name should have at least 5 symbols',
+          control: RoleRegistration.controls['roleName']
+        }"
+      ></ng-container>
+      <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'Role Name should have maximum 15 symbols',
+        control: RoleRegistration.controls['roleName']
+      }"
+    ></ng-container>
+        </div>
+        <div class="form-group">
+          <label for="roleDescription" class="font-weight-bolder">Role Description</label>
+          <textarea type="text" class="form-control" 
+          rows="5" 
+          id="roleDescription"
+          name="roleDescription"
+          formControlName="roleDescription"
+          autocomplete="off"
+          placeholder="Role Description"></textarea>
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Role Description is required',
+            control: RoleRegistration.controls['roleDescription']
+          }"
+        ></ng-container> 
+        <ng-container
+        [ngTemplateOutlet]="formError"
+        [ngTemplateOutletContext]="{
+          validation: 'minlength',
+          message: 'Role Description should have at least 5 symbols',
+          control: RoleRegistration.controls['roleDescription']
+        }"
+      ></ng-container>
+      <ng-container
+      [ngTemplateOutlet]="formError"
+      [ngTemplateOutletContext]="{
+        validation: 'maxLength',
+        message: 'Role Description should have maximum 15 symbols',
+        control: RoleRegistration.controls['roleDescription']
+      }"
+    ></ng-container>
+        </div>
+          <button type="submit" class="btn btn-primary" [disabled]="RoleRegistration.invalid">{{submitBtntext}}</button>
+          &nbsp;
+          <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
+      </form>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">List of Available Roles</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Update/modify the existing roles</span>
+        </h3>
+      </div>
+      <div class="card-body pt-8">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Role Name</th>
+              <th scope="col">Role Description</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="roles.length==0">
+              <td></td>
+              <td style="color: red;">No Records Found</td>
+              <td></td>
+            </tr>
+            <tr *ngFor="let role of roles | paginate:{itemsPerPage: 5, currentPage:p}">
+              <td>{{role.roleName}}</td>
+              <td>{{role.roleDescription}}</td>
+              <td>
+                <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                (click)="editRole(role.roleId,role.roleName,role.roleDescription)">
+                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-primary">
+                </span>
+              </button>
+              <button title="Delete Role" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                (click)="deleteRole(role.roleId)">
+                <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-danger">
+                </span>
+              </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <div id="pagination" class="pagination justify-content-end marginRight10px">
+        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+      </div> 
+    </div>
+    </div>
+  </div>
+
+  <ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+>
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+  
+  
+  

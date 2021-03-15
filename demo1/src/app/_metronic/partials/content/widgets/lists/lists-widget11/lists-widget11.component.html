@@ -1,0 +1,217 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{errorText}}
+  <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Test Management</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Add New Test</span
+          >
+        </h3>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-4">
+        <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{postSuccessText}}
+           <button type="button" (click)="closeNotification()"  class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+        <form class="form"
+        [formGroup]="TestRegistration"
+        novalidate="novalidate"
+        id="kt_test_form"
+        (ngSubmit)="submitData()"
+        >
+          <div class="form-group">
+            <label for="testName"  class="font-weight-bolder">Test Name</label>
+            
+            <input type="text" class="form-control"
+            id="testName"
+            formControlName="testName" 
+            autocomplete="off"
+            id="testName" aria-describedby="testName" placeholder="Test Name">
+        
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Test Name is required',
+              control: TestRegistration.controls['testName']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Test Name should have at least 5 symbols',
+              control: TestRegistration.controls['testName']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Test Name should have maximum 15 symbols',
+              control: TestRegistration.controls['testName']
+            }"
+            ></ng-container>
+        
+          </div>
+
+          <div class="form-group">
+            <label for="testDescription" class="font-weight-bolder">Test Desciption</label>
+            <textarea type="text" class="form-control" 
+          rows="5" 
+          id="testDescription"
+          formControlName="testDescription" 
+          autocomplete="off"
+          placeholder="Test Description"></textarea>
+          </div>
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Test Desciption is required',
+            control: TestRegistration.controls['testDescription']
+          }"
+        ></ng-container> 
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'minlength',
+            message: 'Test Desciption should have at least 5 symbols',
+            control: TestRegistration.controls['testDescription']
+          }"
+           ></ng-container>
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'maxLength',
+            message: 'Test Desciption should have maximum 30 symbols',
+            control: TestRegistration.controls['testDescription']
+          }"
+          ></ng-container>
+
+          <button type="submit" class="btn btn-primary" [disabled]="TestRegistration.invalid">{{buttontext}}</button>
+          &nbsp;
+          <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder text-dark">Set Test Parameters</h3>
+        <div class="card-toolbar">
+          <div
+            ngbDropdown
+            class="dropdown dropdown-inline"
+            data-toggle="tooltip"
+            title="Quick actions"
+            data-placement="bottom"
+          >
+            <div
+              ngbDropdownMenu
+              class="dropdown-menu dropdown-menu-sm dropdown-menu-right"
+            >
+              <app-dropdown-menu2></app-dropdown-menu2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-2">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+         </div>
+        <div style="color: red;" *ngIf="tests.length==0">
+          <hr>   
+          No records found
+        </div>
+        <!--begin::Item-->
+        <div *ngFor="let test of tests 	| paginate:{itemsPerPage: 5, currentPage:p}" class="d-flex align-items-center mb-10">
+          <div class="symbol symbol-45 symbol-light mr-5">
+            <span class="symbol-label">
+              <img
+                alt=""
+                src="./assets/media/svg/misc/006-plurk.svg"
+                class="h-50 align-self-center"
+              />
+            </span>
+          </div>
+          <div class="d-flex flex-column flex-grow-1">
+            <a
+              class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1 cursor-pointer"
+            >
+              {{test.testName}}
+            </a>
+            <span class="text-muted font-weight-bold">
+              {{test.testDescription}}
+            </span>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" (click)="openModel(test.testId)">Add Test Parameter</button>
+          </div>
+          <div>
+                <button title="Edit remark" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                  (click)="edit(test.testId,test.testName,test.testDescription)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-primary">
+                  </span>
+                </button>
+                <button title="Delete remark" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                  (click)="delete(test.testId)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-danger">
+                  </span>
+                </button>
+          </div>
+          <!--end::Text-->
+        </div>
+        <!--end:Item-->
+      </div>
+      <hr>
+           <div id="pagination" class="pagination justify-content-end marginRight10px">
+                  <pagination-controls (pageChange)="p=$event"></pagination-controls>
+             </div> 
+    </div>
+    </div>
+</div>
+
+<ng-template
+#formError
+let-control="control"
+let-message="message"
+let-validation="validation"
+>
+<ng-container
+  *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+>
+  <div class="fv-plugins-message-container">
+    <div class="fv-help-block">
+      {{ message }}
+    </div>
+  </div>
+</ng-container>
+</ng-template>
+
+

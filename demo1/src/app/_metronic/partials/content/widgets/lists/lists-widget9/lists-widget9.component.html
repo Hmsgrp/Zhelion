@@ -1,0 +1,222 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{errorText}}
+  <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Doctor Referral</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Add New referral</span
+          >
+        </h3>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-4">
+        <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{postSuccessText}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+
+       <form #myForm="ngForm" (submit)="submitForm()">
+        <div class="form-group">
+          <label for="uname">FullName</label>
+          <input type="text"
+           autocomplete="off" 
+           id="fullName" 
+           name="fullName"  
+           #fullName="ngModel" 
+           placeholder="Full Name" 
+           ngModel 
+           class="form-control form-control-lg rounded-0" 
+           required 
+           maxlength="30" 
+           minlength="5">
+
+                  <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
+                    style="color: red;">
+                  <div *ngIf="fullName.errors.required">
+                    Full Name is required.
+                  </div>
+                  <div *ngIf="fullName.errors.minlength">
+                    Full Name cannot be less than 5 characters.
+                  </div>
+                  <div *ngIf="fullName.errors.maxlength">
+                    Full Name does not exceed 30 characters.
+                  </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="number" 
+        autocomplete="off" 
+        id="mobileNumber" 
+        name="mobileNumber"  
+        #mobileNumber="ngModel" 
+        placeholder="Mobile Number" 
+        ngModel 
+        class="form-control form-control-lg rounded-0" 
+        minlength="10"
+        maxlength="30" 
+        required
+        number
+        >
+
+        <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)"
+        style="color: red;">
+      <div *ngIf="mobileNumber.errors.required">
+        Mobile Number is required.
+      </div>
+      <div *ngIf="mobileNumber.errors.minlength">
+        Mobile Number cannot be less than 10 characters.
+      </div>
+      <div *ngIf="mobileNumber.errors.maxlength">
+        Mobile Number does not exceed 30 characters.
+      </div>
+
+      </div>
+   </div>
+    <div class="form-group">
+      <label for="uname">Select Hospital</label>
+      <ng-select  
+      #MyNgSelect            
+      bindLabel="name"
+      placeholder="Select item"
+      [(ngModel)]="selected"
+      name="selectHospital"
+      [multiple]="true"
+      required
+      >
+      <ng-option [value]="hospital.hospitalId"  *ngFor="let hospital of hospitals"> 
+          {{hospital.hospitalName}}
+      </ng-option>
+  </ng-select>
+      <div class="invalid-feedback">Oops, you missed this one.</div>
+  </div>
+    <div class="form-group">
+      <label for="uname">EmailID</label>
+      <input type="text" 
+      autocomplete="off" 
+      id="emailID" 
+      name="emailID"  
+      #emailID="ngModel" 
+      placeholder="Email ID" 
+      ngModel 
+      class="form-control form-control-lg rounded-0" 
+      minlength="5"
+      maxlength="30" 
+      required
+      email
+      >
+      <div *ngIf="emailID.invalid && (emailID.dirty || emailID.touched)"
+      style="color: red;">
+    <div *ngIf="emailID.errors.required">
+      EmailID is required.
+    </div>
+    <div *ngIf="emailID.errors.minlength">
+      EmailID cannot be less than 5 characters.
+    </div>
+    <div *ngIf="emailID.errors.maxlength">
+      EmailID does not exceed 30 characters.
+    </div>
+    <div *ngIf="emailID.errors.email">
+      Please Enter Valid Email ID
+    </div>
+
+    </div>
+  </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">Submit</button>
+      </form>
+      
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-custom">
+      <!-- Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder text-dark">View</h3>
+        <div class="card-toolbar">
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-0">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+         </div>
+
+         <!-- <div style="color: red;" *ngIf="user.length==0">
+          <hr>   
+          No records found
+        </div> -->
+        <!--begin::Item-->
+        <div *ngFor="let DoctorReferral of DoctorReferrals" class="mb-10">
+          <!--begin::Section-->
+          <div class="d-flex align-items-center">
+            <!--begin::Symbol-->
+            <div class="symbol symbol-45 symbol-light mr-5">
+              <span class="symbol-label">
+                <img
+                  alt=""
+                  src="./assets/media/svg/misc/006-plurk.svg"
+                  class="h-50 align-self-center"
+                />
+              </span>
+            </div>
+            <!--end::Symbol-->
+    
+            <!--begin::Text-->
+            <div class="d-flex flex-column flex-grow-1">
+              <a
+                class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
+                >{{DoctorReferral.user.userName}}</a
+              >
+              <span class="text-muted font-weight-bold">Mapped Hospitals</span>
+
+              <div>
+                <label *ngFor="let mappedhospital of DoctorReferral.userHospitalMaps ">
+                <span>{{mappedhospital.hospitalId}} </span>
+            </label>
+            </div>
+            </div>
+            <!--end::Text-->
+            <div> 
+              <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+              (click)="edit(hospital.hospitalId,hospital.hospitalName,hospital.hospitalAddress,hospital.contactPerson,hospital.phoneNumber)">
+              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-primary">
+              </span>
+            </button> -->
+            <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+            
+            >
+              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                class="svg-icon svg-icon-md svg-icon-danger">
+              </span>
+            </button>
+          </div>
+          </div>
+
+          <!--end::Section-->
+        </div>
+        <!--end::Item-->
+      </div>
+      <hr>
+      <!--   <div id="pagination" class="pagination justify-content-end marginRight10px">
+            <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>  -->
+    </div>
+  </div>
+
+</div>
