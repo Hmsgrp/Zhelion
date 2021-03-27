@@ -26,7 +26,7 @@ export class ListsWidget9Component implements OnInit {
   users : UserModel[] = [];
   buttontext:string;
   isEdit:boolean;
-  EditforuserId:string;
+  editID:string;
   showSuccessNotification:boolean;
   showUpdateNotification:boolean;
   hasError:boolean;
@@ -36,11 +36,15 @@ export class ListsWidget9Component implements OnInit {
   @ViewChild('myForm', {static: false}) MyForm: NgForm;
   hospitals : HospitalModel[] = [];
   userHospitalMaps: Array<userHospitalMaps> = [];
-  selected = [  ];
+  // selected = [  ];
   postSuccessText:string;
   showPostSuccessNotification:boolean;
   errorText:string;
   DoctorReferrals:any;
+  filteredHospitalList:any;
+  selected: [];
+  showEmpty:boolean;
+  mappedHospital : [];
 
    // private fields
    private unsubscribe: Subscription[] = [];
@@ -52,14 +56,39 @@ export class ListsWidget9Component implements OnInit {
     this.updateMessage = "";
     this.getHospital();
     this.refreshData();
+    this.Initializevariables();
   }
 
+   //common methods
+   Initializevariables()
+   {
+     this.isEdit=false;
+     this.editID = "";
+     this.updateMessage = "";
+     this.showUpdateNotification = false;
+     this.buttontext="Submit";
+     this.hasError = false;
+     this.errorText = "";
+     this.showPostSuccessNotification=false;
+     this.postSuccessText="";
+     this.showEmpty = true;
+     this.mappedHospital = [];
+   }
+
   refreshData() {
-    
     this.dashboardServices.getDoctorReferrals()
       .subscribe(data => {
         this.DoctorReferrals = data;
-        console.log(this.DoctorReferrals);
+        console.log(data);
+        if(this.DoctorReferrals.length > 0)
+        {
+          this.showEmpty = false;
+        }
+        else
+        {
+          this.showEmpty = true;
+        }
+        
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -78,6 +107,23 @@ export class ListsWidget9Component implements OnInit {
       });    
   }
 
+  
+  edit(userid:string,userName:string,emailId:string,mobileNumber:number)
+  {
+    this.HandleEdit(userid);
+    this.MyForm.form.controls.fullName.setValue(userName);
+    this.MyForm.form.controls.mobileNumber.setValue(mobileNumber);
+    this.MyForm.form.controls.emailID.setValue(emailId);
+
+    for (var val of this.selected) {
+      let userHospitalMap = new userHospitalMaps();
+      userHospitalMap.hospitalId = val;
+      this.userHospitalMaps.push(userHospitalMap)
+    }
+
+    this.selected = this.DoctorReferrals.filter(x => x.user.userID == userid)[0]["UserHospitalMapResult"];
+  }
+
   getSelectedValue(){
     console.log(this.selected);
   }
@@ -86,18 +132,13 @@ export class ListsWidget9Component implements OnInit {
     return this.registerForm.controls;
   }
 
-
-  
   submitForm(){
-    this.MyForm.form.markAllAsTouched();
-
+    this.mappedHospital = [];
     for (var val of this.selected) {
-      let userHospitalMap = new userHospitalMaps();
-      userHospitalMap.hospitalId = val;
-      this.userHospitalMaps.push(userHospitalMap)
+     this.mappedHospital.push(val)
     }
-    
-    this.dashboardServices.AddDoctorReferral(this.MyForm.form,this.userHospitalMaps)
+
+    this.dashboardServices.AddDoctorReferral(this.MyForm.form,this.mappedHospital)
     .subscribe(data => {
       this.handleSuccessforPost();
     
@@ -107,6 +148,24 @@ export class ListsWidget9Component implements OnInit {
     }  
   );
  
+}
+
+delete(userId:string)
+{
+  this.dashboardServices.deleteDoctorReferral(userId)
+  .subscribe(data => {
+    this.handleDelete();
+  },
+  error => {
+    this.handleError(error.message);
+  });
+}
+
+HandleEdit(id:string)
+{
+  this.isEdit = true;
+  this.editID = id;
+  this.buttontext = "Update";
 }
 
 closeNotification()
@@ -125,6 +184,13 @@ closeAllNotification()
   }, 3000);
 }
 
+ handleDelete()
+  { 
+    this.updateMessage = "Deleted Successfully."
+    this.showUpdateNotification = true;
+    this.refreshData();
+    this.closeAllNotification(); 
+  }
 
   handleSuccessforPost()
   {
@@ -140,6 +206,13 @@ closeAllNotification()
     this.errorText = error;
     this.hasError = true;
     this.cd.detectChanges();
+  }
+
+  resetData()
+  {
+    this.MyForm.form.reset();
+    this.isEdit = false;
+    this.buttontext = "Submit";
   }
 
 }

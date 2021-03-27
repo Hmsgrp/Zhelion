@@ -80,9 +80,12 @@
       <!-- Header -->
       <div class="card-header border-0">
         <h3 class="card-title font-weight-bolder text-dark">View</h3>
+        
         <div class="card-toolbar">
         </div>
       </div>
+      <hr> 
+  
       <!-- Body -->
       <div class="card-body pt-0">
         <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -91,13 +94,16 @@
            <span aria-hidden="true">&times;</span>
          </button>
          </div>
+         <div style="color: red;" *ngIf="menuRoleMappingmodel.length==0">   
+          No records found
+        </div>
 
          <!-- <div style="color: red;" *ngIf="user.length==0">
           <hr>   
           No records found
         </div> -->
         <!--begin::Item-->
-        <div *ngFor="let map of menuRoleMappingmodel" class="mb-10">
+        <div *ngFor="let map of menuRoleMappingmodel | paginate:{itemsPerPage: 5, currentPage:p}" class="mb-10">
           <!--begin::Section-->
           <div class="d-flex align-items-center">
             <!--begin::Symbol-->
@@ -116,8 +122,15 @@
             <div class="d-flex flex-column flex-grow-1">
               <a
                 class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
-                >{{map.menuId}}</a
+                >{{map.roleName}}</a
               >
+
+              <div style="height: 75px;overflow: auto;">
+                <div *ngFor="let menuinfo of map.menuInfo" >
+                   <span style="font-size: smaller; font-style:italic">
+                     {{menuinfo.menuName}}</span><br>
+                </div>
+             </div>
               <!-- <span class="text-muted font-weight-bold">Mapped Hospitals</span> -->
 
               <div>
@@ -135,7 +148,7 @@
               </span>
             </button> -->
             <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-            
+            (click)="Delete(map.mappingId)"
             >
               <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
                 class="svg-icon svg-icon-md svg-icon-danger">
@@ -146,12 +159,12 @@
 
           <!--end::Section-->
         </div>
+        <hr>
+        <div id="pagination" class="pagination justify-content-end marginRight10px">
+              <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div> 
         <!--end::Item-->
       </div>
-      <hr>
-      <!--   <div id="pagination" class="pagination justify-content-end marginRight10px">
-            <pagination-controls (pageChange)="page=$event"></pagination-controls>
-        </div>  -->
     </div>
   </div>
 </div>

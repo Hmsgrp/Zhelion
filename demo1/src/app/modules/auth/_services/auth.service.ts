@@ -46,11 +46,10 @@ export class AuthService implements OnDestroy {
   login(username: string, password: string): Observable<UserModel> {
     this.isLoadingSubject.next(true);
     return this.authHttpService.login(username, password).pipe(
-      map((auth: AuthModel) => {
+      map((auth: any) => {
         const result = this.setAuthFromLocalStorage(auth);
         return result;
       }),
-      switchMap(() => this.getUserByToken()),
       catchError((err) => {
         console.error('err', err);
         return of(undefined);
@@ -59,12 +58,10 @@ export class AuthService implements OnDestroy {
     );
   }
 
-  logout() {
-    localStorage.removeItem(this.authLocalStorageToken);
-    this.router.navigate(['/auth/login'], {
-      queryParams: {},
-    });
-  }
+   logout(){
+    localStorage.removeItem("access_token");
+    this.router.navigate(["/auth/doctor/login"]);
+   }
 
   getUserByToken(): Observable<UserModel> {
     const auth = this.getAuthFromLocalStorage();
@@ -111,6 +108,16 @@ export class AuthService implements OnDestroy {
 
   // private methods
   private setAuthFromLocalStorage(auth: AuthModel): boolean {
+    // store auth accessToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
+    if (auth && auth.accessToken) {
+      localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
+      return true;
+    }
+    return false;
+  }
+
+  // private methods
+  private setAuthFromLocalStorageDoctor(auth: AuthModel): boolean {
     // store auth accessToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.accessToken) {
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));

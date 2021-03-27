@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule ,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ClipboardModule } from 'ngx-clipboard';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/_services/auth.service';
+import { CommonServicesService } from './modules/auth/_services/common-services.service';
 import { environment } from 'src/environments/environment';
 // Highlight JS
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -18,6 +19,9 @@ import { SplashScreenModule } from './_metronic/partials/layout/splash-screen/sp
 import { FakeAPIService } from './_fake/fake-api.service';
 // #fake-end#
 import { DashboardServicsService } from './modules/commonServices/dashboard-servics.service';
+import { JwtModule } from "@auth0/angular-jwt";
+import { AddRequestHeaderService } from './modules/auth/_services/add-request-header.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -25,6 +29,10 @@ function appInitializer(authService: AuthService) {
       authService.getUserByToken().subscribe().add(resolve);
     });
   };
+}
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
 }
 
 
@@ -38,6 +46,7 @@ function appInitializer(authService: AuthService) {
     HttpClientModule,
     HighlightModule,
     ClipboardModule,
+    NgSelectModule,
     // #fake-start#
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
@@ -49,13 +58,21 @@ function appInitializer(authService: AuthService) {
     AppRoutingModule,
     InlineSVGModule.forRoot(),
     NgbModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:44329","localhost:4200"],
+        disallowedRoutes: [""],
+      },
+    }),
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
+      
       useFactory: appInitializer,
       multi: true,
-      deps: [AuthService,DashboardServicsService],
+      deps: [AuthService,DashboardServicsService,CommonServicesService],
     },
     {
       provide: HIGHLIGHT_OPTIONS,
@@ -68,7 +85,9 @@ function appInitializer(authService: AuthService) {
           json: () => import('highlight.js/lib/languages/json')
         },
       },
-    },
+    }
+    ,
+    { provide: HTTP_INTERCEPTORS, useClass: AddRequestHeaderService, multi: true }
   ],
   bootstrap: [AppComponent],
 })

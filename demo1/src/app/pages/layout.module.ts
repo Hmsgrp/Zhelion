@@ -22,6 +22,7 @@ import { SubheaderModule } from '../_metronic/partials/layout/subheader/subheade
 import { AsideDynamicComponent } from './_layout/components/aside-dynamic/aside-dynamic.component';
 import { HeaderMenuDynamicComponent } from './_layout/components/header/header-menu-dynamic/header-menu-dynamic.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { NgSelectModule } from '@ng-select/ng-select'; 
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgbProgressbarModule,
     CoreModule,
     SubheaderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgSelectModule
   ],
 })
 export class LayoutModule { }

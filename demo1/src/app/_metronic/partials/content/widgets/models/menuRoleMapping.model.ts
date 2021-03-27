@@ -1,7 +1,7 @@
 export class menuRoleMappingmodel {
     mappingId:string
     roleId: string;
-    menuId:string;
+    menuId:any;
     isActive:boolean;
     createdDate:Date;
   }

@@ -5,6 +5,9 @@ import {LoginComponent} from './login/login.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {LogoutComponent} from './logout/logout.component';
+import { ReferComponent } from './refer/refer.component';
+import { DoctorSignupComponent } from './doctor-signup/doctor-signup.component';
+import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
 
 
 const routes: Routes = [
@@ -33,6 +36,18 @@ const routes: Routes = [
       {
         path: 'logout',
         component: LogoutComponent
+      },
+      {
+        path: 'refer/:term1/:term2/:term3',
+        component: ReferComponent
+      },
+      {
+        path: 'doctor/login',
+        component: DoctorLoginComponent
+      },
+      {
+        path: 'signup/doctor/:term1',
+        component: DoctorSignupComponent
       },
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: '**', redirectTo: 'login', pathMatch: 'full'},

@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { UserModel } from '../../../_models/user.model';
+import { UsersModel } from '../../../_models/users.model';
 import { AuthModel } from '../../../_models/auth.model';
 import { UsersTable } from '../../../../../_fake/fake-db/users.table';
 import { environment } from '../../../../../../environments/environment';
@@ -16,6 +17,20 @@ const API_USERS_URL = `${environment.apiUrl}/users`;
 export class AuthHTTPService {
   constructor(private http: HttpClient) { }
 
+
+  GetjwttokenfromLogn(username: string, password: string) : Observable<any>
+      {
+        const user = new UsersModel();
+        user.username = username;
+        user.password = password;
+        const headers = { 'content-type': 'application/json'}  
+  
+        const body = JSON.stringify(user);
+        
+        let endPoints = "api/Auth/Login"
+        return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
+      }
+
   // public methods
   login(username: string, password: string): Observable<any> {
     const notFoundError = new Error('Not Found');
@@ -23,27 +38,13 @@ export class AuthHTTPService {
       return of(notFoundError);
     }
 
-    return this.getAllUsers().pipe(
-      map((result: UserModel[]) => {
+    return this.GetjwttokenfromLogn(username,password).pipe(
+      map((result: any) => {
         if (result.length <= 0) {
           return notFoundError;
         }
 
-        const user = result.find((u) => {
-          return (
-            u.username.toLowerCase() === username.toLowerCase() &&
-            u.password === password
-          );
-        });
-        if (!user) {
-          return notFoundError;
-        }
-
-        const auth = new AuthModel();
-        auth.accessToken = user.accessToken;
-        auth.refreshToken = user.refreshToken;
-        auth.expiresIn = new Date(Date.now() + 100 * 24 * 60 * 60 * 1000);
-        return auth;
+        return result.jwtToken;
       })
     );
   }

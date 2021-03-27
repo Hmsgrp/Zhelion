@@ -21,7 +21,7 @@ export class ListsWidget10Component implements OnInit {
     roleDescription: '',
   };
 
-  selected = [  ];
+  selected = [];
   roles : RoleModel[] = [];
   menu  : Menu[] = [];
   menuRoleMappingmodel  : menuRoleMappingmodel[] = [];
@@ -37,6 +37,8 @@ export class ListsWidget10Component implements OnInit {
   errorText:string;
   DoctorReferrals:any;
   menuRolearr: Array<menuRoleMappingmodel> = [];
+  p:any;
+  menus = []
   
   // private fields
   private unsubscribe: Subscription[] = [];
@@ -45,9 +47,10 @@ export class ListsWidget10Component implements OnInit {
 
   
   ngOnInit(): void {
+    this.selected =[];
     this.refreshRoles();
     this.refreshData();
-    this.refreshMapping();
+    this.refreshMapping(); 
   }
 
   refreshRoles() {
@@ -77,6 +80,7 @@ export class ListsWidget10Component implements OnInit {
     this.dashboardServices.getMappedRoles()
       .subscribe(data => {
         this.menuRoleMappingmodel = data;
+        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -106,23 +110,36 @@ export class ListsWidget10Component implements OnInit {
   
  
   submitForm(){
+
     this.MyForm.form.markAllAsTouched();
 
-    for (var val of this.selected) {
-      let menuRoleMapping = new menuRoleMappingmodel();
-      menuRoleMapping.roleId = val;
-      this.menuRolearr.push(menuRoleMapping)
-    }
-    
-    this.dashboardServices.AddMenuMapping(this.MyForm.form,this.menuRolearr)
+    this.dashboardServices.AddMenuMapping(this.MyForm.form,this.selected)
     .subscribe(data => {
       this.handleSuccessforPost();
-    
     },
     error => {
       this.handleError(error.message);
     }  
   );
+  }
+
+  Delete(MappingID:string)
+  {
+    this.dashboardServices.deleteMenuMapping(MappingID)
+    .subscribe(data => {
+      this.handleDelete();
+    },
+    error => {
+      this.handleError(error.message);
+    });
+  }
+
+  handleDelete()
+  { 
+    this.updateMessage = "Deleted Successfully."
+    this.showUpdateNotification = true;
+    this.refreshData();
+    this.closeAllNotification(); 
   }
 
   closeNotification()
@@ -146,8 +163,9 @@ closeAllNotification()
   {
     this.postSuccessText = "Added Successfully";
     this.MyForm.form.reset();
+    this.MyForm.form.controls.selectRole.setValue("");
     this.showPostSuccessNotification = true;
-    this.refreshData();
+    this.refreshMapping();
     this.closeAllNotification();
   }
 

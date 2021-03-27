@@ -48,6 +48,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
     this.initForm();
     this.refreshData();
     this.Initializevariables();
+    console.log(this.fromParent);
     this.testID = this.fromParent;
   }
 
@@ -80,24 +81,6 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  // edit(hospitalId:string,hospitalName:string,hospitalAddress:string,contactPerson:string,phoneNumber:string)
-  // {
-  //   this.HandleEdit(hospitalId);
-  //   this.parameterRegistration = this.fb.group({
-  //     hospitalName: [
-  //       hospitalName
-  //     ],
-  //     hospitalAddress: [
-  //       hospitalAddress
-  //     ],
-  //     contactPerson: [
-  //       contactPerson
-  //     ],
-  //     phoneNumber: [
-  //       phoneNumber
-  //     ],
-  //   });
-  // }
 
   submitData()
   {
@@ -138,7 +121,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
 
 
   refreshData() {
-    this.dashboardServices.getTestParameters()
+    this.dashboardServices.getTestParameters(this.fromParent)
       .subscribe(data => {
         this.testParameters = data;
         this.cd.detectChanges();

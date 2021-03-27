@@ -29,7 +29,7 @@
     <div class="card-spacer mt-n25">
       <!--begin::Row-->
       <div class="row m-0"> 
-        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('RoleManagement')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
@@ -40,7 +40,7 @@
           </a>
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Roles : 4</span>
         </div>
-        <div class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('UserManagement')" class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
             class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
@@ -50,7 +50,7 @@
           </a>
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Users : 2</span>
         </div>
-        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('HospitalManagement')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
@@ -60,7 +60,7 @@
           </a>
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Active hospitals : 3</span>
         </div>
-        <div class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('LabManagement')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
@@ -70,7 +70,7 @@
           </a>
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Labs : 1</span>
         </div>
-        <div class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div  *ngIf="showmenus('TestManagement')"  class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-danger d-block my-2"
@@ -81,7 +81,7 @@
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Tests : 4</span>
         </div>
         
-        <div class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('DoctorReferral')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
@@ -92,7 +92,7 @@
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Refferred Doctors : 4</span>
         </div>
 
-        <div class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+        <div *ngIf="showmenus('RoleMap')" class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
           <span
             [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
             class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"

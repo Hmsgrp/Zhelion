@@ -1,0 +1,186 @@
+<!--begin::Signup-->
+<div class="login-form login-signup">
+  <!--begin::Form-->
+  <form #registrationForm="ngForm" (submit)="submit()" class="form">
+    <!--begin::Title-->
+    <div class="pb-13 pt-lg-0 pt-5">
+      <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
+        Sign Up
+      </h3>
+      <p class="text-muted font-weight-bold font-size-h4">
+        Enter your details to create your account
+      </p>
+    </div>
+    <!--end::Title-->
+
+    <!-- begin::Alert error-->
+    <ng-container *ngIf="hasError">
+      <div class="mb-10 alert alert-custom alert-light-danger alert-dismissible">
+        <div class="alert-text">The registration details are incorrect</div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isSuccess">
+      <div class="mb-10 alert alert-custom alert-success alert-dismissible">
+        <div class="alert-text">Registration Success</div>
+      </div>
+    </ng-container>
+    <!-- end::Alert error-->
+
+    <!--begin::Form group-->
+    <div  [hidden]="showNext">
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark">Fullname</label>
+        <input class="form-control" type="text" name="fullname" #fullName="ngModel" placeholder="Full Name" ngModel
+          autocomplete="off" required />
+
+        <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)" style="color: red;">
+          <div *ngIf="fullName.errors.required">
+            Full Name is required.
+          </div>
+        </div>
+      </div>
+      <!--end::Form group-->
+
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark">Email</label>
+        <input class="form-control" type="email" name="email" #email="ngModel" placeholder="Email" ngModel
+          autocomplete="off" required />
+
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" style="color: red;">
+          <div *ngIf="email.errors.required">
+            Email is required.
+          </div>
+        </div>
+      </div>
+      <!--end::Form group-->
+
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Hospitals</label>
+        <ng-select bindLabel="name" placeholder="Select item" name="selectHospital" appendTo="body" multiple="true"
+          [searchable]="true" [clearable]="true" [(ngModel)]="selected">
+          <ng-option [value]="item.id" [disabled]="item.disabled" *ngFor="let item of items">
+            {{item.name}}
+          </ng-option>
+        </ng-select>
+
+      </div>
+
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark">Mobile Number</label>
+
+        <input class="form-control" type="number" name="mobilenumber" #mobilenumber="ngModel"
+          placeholder="Mobile Number" ngModel autocomplete="off" required />
+      </div>
+      <!--end::Form group-->
+
+      <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+        <button type="button" (click)="Next()" 
+          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+          Next
+        </button>
+        <ng-container *ngIf="isLoading$ | async">
+          <span class="spinner spinner-primary ml-5"></span>
+        </ng-container>
+      </div>
+    </div>
+
+    <!--begin::Form group-->
+    <div [hidden]="!showNext">
+      <div class="form-group">
+        <label class="checkbox mb-0 font-weight-bolder">
+          <input type="checkbox" [attr.disabled]="isSignUpwithOTPDisabled ? true : null" name="otpConfirm"
+            #otpConfirm="ngModel" ngModel
+            (change)="isChangeOTPToggle($event.target.checked ? 'true' : 'false')" />&nbsp;
+          SignUp with OTP&nbsp;&nbsp;
+          <span></span>
+        </label>
+      </div>
+
+      <div class="form-group input-group mb-3" [hidden]="!showOTPField">
+        <input type="number" class="form-control"  name="OTPfield" #OTPfield="ngModel" ngModel
+          placeholder="OTP" autocomplete="off" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="getOTP()" type="button">Send OTP</button>
+        </div>
+      </div>
+
+      <!--end::Form group-->
+
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="checkbox mb-0 font-weight-bolder">
+          <input type="checkbox" [attr.disabled]="isSignUpwithPasswordDisabled ? true : null"
+             name="sgwithPassword"
+             #sgwithPassword="ngModel" ngModel
+            (change)="isChangesgwithPasswordToggle($event.target.checked ? 'true' : 'false')" />&nbsp;
+          SignUp with Password&nbsp;&nbsp;
+          <span></span>
+        </label>
+      </div>
+      <!--end::Form group-->
+
+      <!--begin::Form group-->
+      <div *ngIf="showPasswordFields" class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+        <input class="form-control" type="password" name="password" #password="ngModel" ngModel placeholder="Password"
+          autocomplete="off" required />
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" style="color: red;">
+          <div *ngIf="password.errors.required">
+            Enter Password.
+          </div>
+        </div>
+      </div>
+      <!--end::Form group-->
+
+      <!--begin::Form group-->
+      <div *ngIf="showPasswordFields" class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark pt-5">Confirm Password</label>
+        <input class="form-control" type="password" name="cPassword" #cPassword="ngModel" ngModel
+          placeholder="Confirm password" autocomplete="off" required />
+
+        <div *ngIf="cPassword.invalid && (cPassword.dirty || cPassword.touched)" style="color: red;">
+          <div *ngIf="cPassword.errors.required">
+            Enter Confirm Password.
+          </div>
+        </div>
+      </div>
+      <!--end::Form group-->
+
+      <!--begin::Form group-->
+      <div class="form-group">
+        <label class="checkbox mb-0">
+          <input type="checkbox" name="agree" #agree="ngModel" ngModel
+          (change)="agreeclick($event.target.checked ? 'true' : 'false')"
+          />&nbsp;I
+          Agree the&nbsp;<a href="" target="_blank">terms and conditions</a>.&nbsp;
+          <span></span>
+        </label>
+      </div>
+      <!--end::Form group-->
+      <!--begin::Form group-->
+      <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
+
+        <button type="button" (click)="back()"
+          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+          back
+        </button>
+        <button type="submit" id="kt_login_signup_submit"  [disabled]="disableSignUp"
+          class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4"
+          >
+          Sign Up
+        </button>
+
+        <ng-container *ngIf="isLoading$ | async">
+          <span class="spinner spinner-primary ml-5"></span>
+        </ng-container>
+      </div>
+      <!--end::Form group-->
+    </div>
+
+  </form>
+  <!--end::Form-->
+</div>
+<!--end::Signup-->

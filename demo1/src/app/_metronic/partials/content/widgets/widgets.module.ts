@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Form , ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 // Advanced Tables
 import { AdvanceTablesWidget1Component } from './advance-tables/advance-tables-widget1/advance-tables-widget1.component';
@@ -113,7 +113,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    NgSelectModule 
+    NgSelectModule,
   ],
   exports: [
     // Advanced Tables

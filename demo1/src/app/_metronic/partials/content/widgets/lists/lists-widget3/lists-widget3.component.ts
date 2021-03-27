@@ -156,7 +156,6 @@ export class ListsWidget3Component implements OnInit {
     this.buttontext = "Update";
     this.isEdit=true;
     this.EditforuserId=userID;
-    console.log(userID);
     this.UserRegistration = this.fb.group({
       userName: [
         userName   

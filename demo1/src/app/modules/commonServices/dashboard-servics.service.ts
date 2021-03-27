@@ -123,6 +123,11 @@ export class DashboardServicsService {
       return this.http.get<HospitalModel[]>(environment.apiUrl + endPoints)
     }
 
+    getAllHospital(): Observable<any> {
+      let endPoints = "api/Hospital/GetAllHospitals"
+      return this.http.get<any>(environment.apiUrl + endPoints)
+    }
+
     deleteHospital(id:string) : Observable<any>{
       let endPoints = "api/Hospital/DeleteHospital/"
       return this.http.delete(environment.apiUrl + endPoints + id);
@@ -242,9 +247,9 @@ export class DashboardServicsService {
       return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
     }
   
-    getTestParameters(): Observable<testParameter[]> {
-      let endPoints = "api/TestParameter/GetTestParameters"
-      return this.http.get<testParameter[]>(environment.apiUrl + endPoints)
+    getTestParameters(testID:string): Observable<testParameter[]> {
+      let endPoints = "api/TestParameter/GetTestParameter/"
+      return this.http.get<testParameter[]>(environment.apiUrl + endPoints + testID)
     }
 
     deleteTestParameter(id:string) : Observable<any>{
@@ -272,17 +277,24 @@ export class DashboardServicsService {
     AddDoctorReferral(FormGroup:FormGroup,hospitalIDs:any) : Observable<any>
     {
       const user = new UserModel();
-      user.UserName = FormGroup.controls.fullName.value;
+      user.FullName = FormGroup.controls.fullName.value;
+      user.UserName = FormGroup.controls.mobileNumber.value.toString();
       user.MobileNumber =  FormGroup.controls.mobileNumber.value;
       user.EmailId = FormGroup.controls.emailID.value;
       user.CreatedDate = new Date();
 
+      const mapped = { hospitalId: hospitalIDs}  
       const headers = { 'content-type': 'application/json'}  
 
-      let body = { "user": user, "userHospitalMaps": hospitalIDs };
+      let body = { "user": user, "userHospitalMaps": mapped };
       
       let endPoints = "api/Doctor/DoctorRefer"
       return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
+    }
+
+    deleteDoctorReferral(id:string) : Observable<any>{
+      let endPoints = "api/Doctor/DeleteDoctor/"
+      return this.http.delete(environment.apiUrl + endPoints + id);
     }
 
     getDoctorReferrals(): Observable<any> {
@@ -296,6 +308,7 @@ export class DashboardServicsService {
       AddMenu(FormGroup:FormGroup) : Observable<any>
       {
         const MenuModel = new Menu();
+        MenuModel.menuName = FormGroup.controls.menuName.value;
         MenuModel.menuLink = FormGroup.controls.menuName.value;
         MenuModel.isSideBar = false;
         MenuModel.isActive = true;
@@ -325,7 +338,7 @@ export class DashboardServicsService {
       {
         const menuMapping = new menuRoleMappingmodel();
         menuMapping.roleId = FormGroup.controls.selectRole.value;
-        menuMapping.menuId =  "test";
+        menuMapping.menuId = menus;
   
         const headers = { 'content-type': 'application/json'}  
   
@@ -338,6 +351,15 @@ export class DashboardServicsService {
       getMappedRoles(): Observable<menuRoleMappingmodel[]> {
         let endPoints = "api/MenuRoleMap/GetMenuRoleMaps"
         return this.http.get<menuRoleMappingmodel[]>(environment.apiUrl + endPoints)
+      }
+
+      deleteMenuMapping(id:string) : Observable<any>{
+        let endPoints = "api/MenuRoleMap/DeleteMenuRoleMap/"
+        return this.http.delete(environment.apiUrl + endPoints + id);
+      }
+
+      tokenGetterforMEnus() :string{
+        return localStorage.getItem("Menus");
       }
 
       

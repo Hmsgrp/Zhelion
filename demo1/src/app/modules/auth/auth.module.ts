@@ -9,6 +9,12 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LogoutComponent } from './logout/logout.component';
 import { AuthComponent } from './auth.component';
 import {TranslationModule} from '../i18n/translation.module';
+import { ReferComponent } from './refer/refer.component';
+import { DoctorSignupComponent } from './doctor-signup/doctor-signup.component';
+import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
@@ -17,6 +23,10 @@ import {TranslationModule} from '../i18n/translation.module';
     ForgotPasswordComponent,
     LogoutComponent,
     AuthComponent,
+    ReferComponent,
+    DoctorSignupComponent,
+    DoctorLoginComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +35,7 @@ import {TranslationModule} from '../i18n/translation.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgSelectModule
   ]
 })
 export class AuthModule {}

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { DashboardServicsService } from '../../../../../../modules/commonServices/dashboard-servics.service';
 import { RoleModel } from 'src/app/_metronic/partials/content/widgets/models/role.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 
@@ -190,11 +190,13 @@ export class ListsWidget1Component implements OnInit,OnDestroy {
       this.updateMessage="Role Deleted Successfully."
       this.closenUpdNotification();
       this.refreshRoles();
-    },error => {
-      this.hasError = true;
-      this.ErrorOccuredtext=error;
+    } ,
+    HttpErrorResponse => {
+      this.handleError(HttpErrorResponse.error.errorDetails);
     });
   }
+
+ 
 
   resetData()
   {

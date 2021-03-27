@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../_metronic/core';
+import { DashboardServicsService } from '../../../../modules/commonServices/dashboard-servics.service';
 
 @Component({
   selector: 'app-aside',
@@ -19,8 +20,9 @@ export class AsideComponent implements OnInit {
   brandClasses: string;
   asideMenuScroll = 1;
   asideSelfMinimizeToggle = false;
+  menus:string;
 
-  constructor(private layout: LayoutService, private loc: Location) { }
+  constructor(private layout: LayoutService, private loc: Location,private dashboardServices: DashboardServicsService) { }
 
   ngOnInit(): void {
     // load view settings
@@ -40,6 +42,7 @@ export class AsideComponent implements OnInit {
     // this.asideMenuCSSClasses = `${this.asideMenuCSSClasses} ${this.asideMenuScroll === 1 ? 'scroll my-4 ps ps--active-y' : ''}`;
     // Routing
     this.location = this.loc;
+    this.getmenus();
   }
 
   private getLogo() {
@@ -48,5 +51,20 @@ export class AsideComponent implements OnInit {
     } else {
       return './assets/media/logos/logo-light.png';
     }
+  }
+
+  showmenus(menuname:string)
+  {
+    if (this.menus.toLowerCase().search(menuname.toLowerCase()) == -1 ) { 
+      return false;
+    } else { 
+      return true
+    } 
+  }
+
+
+  getmenus()
+  {
+    this.menus= this.dashboardServices.tokenGetterforMEnus()
   }
 }

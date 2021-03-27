@@ -150,6 +150,12 @@
         <th>
            Parameter Name
         </th>
+        <th>
+          RangesFrom
+       </th>
+       <th>
+        RangesTo
+     </th>
         <th>ACTIONS</th>
       </thead>
       <tbody>
@@ -158,6 +164,12 @@
         </tr>
         <tr *ngFor="let testParameter of testParameters; let i =index" >
          <td>{{testParameter.parameterName}}</td>
+         <td>
+          {{testParameter.rangesFrom}}
+         </td>
+         <td>
+          {{testParameter.rangesTo}}
+         </td>
           <td>
             <div> 
               <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
@@ -180,11 +192,11 @@
   </div>
 </div>
 
- </div>
-    <div class="modal-footer">
-     
-    </div>
-  </div>
+</div>
+<div class="modal-footer">
+  <a  class="btn btn-light btn-elevate mr-2" (click)="closeModal()">Close</a>
+</div>
+</div>
 
   <ng-template
 #formError

@@ -65,7 +65,7 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Role Name should have maximum 15 symbols',
+        message: 'Role Name should have maximum 5 symbols',
         control: RoleRegistration.controls['roleName']
       }"
     ></ng-container>
@@ -99,7 +99,7 @@
       [ngTemplateOutlet]="formError"
       [ngTemplateOutletContext]="{
         validation: 'maxLength',
-        message: 'Role Description should have maximum 15 symbols',
+        message: 'Role Description should have maximum 100 symbols',
         control: RoleRegistration.controls['roleDescription']
       }"
     ></ng-container>

@@ -40,7 +40,7 @@
            maxlength="30" 
            minlength="5">
 
-                  <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
+         <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)"
                     style="color: red;">
                   <div *ngIf="fullName.errors.required">
                     Full Name is required.
@@ -85,7 +85,7 @@
    </div>
     <div class="form-group">
       <label for="uname">Select Hospital</label>
-      <ng-select  
+    <ng-select  
       #MyNgSelect            
       bindLabel="name"
       placeholder="Select item"
@@ -97,7 +97,7 @@
       <ng-option [value]="hospital.hospitalId"  *ngFor="let hospital of hospitals"> 
           {{hospital.hospitalName}}
       </ng-option>
-  </ng-select>
+   </ng-select>
       <div class="invalid-feedback">Oops, you missed this one.</div>
   </div>
     <div class="form-group">
@@ -132,7 +132,9 @@
 
     </div>
   </div>
-        <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">Submit</button>
+        <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">{{buttontext}}</button>
+        &nbsp;
+        <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
       </form>
       
       </div>
@@ -155,68 +157,58 @@
            <span aria-hidden="true">&times;</span>
          </button>
          </div>
-
-         <!-- <div style="color: red;" *ngIf="user.length==0">
-          <hr>   
-          No records found
-        </div> -->
-        <!--begin::Item-->
-        <div *ngFor="let DoctorReferral of DoctorReferrals" class="mb-10">
-          <!--begin::Section-->
-          <div class="d-flex align-items-center">
-            <!--begin::Symbol-->
-            <div class="symbol symbol-45 symbol-light mr-5">
-              <span class="symbol-label">
-                <img
-                  alt=""
-                  src="./assets/media/svg/misc/006-plurk.svg"
-                  class="h-50 align-self-center"
-                />
-              </span>
-            </div>
-            <!--end::Symbol-->
-    
-            <!--begin::Text-->
-            <div class="d-flex flex-column flex-grow-1">
-              <a
-                class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
-                >{{DoctorReferral.user.userName}}</a
-              >
-              <span class="text-muted font-weight-bold">Mapped Hospitals</span>
-
-              <div>
-                <label *ngFor="let mappedhospital of DoctorReferral.userHospitalMaps ">
-                <span>{{mappedhospital.hospitalId}} </span>
-            </label>
-            </div>
-            </div>
-            <!--end::Text-->
-            <div> 
-              <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-              (click)="edit(hospital.hospitalId,hospital.hospitalName,hospital.hospitalAddress,hospital.contactPerson,hospital.phoneNumber)">
-              <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
-                class="svg-icon svg-icon-md svg-icon-primary">
-              </span>
-            </button> -->
-            <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
-            
-            >
-              <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
-                class="svg-icon svg-icon-md svg-icon-danger">
-              </span>
-            </button>
-          </div>
-          </div>
-
+      
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Doctor Name</th>
+                <th scope="col">Hospitals</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="showEmpty">
+                <td></td>
+                <td style="color: red;">No Records Found</td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let DoctorReferral of DoctorReferrals | paginate:{itemsPerPage: 5, currentPage:p}">
+                <td>{{DoctorReferral.user.fullName}}</td>
+                <td>   
+                  <div style="height: 75px;overflow: auto;">
+                     <div *ngFor="let userhospital of DoctorReferral.userHospitalMapResults" >
+                      <div *ngFor="let hospitalInfo of userhospital.hospitalInfo">
+                        <span style="font-size: smaller; font-style:italic">
+                          {{hospitalInfo.hospitalName}}</span><br>
+                      </div>
+                     </div>
+                  </div>
+                <td>
+                  <!-- <button title="Edit Role" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                  (click)="edit(DoctorReferral.user.userID,DoctorReferral.user.userName,DoctorReferral.user.emailId,DoctorReferral.user.mobileNumber)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-primary">
+                  </span>
+                </button> -->
+                <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                (click)="delete(DoctorReferral.user.userID)"
+                >
+                  <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-danger">
+                  </span>
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
           <!--end::Section-->
         </div>
+        <hr>
+        <div id="pagination" class="pagination justify-content-end marginRight10px">
+              <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div> 
         <!--end::Item-->
       </div>
-      <hr>
-      <!--   <div id="pagination" class="pagination justify-content-end marginRight10px">
-            <pagination-controls (pageChange)="page=$event"></pagination-controls>
-        </div>  -->
+     
     </div>
   </div>
-
-</div>

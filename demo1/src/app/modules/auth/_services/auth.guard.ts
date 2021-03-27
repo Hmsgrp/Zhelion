@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {JwtHelperService} from "@auth0/angular-jwt";
+
 import {
   Router,
   CanActivate,
@@ -9,17 +11,15 @@ import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router: Router,private jwtHelper: JwtHelperService) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const currentUser = this.authService.currentUserValue;
-    if (currentUser) {
-      // logged in so return true
-      return true;
+  canActivate(){
+    const token = localStorage.getItem("access_token");
+    if(token && !this.jwtHelper.isTokenExpired(token)){
+        return true
     }
-
-    // not logged in so redirect to login page with the return url
-    this.authService.logout();
+    this.router.navigate((["/auth/login"]));
     return false;
-  }
+}
+
 }

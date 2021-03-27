@@ -78,6 +78,7 @@
         class="menu-item"
         aria-haspopup="true"
         routerLinkActive="menu-item-active"
+        *ngIf="showmenus('RoleManagement')"
       >
         <a class="menu-link" routerLink="/roleManagement" routerLinkActive="active">
           <span
@@ -92,6 +93,7 @@
         class="menu-item"
         aria-haspopup="true"
         routerLinkActive="menu-item-active"
+        *ngIf="showmenus('userManagement')"
       >
         <a class="menu-link" routerLink="/userManagement" routerLinkActive="active">
           <span
@@ -106,6 +108,7 @@
       class="menu-item"
       aria-haspopup="true"
       routerLinkActive="menu-item-active"
+      *ngIf="showmenus('hospitalManagement')"
     >
       <a class="menu-link" routerLink="/hospitalManagement" routerLinkActive="active">
         <span
@@ -120,6 +123,7 @@
     class="menu-item"
     aria-haspopup="true"
     routerLinkActive="menu-item-active"
+    *ngIf="showmenus('labManagement')"
   >
     <a class="menu-link" routerLink="/labManagement" routerLinkActive="active">
       <span
@@ -134,6 +138,7 @@
     class="menu-item"
     aria-haspopup="true"
     routerLinkActive="menu-item-active"
+    *ngIf="showmenus('testManagement')"
   >
     <a class="menu-link" routerLink="/testManagement" routerLinkActive="active">
       <span
@@ -142,6 +147,36 @@
         class="svg-icon menu-icon"
       ></span>
       <span class="menu-text">Test Management</span>
+    </a>
+  </li>
+  <li
+    class="menu-item"
+    aria-haspopup="true"
+    routerLinkActive="menu-item-active"
+    *ngIf="showmenus('doctorReferral')"
+  >
+    <a class="menu-link" routerLink="/doctorReferral" routerLinkActive="active">
+      <span
+        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        cacheSVG="true"
+        class="svg-icon menu-icon"
+      ></span>
+      <span class="menu-text">Doctor Referral</span>
+    </a>
+  </li>
+  <li
+    class="menu-item"
+    aria-haspopup="true"
+    routerLinkActive="menu-item-active"
+    *ngIf="showmenus('roleMap')"
+  >
+    <a class="menu-link" routerLink="/roleMap" routerLinkActive="active">
+      <span
+        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        cacheSVG="true"
+        class="svg-icon menu-icon"
+      ></span>
+      <span class="menu-text">Role Map</span>
     </a>
   </li>
       <!-- end::1 Level -->

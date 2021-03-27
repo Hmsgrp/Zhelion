@@ -44,17 +44,13 @@ export class ListsWidget4Component implements OnInit {
       hospitalName: [
         this.defaultVal.hospitalName,
         Validators.compose([
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.required // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
       hospitalAddress: [
         this.defaultVal.hospitalAddress,
         Validators.compose([
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(30),
+          Validators.required
         ]),
       ],
       contactPerson: [

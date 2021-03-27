@@ -7,6 +7,9 @@ import { ListsWidget3Component } from 'src/app/_metronic/partials/content/widget
 import { ListsWidget4Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget4/lists-widget4.component';
 import { ListsWidget8Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget8/lists-widget8.component';
 import { ListsWidget11Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget11/lists-widget11.component';
+import { ListsWidget9Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget9/lists-widget9.component';
+import { ListsWidget10Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget10/lists-widget10.component';
+import { AuthGuard } from '../modules/auth/_services/auth.guard';
 
 const routes: Routes = [
   {
@@ -15,30 +18,13 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
+      //  canActivate: [AuthGuard],
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
-        path: 'builder',
-        loadChildren: () =>
-          import('./builder/builder.module').then((m) => m.BuilderModule),
-      },
-      {
-        path: 'ecommerce',
-        loadChildren: () =>
-          import('../modules/e-commerce/e-commerce.module').then(
-            (m) => m.ECommerceModule
-          ),
-      },
-      {
-        path: 'user-management',
-        loadChildren: () =>
-          import('../modules/user-management/user-management.module').then(
-            (m) => m.UserManagementModule
-          ),
-      },
-      {
         path: 'user-profile',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('../modules/user-profile/user-profile.module').then(
             (m) => m.UserProfileModule
@@ -46,44 +32,46 @@ const routes: Routes = [
       },
       {
         path: 'ngbootstrap',
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('../modules/ngbootstrap/ngbootstrap.module').then(
             (m) => m.NgbootstrapModule
           ),
       },
       {
-        path: 'wizards',
-        loadChildren: () =>
-          import('../modules/wizards/wizards.module').then(
-            (m) => m.WizardsModule
-          ),
-      },
-      {
-        path: 'material',
-        loadChildren: () =>
-          import('../modules/material/material.module').then(
-            (m) => m.MaterialModule
-          ),
-      },
-      {
         path: 'roleManagement',
+        //canActivate: [AuthGuard],
         component: ListsWidget1Component
       },
       {
         path: 'userManagement',
+        canActivate: [AuthGuard],
         component: ListsWidget3Component
       },
       {
         path: 'hospitalManagement',
+        canActivate: [AuthGuard],
         component: ListsWidget4Component
       },
       {
         path: 'labManagement',
+        canActivate: [AuthGuard],
         component: ListsWidget8Component
       },
       {
         path: 'testManagement',
+        canActivate: [AuthGuard],
         component: ListsWidget11Component
+      },
+      {
+        path: 'doctorReferral',
+       // canActivate: [AuthGuard],
+        component: ListsWidget9Component
+      },
+      {
+        path: 'roleMap',
+        //canActivate: [AuthGuard],
+        component: ListsWidget10Component
       },
       {
         path: '',
