@@ -60,7 +60,7 @@ export class AuthService implements OnDestroy {
 
    logout(){
     localStorage.removeItem("access_token");
-    this.router.navigate(["/auth/doctor/login"]);
+    this.router.navigate(["/auth/login"]);
    }
 
   getUserByToken(): Observable<UserModel> {

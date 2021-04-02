@@ -1,0 +1,166 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ErrorOccuredtext}}
+    <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class=row>
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Prescribe Test</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm"
+            >Add New</span
+          >
+        </h3>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-4">
+  
+        <div *ngIf="showSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+           Added Successfully.
+           <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+
+       <form style="margin-bottom: -45px;">
+        <label for="roleSelection" class="font-weight-bolder">Select Test</label>
+        <ng-select bindLabel="name" placeholder="Select Test" name="selected" appendTo="body"
+              [searchable]="true" [clearable]="true" [(ngModel)]="selected">
+              <ng-option [value]="test.testId"  [disabled]="false" *ngFor="let test of tests">
+                {{test.testName}}
+              </ng-option>
+            </ng-select>
+            <div *ngIf="errorSelected" style="color: red;">
+                  Please Select Test
+                 </div>
+            <br>
+       </form>
+  
+        <form class="form"
+        [formGroup]="UserRegistration"
+        novalidate="novalidate"
+        id="kt_role_user_form"
+        (ngSubmit)="submitUser()">
+          <div class="form-group">
+  
+           
+                <!-- <div *ngIf="errorSelected" style="color: red;">
+                  Please Select Team
+                 </div> -->
+            <!-- <select id="roleSelection" formControlName="roleSelection"  class="form-control" data-role="select-dropdown">
+              <option *ngFor="let role of (tests || []);  let i = index" [selected]="i == i" value={{role.testId}}>
+              {{role.testName}}
+            </option>
+            </select> -->
+            <!-- <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Please select Role',
+              control: UserRegistration.controls['roleSelection']
+            }"
+          ></ng-container>  -->
+          </div>
+          <div class="form-group">
+            <label for="patientID" class="font-weight-bolder">Patient ID</label>
+            <input type="text" class="form-control" id="patientID"
+            formControlName="patientID" 
+            autocomplete="off" 
+            aria-describedby="patientID" 
+            placeholder="patientID">
+          
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'patientID is required',
+              control: UserRegistration.controls['patientID']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'patientID should have at least 5 symbols',
+              control: UserRegistration.controls['patientID']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'patientID should have maximum 15 symbols',
+              control: UserRegistration.controls['patientID']
+            }"
+            ></ng-container>
+          
+          </div>
+          <div class="form-group">
+            <label for="mobileNumber" class="font-weight-bolder">Mobile Number</label>
+            <input type="number" class="form-control" id="mobileNumber" min="0"
+            formControlName="mobileNumber" 
+            autocomplete="off"
+            aria-describedby="mobileNumber" placeholder="Mobile Number">
+          
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Mobile Number is required',
+              control: UserRegistration.controls['mobileNumber']
+            }"
+          ></ng-container> 
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'minlength',
+              message: 'Mobile Number should have at least 5 symbols',
+              control: UserRegistration.controls['mobileNumber']
+            }"
+             ></ng-container>
+  
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'maxLength',
+              message: 'Mobile Number should have maximum 15 symbols',
+              control: UserRegistration.controls['mobileNumber']
+            }"
+            ></ng-container>
+          </div>
+    
+          <div class="form-check">
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="UserRegistration.invalid">{{buttontext}}</button>
+          &nbsp;
+          <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  <ng-template
+  #formError
+  let-control="control"
+  let-message="message"
+  let-validation="validation"
+  >
+  <ng-container
+    *ngIf="control.hasError(validation) && (control.dirty || control.touched)"
+  >
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+  </ng-template>

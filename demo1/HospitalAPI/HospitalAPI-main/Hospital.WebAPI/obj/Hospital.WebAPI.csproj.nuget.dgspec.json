@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj": {}
+    "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj": {
+    "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
+        "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
         "projectName": "Hospital.Core",
-        "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
+        "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
         "packagesPath": "C:\\Users\\smahadev\\.nuget\\packages\\",
-        "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\obj\\",
+        "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\smahadev\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -77,14 +77,14 @@
         }
       }
     },
-    "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj": {
+    "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
+        "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
         "projectName": "Hospital.WebAPI",
-        "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
+        "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
         "packagesPath": "C:\\Users\\smahadev\\.nuget\\packages\\",
-        "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\obj\\",
+        "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\smahadev\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -102,8 +102,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj": {
-                "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj"
+              "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj": {
+                "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj"
               }
             }
           }

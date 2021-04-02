@@ -14,7 +14,8 @@
         public string Menus_Collection_Name { get; set; }
         public string MenuRoleMaps_Collection_Name { get; set; }
         public string PaySplitUp_Collection_Name { get; set; }
-	public string URLMapping_Collection_Name { get; set; }
+	    public string URLMapping_Collection_Name { get; set; }
+        public string TestMap_Collection_Name { get; set; }
 
     }
 }

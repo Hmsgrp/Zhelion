@@ -12,6 +12,8 @@ namespace Hospital.Core.Models
         [JsonPropertyName("Password")]
         public string Password { get; set; }
 
+        public string HospitalID { get; set; }
+
         public int OTP { get; set; }
     }
 

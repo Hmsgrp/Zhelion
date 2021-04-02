@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class UserDropdownInnerComponent implements OnInit {
   extrasUserDropdownStyle: 'light' | 'dark' = 'light';
   user$: Observable<UserModel>;
+  userName:string;
 
   constructor(private layout: LayoutService, private auth: AuthService,private router: Router) {}
 
@@ -20,10 +21,16 @@ export class UserDropdownInnerComponent implements OnInit {
       'extras.user.dropdown.style'
     );
     this.user$ = this.auth.currentUserSubject.asObservable();
+    this.getUserName();
   }
+
+  getUserName()
+ {
+   this.userName= localStorage.getItem("UserName");
+ }
 
   logout() {
     localStorage.removeItem("access_token");
-    this.router.navigate(["/auth/doctor/login"]);
+    this.router.navigate(["/auth/login"]);
   }
 }

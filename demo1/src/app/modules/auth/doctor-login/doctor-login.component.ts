@@ -127,7 +127,7 @@ console.log(this.f.password.value);
    .subscribe(
               data => {
                 this.hasError = false;
-                this.router.navigate(["/dashboard"]);
+                this.router.navigate(["auth/doctor/doctorNextStep"]);
               },
               error => {
                 this.hasError = true;

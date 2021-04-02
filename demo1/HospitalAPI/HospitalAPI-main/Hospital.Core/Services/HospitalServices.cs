@@ -24,6 +24,7 @@ namespace Hospital.Core.Services
         private readonly IMongoCollection<MenuRoleMap> _menuRoleMaps;
         private readonly IMongoCollection<PaySplitUp> _paySplitUps;
         private readonly IMongoCollection<MappingURL> _mappingURLS;
+        private readonly IMongoCollection<TestMap> _testMaps;
         private readonly IConfiguration _iconfiguration;
         private static Random random = new Random();
         readonly ExceptionResult excep = new ExceptionResult();
@@ -40,6 +41,7 @@ namespace Hospital.Core.Services
             _menuRoleMaps = dbClient.GetMenuRoleMapsCollection();
             _paySplitUps = dbClient.GetSplitUpsCollection();
             _mappingURLS = dbClient.GetMappingURLCollection();
+            _testMaps = dbClient.GetTestMapCollection();
             _iconfiguration = iconfiguration;
 
         }
@@ -188,6 +190,19 @@ namespace Hospital.Core.Services
             return user;
         }
 
+        public User UpdatePatient(User user)
+        {
+             var _user = GetUser(user.UserID);
+            _user.IsActive = true;
+            _user.IsRegistered = true;
+            _user.Password = user.Password;
+
+            _users.ReplaceOne(u => u.UserID == user.UserID, _user);
+            var _mapurl = GetMappingURLByUserid(user.UserID);
+            _mapurl.IsActive = false;
+            _mappingURLS.ReplaceOne(m => m.UserID == _mapurl.UserID, _mapurl);
+            return user;
+        }
 
         /*********************************************************************************************************/
 
@@ -319,7 +334,7 @@ namespace Hospital.Core.Services
                 message = string.Format("Hi Dr.{0}, you have received an invite from ZH team, please signup by clicking {1}", fullName, mappingURL);
             }
             string stringpost = "User=medivasz&passwd=zumheilen@123&mobilenumber=" + mobileNumber + "&message=" + message;
-            
+
             HttpWebRequest objWebRequest = null;
             objWebRequest = (HttpWebRequest)WebRequest.Create("http://api.smscountry.com/SMSCwebservice_bulk.aspx");
             HttpWebResponse objWebResponse = null;
@@ -381,7 +396,7 @@ namespace Hospital.Core.Services
             _userHospitals.InsertOne(userHospitalMap);
             return userHospitalMap;
         }
-        
+
         public List<DoctorReferResult> GetDoctorRefers()
         {
             var doctoRefer = new List<DoctorReferResult>();
@@ -683,6 +698,18 @@ namespace Hospital.Core.Services
                 return false;
         }
 
+        public bool isAuthorizedPatient(Login login)
+        {
+            User _user = null;
+
+            _user = _users.Find(user => user.UserName == login.UserName  && user.Password == login.Password).FirstOrDefault();
+
+            if (_user != null)
+                return true;
+            else
+                return false;
+        }
+
         public DoctorReferResult UpdateDoctor(DoctorRefer doctorRefer)
         {
 
@@ -742,6 +769,7 @@ namespace Hospital.Core.Services
         {
             string user_name = string.Format("{0}_{1}", hospId, patientId);
             var _user = _users.Find(u => u.UserName == user_name).FirstOrDefault();
+            var _role = _roles.Find(i => i.RoleName.ToLower() == "patient").FirstOrDefault();
             if (_user != null)
             {
                 _user.MobileNumber = outMobileNo;
@@ -756,12 +784,23 @@ namespace Hospital.Core.Services
                     Hospital_PID = patientId,
                     HospitalId = hospId,
                     MobileNumber = outMobileNo,
-                    ReferredBy = doctorId
+                    ReferredBy = doctorId,
+                    RoleId = _role.RoleId
                 };
                 AddUser(_user);
             }
             MappingURL mappingURL = GenerateMapURL(hospId, doctorId, _user);
             SendSMSString(mappingURL, outMobileNo.ToString(), false, "");
+            var _testMap = new TestMap()
+            {
+                UserId = _user.UserID,
+                TestId = testId,
+                Patient_HID = patientId,
+                DoctorId = doctorId,
+                CreatedDate = DateTime.Now
+
+            };
+            AddMTestMap(_testMap);
             return true;
         }
 
@@ -776,12 +815,36 @@ namespace Hospital.Core.Services
                 IsActive = true,
                 IsDoctor = false,
                 CreatedDateTime = DateTime.Now.ToString("dd/MMM/yyyy"),
-                URLGenerated = GenerateUniqueURL(10, true),
+                URLGenerated = GenerateUniqueURL(10, false),
                 HospitalID = hospId
             };
             mappingURL.RediectionLink = "/signup/patient/" + mappingURL.UserID;
             _mappingURLS.InsertOne(mappingURL);
             return mappingURL;
+        }
+        public TestMap AddMTestMap(TestMap testMap)
+        {
+            testMap.TestMapId = Guid.NewGuid().ToString();
+            testMap.CreatedDate = DateTime.Now;
+            testMap.IsPaid = false;
+            testMap.ReceiptNo = string.Empty;
+            testMap.PaymentRefNo = string.Empty;
+            _testMaps.InsertOne(testMap);
+            return testMap;
+        }
+        public TestMap UpdateTestMap(TestMap testMap)
+        {
+            _testMaps.ReplaceOne(tm => tm.TestMapId == testMap.TestMapId, testMap);
+            return testMap;
+        }
+        public List<TestMap> GetTestMaps()
+        {
+            return _testMaps.Find(testMap => true).ToList();
+        }
+
+        public TestMap GetTestMap(string id)
+        {
+            return _testMaps.Find(testMap => testMap.TestMapId == id).FirstOrDefault();
         }
     }
 }

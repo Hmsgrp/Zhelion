@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TGdPmIgWFss0z7q8jw9JBTitfy5WvpxDb4cJf7dqukQ9dOWdAjZI2EsLaitVowial+NSYhNRd/3ek7eId7A48A==",
+  "dgSpecHash": "/Axzx7W0aJLlKYrRrOj7J4e/ESdU4ff5dMJnscXuii5L/8Xse3crHmdQRQor+JPHWLW3freBb40kyD2ZGIHGRw==",
   "success": true,
-  "projectFilePath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
+  "projectFilePath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\smahadev\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\smahadev\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",

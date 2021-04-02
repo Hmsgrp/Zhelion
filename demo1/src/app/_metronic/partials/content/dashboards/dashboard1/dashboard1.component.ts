@@ -51,6 +51,14 @@ export class Dashboard1Component implements OnInit {
       {
         this.activetabs.push("RoleMap");   
       }
+      else if(data ==8)
+      {
+        this.activetabs.push("PrescribeTest");   
+      }
+      else if(data ==9)
+      {
+        this.activetabs.push("Payment");   
+      }
     }
 
      checkInput(input) {

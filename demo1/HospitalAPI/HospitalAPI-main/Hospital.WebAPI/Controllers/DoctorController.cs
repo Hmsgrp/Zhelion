@@ -57,6 +57,7 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetDoctorRefersById(id));
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetDoctorLoginURl/{url}", Name = "GetDoctorLoginURl")]
         public IActionResult GetDoctorLoginURl(string url)
@@ -64,6 +65,7 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetMappingURL(url));
         }
 
+        [AllowAnonymous]
         [HttpDelete]
         [Route("DeleteDoctor/{id}", Name = "DeleteDoctor")]
         public IActionResult DeleteDoctor(string id)
@@ -72,6 +74,7 @@ namespace Hospital.WebAPI.Controllers
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpPut]
         [Route("DoctorSignup", Name = "DoctorSignup")]
         public IActionResult DoctorSignup(DoctorRefer doctorRef)
@@ -82,6 +85,14 @@ namespace Hospital.WebAPI.Controllers
                 return BadRequest(chkpwd);
             }
             return Ok(_hospitalServices.UpdateDoctor(doctorRef));
+        }
+
+        [HttpPost]
+        [Route("PrescribeTest", Name = "PrescribeTest")]
+        public IActionResult PrescribeTest(PrescribeTestResult prescribeTest)
+        {
+            return Ok(_hospitalServices.PrescribeTest(prescribeTest.testId,prescribeTest.patientId,prescribeTest.outMobileNo,prescribeTest.hospId,prescribeTest.doctorId));
+            
         }
     }
 }

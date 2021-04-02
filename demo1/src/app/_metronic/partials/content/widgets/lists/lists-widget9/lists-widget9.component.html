@@ -25,7 +25,7 @@
          </button>
        </div>
 
-       <form #myForm="ngForm" (submit)="submitForm()">
+       <form #myForm="ngForm"  (submit)="submitForm()">
         <div class="form-group">
           <label for="uname">FullName</label>
           <input type="text"
@@ -55,7 +55,7 @@
       </div>
       <div class="form-group">
         <label for="mobileNumber">Mobile Number</label>
-        <input type="number" 
+        <input type="number"  min="0"
         autocomplete="off" 
         id="mobileNumber" 
         name="mobileNumber"  

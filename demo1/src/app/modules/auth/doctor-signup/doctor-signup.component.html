@@ -25,6 +25,12 @@
         <div class="alert-text">Registration Success</div>
       </div>
     </ng-container>
+
+    <ng-container *ngIf="isOTPGeneratedsuccess">
+      <div class="mb-10 alert alert-custom alert-success alert-dismissible">
+        <div class="alert-text">OTP generated Succesfully</div>
+      </div>
+    </ng-container>
     <!-- end::Alert error-->
 
     <!--begin::Form group-->
@@ -71,7 +77,7 @@
       <div class="form-group">
         <label class="font-size-h6 font-weight-bolder text-dark">Mobile Number</label>
 
-        <input class="form-control" type="number" name="mobilenumber" #mobilenumber="ngModel"
+        <input class="form-control" type="number" min="0" name="mobilenumber" #mobilenumber="ngModel"
           placeholder="Mobile Number" ngModel autocomplete="off" required />
       </div>
       <!--end::Form group-->
@@ -100,10 +106,10 @@
       </div>
 
       <div class="form-group input-group mb-3" [hidden]="!showOTPField">
-        <input type="number" class="form-control"  name="OTPfield" #OTPfield="ngModel" ngModel
+        <input type="number" min="0" class="form-control"  name="OTPfield" #OTPfield="ngModel" ngModel
           placeholder="OTP" autocomplete="off" required>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" (click)="getOTP()" type="button">Send OTP</button>
+          <button class="btn btn-outline-secondary" (click)="generateOTP()" type="button">Generate OTP</button>
         </div>
       </div>
 

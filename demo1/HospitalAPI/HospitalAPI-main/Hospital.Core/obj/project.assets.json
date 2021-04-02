@@ -5301,11 +5301,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
+      "projectUniqueName": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
       "projectName": "Hospital.Core",
-      "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
+      "projectPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\Hospital.Core.csproj",
       "packagesPath": "C:\\Users\\smahadev\\.nuget\\packages\\",
-      "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.Core\\obj\\",
+      "outputPath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\smahadev\\AppData\\Roaming\\NuGet\\NuGet.Config",

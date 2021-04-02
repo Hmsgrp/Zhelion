@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { RoleModel } from 'src/app/_metronic/partials/content/widgets/models/role.model';
 import { UserModel } from 'src/app/_metronic/partials/content/widgets/models/user.model';
 import { HospitalModel } from 'src/app/_metronic/partials/content/widgets/models/hospital.model';
+import { HospitalPatientModel } from 'src/app/_metronic/partials/content/widgets/models/hospitalpatient';
 import { LabModel } from 'src/app/_metronic/partials/content/widgets/models/lab.model';
 import { testModel } from 'src/app/_metronic/partials/content/widgets/models/test.model';
 import { testParameter } from 'src/app/_metronic/partials/content/widgets/models/testParameter.model';
 import { Menu } from 'src/app/_metronic/partials/content/widgets/models/menu.model';
+import { prescribeTest } from 'src/app/_metronic/partials/content/widgets/models/prescribeTest.model';
 import { menuRoleMappingmodel } from 'src/app/_metronic/partials/content/widgets/models/menuRoleMapping.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import{environment} from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserModelPatient } from 'src/app/_metronic/partials/content/widgets/models/usermodelPatient';
 
 
 @Injectable({
@@ -39,7 +42,7 @@ export class DashboardServicsService {
     return this.http.get<RoleModel[]>(environment.apiUrl +'api/Roles/GetRoles')
   }
 
- deleteRole(id:string) : Observable<any>{
+  deleteRole(id:string) : Observable<any>{
     let endPoints = "api/Roles/DeleteRole/"
     return this.http.delete(environment.apiUrl + endPoints + id);
   }
@@ -81,6 +84,11 @@ export class DashboardServicsService {
     return this.http.get<UserModel[]>(environment.apiUrl + endPoints)
   }
 
+  getPatientUsers(id:string): Observable<UserModelPatient> {
+    let endPoints = "api/User/GetUser/"
+    return this.http.get<UserModelPatient>(environment.apiUrl + endPoints +id)
+  }
+
   deleteUser(id:string) : Observable<any>{
     let endPoints = "api/User/DeleteUser/"
     return this.http.delete(environment.apiUrl + endPoints + id);
@@ -118,9 +126,14 @@ export class DashboardServicsService {
       return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
     }
   
-     getHospital(): Observable<HospitalModel[]> {
+    getHospital(): Observable<HospitalModel[]> {
       let endPoints = "api/Hospital/GetHospitals"
       return this.http.get<HospitalModel[]>(environment.apiUrl + endPoints)
+    }
+
+    getHospitalbyID(id:string): Observable<HospitalPatientModel> {
+      let endPoints = "api/Hospital/GetHospital/"
+      return this.http.get<HospitalPatientModel>(environment.apiUrl + endPoints +id)
     }
 
     getAllHospital(): Observable<any> {
@@ -206,12 +219,28 @@ export class DashboardServicsService {
        let endPoints = "api/Test/AddTest"
        return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
      }
-   
+
+     AddNewPrescribe(FormGroup:FormGroup,selectedtestID:string) : Observable<any>
+     {
+       const test = new prescribeTest();
+       test.patientId = FormGroup.controls.patientID.value;
+       test.testId = selectedtestID;
+       test.doctorId =localStorage.getItem("userID").toString();
+       test.hospId =localStorage.getItem("SelectedHospital").toString();
+       test.outMobileNo =  FormGroup.controls.mobileNumber.value;
+ 
+       const headers = { 'content-type': 'application/json'}  
+       
+       const body = JSON.stringify(test);
+       let endPoints = "api/Doctor/PrescribeTest"
+       return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
+     }
+
      getTest(): Observable<testModel[]> {
        let endPoints = "api/Test/GetTests"
        return this.http.get<testModel[]>(environment.apiUrl + endPoints)
      }
- 
+
      deleteTest(id:string) : Observable<any>{
        let endPoints = "api/Test/DeleteTest/"
        return this.http.delete(environment.apiUrl + endPoints + id);

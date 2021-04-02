@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonServicesService } from '../_services/common-services.service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,11 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  // KeenThemes mock, change it to:
-   defaultAuth = {
-     username: '',
-     password: '',
-   };
+ 
+  defaultAuth = {
+    username: '',
+    password: '',
+  };
   // defaultAuth: any = {
   //   username: 'admin',
   //   password: 'demo',
@@ -25,74 +26,103 @@ export class LoginComponent implements OnInit, OnDestroy {
   hasError: boolean;
   returnUrl: string;
   isLoading$: Observable<boolean>;
-
+  
   // private fields
   private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
-
+  
+  showPasswordFields:boolean;
+  showOTPField:boolean;
+  isSignUpwithOTPDisabled:boolean;
+  isSignUpwithPasswordDisabled:boolean;
+  FieldError:boolean;
+  
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
+   private fb: FormBuilder,
+   private authService: AuthService,
+   private route: ActivatedRoute,
+   private router: Router,
+   private CommonServices: CommonServicesService,
+   private cd: ChangeDetectorRef
   ) {
-    this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+   this.isLoading$ = this.authService.isLoading$;
+   // redirect to home if already logged in
+   if (this.authService.currentUserValue) {
+     this.router.navigate(['/']);
+   }
   }
-
+  
   ngOnInit(): void {
-    this.initForm();
-    // get return url from route parameters or default to '/'
-    //localStorage.removeItem("access_token");
-   // localStorage.removeItem("Menus");
-    this.returnUrl =
-        this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
-    }
-
+   this.initForm();
+   this.FieldError=false;
+  
+   this.showPasswordFields = false;
+   this.showOTPField = true;
+  
+   localStorage.removeItem("access_token");
+   localStorage.removeItem("Menus");
+   // get return url from route parameters or default to '/'
+   this.returnUrl =
+       this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+   }
+  
   // convenience getter for easy access to form fields
   get f() {
-    return this.loginForm.controls;
+   return this.loginForm.controls;
   }
-
+  
   initForm() {
-    this.loginForm = this.fb.group({
-      username: [
-        this.defaultAuth.username,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
-        ]),
-      ],
-      password: [
-        this.defaultAuth.password,
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(100),
-        ]),
-      ],
-    });
+   this.loginForm = this.fb.group({
+     username: [
+       this.defaultAuth.username,
+       Validators.compose([
+         Validators.required
+       ]),
+     ],
+     password: [
+       this.defaultAuth.password,
+       Validators.compose([
+         
+       ]),
+     ],
+     OTP: [
+      '',
+      Validators.compose([
+        
+      ]),
+    ],
+    sgwithPassword: [false, Validators.compose([])],
+   });
   }
-
-  submit() {
+  
+  getOTP()
+  {
+    this.loginForm.controls.OTP.setValue("5678788");
+  }
+  
+  submit(){
     this.hasError = false;
-    const loginSubscr = this.authService
-      .login(this.f.username.value, this.f.password.value)
-      .pipe(first())
-      .subscribe((user: UserModel) => {
-        if (user) {
-          this.router.navigate([this.  returnUrl]);
-        } else {
-          this.hasError = true;
-        }
-      });
-    this.unsubscribe.push(loginSubscr);
+  console.log(this.f.password.value);
+   if(this.f.password.value =="" && this.f.OTP.value =="")
+   {
+    this.FieldError=true;
+   }
+   else{
+    this.CommonServices.Login(this.f.username.value, this.f.password.value)
+     .subscribe(
+                data => {
+                  this.hasError = false;
+                  this.router.navigate(["/dashboard"]);
+                },
+                error => {
+                  this.hasError = true;
+                });
+   }
   }
-
+  
   ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
+   this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
-}
+  
+  }
+  
+  

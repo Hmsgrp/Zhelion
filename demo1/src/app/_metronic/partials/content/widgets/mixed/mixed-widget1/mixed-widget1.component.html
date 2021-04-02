@@ -102,6 +102,26 @@
           </a>
           <span class="text-muted mt-3 font-weight-bold font-size-sm">Mapped Roles : 4</span>
         </div>
+        <div *ngIf="showmenus('PrescribeTest')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(8)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+            Prescribe Test
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Tests : 3</span>
+        </div>
+        <div *ngIf="showmenus('Payment')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span
+            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(9)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+            Payment
+          </a>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Payment : 3</span>
+        </div>
        
       </div>
     

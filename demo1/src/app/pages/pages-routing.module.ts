@@ -9,7 +9,9 @@ import { ListsWidget8Component } from 'src/app/_metronic/partials/content/widget
 import { ListsWidget11Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget11/lists-widget11.component';
 import { ListsWidget9Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget9/lists-widget9.component';
 import { ListsWidget10Component } from 'src/app/_metronic/partials/content/widgets/lists/lists-widget10/lists-widget10.component';
+import { PrescribeTestComponent } from 'src/app/_metronic/partials/content/widgets/lists/prescribe-test/prescribe-test.component';
 import { AuthGuard } from '../modules/auth/_services/auth.guard';
+import { PaymentComponent } from 'src/app/_metronic/partials/content/widgets/lists/payment/payment.component';
 
 const routes: Routes = [
   {
@@ -72,6 +74,16 @@ const routes: Routes = [
         path: 'roleMap',
         //canActivate: [AuthGuard],
         component: ListsWidget10Component
+      },
+      {
+        path: 'prescribeTest',
+        //canActivate: [AuthGuard],
+        component: PrescribeTestComponent
+      },
+      {
+        path: 'payment',
+        //canActivate: [AuthGuard],
+        component: PaymentComponent
       },
       {
         path: '',

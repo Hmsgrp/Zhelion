@@ -1,0 +1,50 @@
+
+  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-custom card-stretch gutter-b">
+        <!-- Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="font-weight-bolder text-dark">Payment</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm"
+              ></span
+            >
+          </h3>
+        </div>
+        <!-- Body -->
+        <div class="card-body pt-4">
+
+          <form class="form">
+            <div class="form-group">
+                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Select Test</label>
+                <ng-select bindLabel="name" placeholder="Select Test" name="selectHospital" appendTo="body" multiple="false"
+                  [searchable]="true" [clearable]="true" [(ngModel)]="selected">
+                  <ng-option [value]="item.testId" [disabled]="item.disabled" *ngFor="let item of tests">
+                    {{item.testName}}
+                  </ng-option>
+                </ng-select>
+        
+              </div>
+  
+
+            <div class="form-group">
+              <label for="testName"  class="font-weight-bolder">Amount</label>
+              
+              <input type="number" min="0" class="form-control"
+              id="testName"
+              autocomplete="off"
+              id="amount" aria-describedby="amount" placeholder="amount">
+            </div>
+  
+            <button type="submit" class="btn btn-primary" >Pay</button>
+            &nbsp;
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  
+  

@@ -22,6 +22,7 @@ export class ReferComponent implements OnInit {
         //this.doSearch(params['term'])
       }
       this.refID = params['term3'].toString();
+      console.log(this.refID);
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("Menus");
@@ -34,6 +35,11 @@ export class ReferComponent implements OnInit {
         if(data.isActive == true)
         {
           var gotoURL= window.location.origin + "/auth" + data.rediectionLink;
+          window.location.href = gotoURL;
+        }
+        else if(data.rediectionLink.includes("patient"))
+        {
+          var gotoURL= window.location.origin + "/auth/patient/login/" + data.userID ;
           window.location.href = gotoURL;
         }
         else

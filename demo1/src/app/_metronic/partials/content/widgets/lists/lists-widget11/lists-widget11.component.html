@@ -77,7 +77,7 @@
           formControlName="testDescription" 
           autocomplete="off"
           placeholder="Test Description"></textarea>
-          </div>
+      
 
           <ng-container
           [ngTemplateOutlet]="formError"
@@ -105,6 +105,16 @@
             control: TestRegistration.controls['testDescription']
           }"
           ></ng-container>
+        </div>
+
+          <div class="form-group">
+            <label for="testName"  class="font-weight-bolder">Amount</label>
+            
+            <input type="number" min="0" class="form-control"
+            id="testName"
+            autocomplete="off"
+            id="amount" aria-describedby="amount" placeholder="amount">
+          </div>
 
           <button type="submit" class="btn btn-primary" [disabled]="TestRegistration.invalid">{{buttontext}}</button>
           &nbsp;

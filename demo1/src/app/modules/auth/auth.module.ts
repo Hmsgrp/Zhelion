@@ -14,6 +14,9 @@ import { DoctorSignupComponent } from './doctor-signup/doctor-signup.component';
 import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PatientSignupComponent } from './patient-signup/patient-signup.component';
+import { PatientLoginComponent } from './patient-login/patient-login.component';
+import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.component';
 
 
 @NgModule({
@@ -26,7 +29,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReferComponent,
     DoctorSignupComponent,
     DoctorLoginComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PatientSignupComponent,
+    PatientLoginComponent,
+    DoctorNextStepComponent
   ],
   imports: [
     CommonModule,

@@ -179,6 +179,37 @@
       <span class="menu-text">Role Map</span>
     </a>
   </li>
+  <li
+  class="menu-item"
+  aria-haspopup="true"
+  routerLinkActive="menu-item-active"
+  *ngIf="showmenus('prescribeTest')"
+>
+  <a class="menu-link" routerLink="/prescribeTest" routerLinkActive="active">
+    <span
+      [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+      cacheSVG="true"
+      class="svg-icon menu-icon"
+    ></span>
+    <span class="menu-text">Prescribe Test</span>
+  </a>
+</li>
+
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('payment')"
+>
+<a class="menu-link" routerLink="/payment" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">Payment</span>
+</a>
+</li>
       <!-- end::1 Level -->
 
       <!-- Components -->

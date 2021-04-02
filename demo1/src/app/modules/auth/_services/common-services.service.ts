@@ -29,16 +29,23 @@ export class CommonServicesService {
   }
 
   //user
-  UpdateUser(FormGroup:FormGroup,userID:string,hospitalIDs:any,roleID:string): Observable<any>{
+  UpdateUser(FormGroup:FormGroup,userID:string,hospitalIDs:any,roleID:string,passwordtick:boolean,otptick:boolean): Observable<any>{
  
     const user = new UserModel();
     user.UserID = userID;
     user.UserName = FormGroup.controls.mobilenumber.value.toString();
+   
     user.FullName = FormGroup.controls.fullname.value;
-    user.Password =  FormGroup.controls.password.value;
+    if(passwordtick)
+    {
+      user.Password =  FormGroup.controls.password.value;
+    }
     user.MobileNumber = FormGroup.controls.mobilenumber.value;
     user.EmailId =  FormGroup.controls.email.value;
-    user.Otp =  (FormGroup.controls.OTPfield.value == "" ? 0 : FormGroup.controls.OTPfield.value);
+    // if(otptick)
+    // {
+    //   user.Otp =  (FormGroup.controls.OTPfield.value == "" ? 0 : FormGroup.controls.OTPfield.value);
+    // }
     user.IsActive =  true;
     user.IsRegistered =  true;
     user.RoleId = roleID;
@@ -53,9 +60,34 @@ export class CommonServicesService {
     return this.http.put(environment.apiUrl + endPoints, body,{'headers':headers})
   }
 
+  Login(UserName:string,Password:string)
+  {
+    this.removeCookie();
+    const credentials = {
+      'username':UserName,
+      'password':Password
+    }
+
+    return this.http.post(environment.apiUrl+'api/Auth/Login',credentials)
+    .pipe(map(response => {
+      // store jwt token in local storage to keep user logged in between page refreshes
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken((<any> response).jwtToken);
+      localStorage.setItem("access_token",(<any> response).jwtToken);
+      localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
+      localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
+      localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+      localStorage.setItem("UserName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+
+      return response;
+  }));
+
+  }
+
 
   LoginUser(UserName:string,Password:string)
   {
+    this.removeCookie();
     const credentials = {
       'username':UserName,
       'password':Password
@@ -69,15 +101,83 @@ export class CommonServicesService {
       console.log(decodedToken);
       localStorage.setItem("access_token",(<any> response).jwtToken);
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
+      localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
+      localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+      localStorage.setItem("UserName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+
+      return response;
+  }));
+
+  }
+  
+UpdatePatient(FormGroup:FormGroup,userID:string,passwordtick:boolean,otptick:boolean): Observable<any>{
+ 
+    const user = new UserModel();
+    user.UserID = userID;
+    if(passwordtick)
+    {
+      user.Password =  FormGroup.controls.password.value;
+    }
+    // if(otptick)
+    // {
+    //   user.Otp =  (FormGroup.controls.OTPfield.value == "" ? 0 : FormGroup.controls.OTPfield.value);
+    // }
+ 
+
+    const headers = { 'content-type': 'application/json'}  
+
+     const roledata=JSON.stringify(user);
+    let endPoints = "api/User/UpdatePatient"
+    return this.http.put(environment.apiUrl + endPoints, roledata,{'headers':headers});
+  }
+
+  LoginPatient(UserName:string,Password:string)
+  {
+    this.removeCookie();
+    const credentials = {
+      'username':UserName,
+      'password':Password
+    }
+
+    return this.http.post(environment.apiUrl+'api/Auth/LoginV2',credentials)
+    .pipe(map(response => {
+      // store jwt token in local storage to keep user logged in between page refreshes
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken((<any> response).jwtToken);
+      console.log(decodedToken);
+      localStorage.setItem("access_token",(<any> response).jwtToken);
+      localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
+      localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
+      localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+      localStorage.setItem("UserName","Welcome");
+
       return response;
   }));
 
   }
 
   logout(){
+    localStorage.removeItem("Hospitals");
     localStorage.removeItem("access_token");
     localStorage.removeItem("Menus");
-    this.router.navigate(["/auth/doctor/login"]);
+    localStorage.removeItem("SelectedHospital");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("UserName");
+    this.router.navigate(["/auth/login"]);
    }
+
+   removeCookie()
+   {
+    localStorage.removeItem("Hospitals");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("Menus");
+    localStorage.removeItem("SelectedHospital");
+    localStorage.removeItem("userID");
+   }
+   
+   GenerateOTP(userID:string): Observable<any> {
+    let endPoints = "api/Auth/GenarateOtp/"
+    return this.http.get<any>(environment.apiUrl + endPoints + userID)
+  }
 
 }

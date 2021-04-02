@@ -8,6 +8,9 @@ import {LogoutComponent} from './logout/logout.component';
 import { ReferComponent } from './refer/refer.component';
 import { DoctorSignupComponent } from './doctor-signup/doctor-signup.component';
 import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
+import { PatientSignupComponent } from './patient-signup/patient-signup.component';
+import { PatientLoginComponent } from './patient-login/patient-login.component';
+import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.component';
 
 
 const routes: Routes = [
@@ -46,8 +49,20 @@ const routes: Routes = [
         component: DoctorLoginComponent
       },
       {
+        path: 'doctor/doctorNextStep',
+        component: DoctorNextStepComponent
+      },
+      {
         path: 'signup/doctor/:term1',
         component: DoctorSignupComponent
+      },
+      {
+        path: 'signup/patient/:term1',
+        component: PatientSignupComponent
+      },
+      {
+        path: 'patient/login/:term1',
+        component: PatientLoginComponent
       },
       {path: '', redirectTo: 'login', pathMatch: 'full'},
       {path: '**', redirectTo: 'login', pathMatch: 'full'},

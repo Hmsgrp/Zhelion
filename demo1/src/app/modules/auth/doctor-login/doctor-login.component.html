@@ -11,8 +11,11 @@
       <!--begin::Title-->
       <div class="pb-13 pt-lg-0 pt-5">
         <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">
-          Hospital Tracker
+          Monitoreez
         </h3>
+        <h5 class="font-weight-bolder text-dark font-size-h6">
+          Doctor Login
+         </h5>
       </div>
       <!--end::Title-->
   
@@ -46,7 +49,7 @@
   
       <!--begin::Form group-->
       <div class="form-group">
-        <label class="font-size-h6 font-weight-bolder text-dark">UserName/Email</label>
+        <label class="font-size-h6 font-weight-bolder text-dark">MobileNumber</label>
         <input
           class="form-control form-control-solid h-auto py-7 px-6 rounded-lg"
           type="text"
@@ -59,7 +62,7 @@
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'required',
-            message: 'User Name is required',
+            message: 'Mobile Number is required',
             control: loginForm.controls['username']
           }"
         ></ng-container>      
@@ -73,8 +76,9 @@
         </div> -->
   
         <input
-          class="form-control"
+          class="form-control form-control-solid h-auto py-7 px-6"
           type="number"
+          min="0"
           name="OTPfield"
           autocomplete="off"
           formControlName="OTP"

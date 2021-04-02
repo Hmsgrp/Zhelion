@@ -18,7 +18,8 @@ namespace Hospital.Core.Infrastructure
         IMongoCollection<Menu> GetMenusCollection();
         IMongoCollection<MenuRoleMap> GetMenuRoleMapsCollection();
         IMongoCollection<PaySplitUp> GetSplitUpsCollection();
-	IMongoCollection<MappingURL> GetMappingURLCollection();
+	    IMongoCollection<MappingURL> GetMappingURLCollection();
+        IMongoCollection<TestMap> GetTestMapCollection();
 
     }
 }

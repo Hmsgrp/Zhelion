@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tuL5tfZCD1qzhXACj3GEqxmHoImOLRSy0F+Qbc3FrKRXC0Q3IpZ4hrm30O2YUhkuRJu9Mdnl4vzvOtU61VMymQ==",
+  "dgSpecHash": "MkQVoM+4i1J8G3oakW9+qEFwPzrgYF6XN2awOAYinzWLkOOKDJ+Ba+tbQKrTVSlKQjNRxlKAh24CRihZljemAQ==",
   "success": true,
-  "projectFilePath": "C:\\MyOwn\\demo1\\HospitalAPI-main (4)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
+  "projectFilePath": "C:\\MyOwn\\demo1\\HospitalAPI-main (5)\\HospitalAPI-main\\Hospital.WebAPI\\Hospital.WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\smahadev\\.nuget\\packages\\dnsclient\\1.3.1\\dnsclient.1.3.1.nupkg.sha512",
     "C:\\Users\\smahadev\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.11\\microsoft.aspnetcore.authentication.jwtbearer.3.1.11.nupkg.sha512",

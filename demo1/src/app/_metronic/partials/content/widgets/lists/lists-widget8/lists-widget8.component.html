@@ -35,7 +35,7 @@
             <input type="text" class="form-control" id="userName"
             formControlName="userName" 
             autocomplete="off"
-            aria-describedby="roleName" placeholder="Role Name">
+            aria-describedby="roleName" placeholder="User Name">
 
             <ng-container
             [ngTemplateOutlet]="formError"
@@ -212,7 +212,7 @@
           </div>
           <div class="form-group">
             <label for="roleDescription" class="font-weight-bolder">Mobile Number</label>
-            <input type="number" class="form-control" id="mobileNumber"
+            <input type="number" class="form-control" id="mobileNumber" min="0"
             formControlName="mobileNumber" 
             autocomplete="off"
             aria-describedby="mobileNumber" placeholder="Mobile Number">
@@ -247,7 +247,7 @@
           </div>
           <div class="form-group">
             <label for="landlineNumber" class="font-weight-bolder">Landline Number</label>
-            <input type="number" class="form-control" id="landlineNumber"
+            <input type="number" class="form-control" id="landlineNumber" min="0"
             formControlName="landlineNumber" 
             autocomplete="off"
             aria-describedby="landlineNumber" placeholder="Landline Number">

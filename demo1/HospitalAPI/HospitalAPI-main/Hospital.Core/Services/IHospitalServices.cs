@@ -25,6 +25,7 @@ namespace Hospital.Core.Services
         User GetUserByUserName(string userName);
         void DeleteUser(string id);
         User UpdateUser(User user);
+        User UpdatePatient(User user);
 
 
         List<Lab> GetLabs();
@@ -84,8 +85,13 @@ namespace Hospital.Core.Services
 
         void GenarateOtp(string userId);
         bool isAuthorizedDoctor(Login login);
+        bool isAuthorizedPatient(Login login);
         List<Hospitals> GetHospitalListByUserID(string userId);
 
         bool PrescribeTest(string testId, string patientId, long outMobileNo, string hospId, string doctorId);
+        TestMap AddMTestMap(TestMap testMap);
+        TestMap UpdateTestMap(TestMap testMap);
+        List<TestMap> GetTestMaps();
+        TestMap GetTestMap(string id);
     }
 }

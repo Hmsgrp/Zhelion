@@ -8,6 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -18,7 +19,6 @@ namespace Hospital.WebAPI.Controllers
             _iconfiguration = iconfiguration;
         }
 
-        [Authorize]
         [HttpGet]
         [Route("GetUsers", Name = "GetUsers")]
         public IActionResult GetUsers()
@@ -26,7 +26,7 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetUsers());
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetUser/{id}", Name = "GetUser")]
         public IActionResult GetUser(string id)
@@ -34,7 +34,6 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetUser(id));
         }
 
-        [Authorize]
         [HttpPost]
         [Route("AddUser", Name = "AddUser")]
         public IActionResult AddUser(User user)
@@ -54,7 +53,6 @@ namespace Hospital.WebAPI.Controllers
 
         }
 
-        [Authorize]
         [HttpDelete]
         [Route("DeleteUser/{id}", Name = "DeleteUser")]
         public IActionResult DeleteUser(string id)
@@ -63,14 +61,13 @@ namespace Hospital.WebAPI.Controllers
             return NoContent();
         }
 
-        [Authorize]
         [HttpPut]
         [Route("UpdateUser", Name = "UpdateUser")]
         public IActionResult UpdateUser(User user)
         {
             return Ok(_hospitalServices.UpdateUser(user));
         }
-	[AllowAnonymous]
+	    [AllowAnonymous]
         [HttpGet]
         [Route("GetSignUpLink/{refID}", Name = "GetSignUpLink")]
         public IActionResult GetSignUpLink(string refID)
@@ -78,7 +75,13 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetSignUpLink(refID));
         }
 
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("UpdatePatient", Name = "UpdatePatient")]
+        public IActionResult UpdatePatient(User user)
+        {
+            return Ok(_hospitalServices.UpdatePatient(user));
 
-
+        }
     }
 }

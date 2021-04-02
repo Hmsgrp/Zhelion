@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Hospital.Core.Infrastructure
 {
-    public class DbClient:IDbClient
+    public class DbClient : IDbClient
     {
         private readonly IMongoCollection<Role> _roles;
         private readonly IMongoCollection<Hospitaal> _hospitals;
@@ -16,7 +16,8 @@ namespace Hospital.Core.Infrastructure
         private readonly IMongoCollection<Menu> _menus;
         private readonly IMongoCollection<MenuRoleMap> _menuRoleMaps;
         private readonly IMongoCollection<PaySplitUp> _paySplitUps;
-	private readonly IMongoCollection<MappingURL> _mappingURLS;
+        private readonly IMongoCollection<MappingURL> _mappingURLS;
+        private readonly IMongoCollection<TestMap> _testMaps;
 
         public DbClient(IOptions<HospitalDbConfig> hospitalDbConfig)
         {
@@ -33,7 +34,8 @@ namespace Hospital.Core.Infrastructure
             _menus = database.GetCollection<Menu>(hospitalDbConfig.Value.Menus_Collection_Name);
             _menuRoleMaps = database.GetCollection<MenuRoleMap>(hospitalDbConfig.Value.MenuRoleMaps_Collection_Name);
             _paySplitUps = database.GetCollection<PaySplitUp>(hospitalDbConfig.Value.PaySplitUp_Collection_Name);
-            _mappingURLS= database.GetCollection<MappingURL>(hospitalDbConfig.Value.URLMapping_Collection_Name);
+            _mappingURLS = database.GetCollection<MappingURL>(hospitalDbConfig.Value.URLMapping_Collection_Name);
+            _testMaps = database.GetCollection<TestMap>(hospitalDbConfig.Value.TestMap_Collection_Name);
 
         }
 
@@ -73,7 +75,7 @@ namespace Hospital.Core.Infrastructure
         }
         public IMongoCollection<MenuRoleMap> GetMenuRoleMapsCollection()
         {
-            return _menuRoleMaps; 
+            return _menuRoleMaps;
         }
 
         public IMongoCollection<PaySplitUp> GetSplitUpsCollection()
@@ -81,9 +83,13 @@ namespace Hospital.Core.Infrastructure
             return _paySplitUps;
         }
 
-	public IMongoCollection<MappingURL> GetMappingURLCollection()
+        public IMongoCollection<MappingURL> GetMappingURLCollection()
         {
             return _mappingURLS;
+        }
+        public IMongoCollection<TestMap> GetTestMapCollection()
+        {
+            return _testMaps;
         }
     }
 }

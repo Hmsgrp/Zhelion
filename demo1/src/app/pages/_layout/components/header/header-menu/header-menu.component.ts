@@ -16,6 +16,8 @@ export class HeaderMenuComponent implements OnInit {
   rootArrowEnabled: boolean;
   location: Location;
   headerMenuDesktopToggle: string;
+  hospitals:any;
+  selectedDevice:string;
 
   constructor(private layout: LayoutService, private loc: Location) {
     this.location = this.loc;
@@ -50,4 +52,5 @@ export class HeaderMenuComponent implements OnInit {
 
     return false;
   }
+
 }

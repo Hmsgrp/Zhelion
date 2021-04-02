@@ -47,6 +47,7 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
   mobileNumber:number;
   emailID:string;
   roleId:string;
+  isOTPGeneratedsuccess:boolean;
   
   
   
@@ -87,6 +88,7 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
     this.mobileNumber = null;
     this.emailID ="";
     this.roleId = "";
+    this.isOTPGeneratedsuccess= false;
     
   }
 
@@ -104,8 +106,6 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
     this.CommonServices.GetDoctorDataByUserId(this.refID)
       .subscribe(data => {
         this.DoctorReferrals = data;
-        console.log(data);
-        console.log(data.user.roleId);
         this.roleId= data.user.roleId;
         this.registrationForm.form.controls.fullname.setValue(this.DoctorReferrals.user.fullName);
         this.registrationForm.form.controls.mobilenumber.setValue(this.DoctorReferrals.user.mobileNumber);
@@ -132,7 +132,10 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
  
     this.CommonServices.UpdateUser(this.registrationForm.form,
       this.refID, 
-      this.mappedHospital,this.roleId)
+      this.mappedHospital,this.roleId,
+      this.showPasswordFields,
+      this.showOTPField
+      )
     .subscribe(data => {
       this.isSuccess = true; 
       this.router.navigate(['/auth/doctor/login']);
@@ -145,9 +148,17 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
     );
   }
 
-  getOTP()
+  generateOTP()
   {
-    this.registrationForm.form.controls.OTPfield.setValue("5678788");
+   // this.registrationForm.form.controls.OTPfield.setValue("5678788");
+    this.CommonServices.GenerateOTP(this.refID)
+      .subscribe(data => {
+        this.isOTPGeneratedsuccess= true;
+        this.cd.detectChanges();
+      },
+      HttpErrorResponse =>{
+       // this.handleError(HttpErrorResponse.message+" Check Api");
+      }); 
   }
   
   getHospitals() {

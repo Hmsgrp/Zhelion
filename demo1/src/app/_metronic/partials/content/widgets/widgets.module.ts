@@ -44,6 +44,7 @@ import { TilesWidget12Component } from './tiles/tiles-widget12/tiles-widget12.co
 import { TilesWidget13Component } from './tiles/tiles-widget13/tiles-widget13.component';
 import { TilesWidget14Component } from './tiles/tiles-widget14/tiles-widget14.component';
 // Other
+import { PrescribeTestComponent } from './lists/prescribe-test/prescribe-test.component';
 import { DropdownMenusModule } from '../dropdown-menus/dropdown-menus.module';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { Widget4DropdownComponent } from './lists/lists-widget4/widget4-dropdown/widget4-dropdown.component';
@@ -53,7 +54,8 @@ import { EditParameterModalComponent } from './lists/components/edit-customer-mo
 import { AddmenusModalComponent } from './lists/components/add-menus-modal/add-menus-modal.component';
 
 import {NgxPaginationModule} from 'ngx-pagination';
-import { NgSelectModule } from '@ng-select/ng-select'; 
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PaymentComponent } from './lists/payment/payment.component';
 
 
 @NgModule({
@@ -77,6 +79,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ListsWidget10Component,
     ListsWidget11Component,
     ListsWidget14Component,
+    PrescribeTestComponent,
     // Mixed
     MixedWidget1Component,
     MixedWidget4Component,
@@ -101,7 +104,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     Widget4DropdownComponent,
     //Edit Grid
     EditParameterModalComponent,
-    AddmenusModalComponent
+    AddmenusModalComponent,
+    PaymentComponent
   ],
   imports: [
     CommonModule,
@@ -135,6 +139,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ListsWidget10Component,
     ListsWidget11Component,
     ListsWidget14Component,
+    PrescribeTestComponent,
+    PaymentComponent,
     // Mixed
     MixedWidget1Component,
     MixedWidget4Component,
