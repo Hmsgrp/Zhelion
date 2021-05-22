@@ -119,7 +119,7 @@ export class PatientSignupComponent implements OnInit {
   UpdateData()
   {
  
-    this.CommonServices.UpdatePatient(this.registrationForm.form,
+    this.CommonServices.UpdatePatient(this.registrationForm.form,this.hospitalID,
       this.refID,
       this.showPasswordFields,
       this.showOTPField

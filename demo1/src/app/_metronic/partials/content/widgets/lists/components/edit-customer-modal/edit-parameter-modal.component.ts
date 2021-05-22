@@ -58,7 +58,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
         this.defaultVal.parameterName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(2),
           Validators.maxLength(30), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
@@ -66,7 +66,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
         this.defaultVal.rangesFrom,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(1),
           Validators.maxLength(10),
         ]),
       ],
@@ -74,7 +74,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
         this.defaultVal.rangesTo,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(1),
           Validators.maxLength(10),
         ]),
       ]

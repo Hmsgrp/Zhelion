@@ -1,50 +1,119 @@
 
-  
+     
   <div class="row">
-    <div class="col-md-6">
-      <div class="card card-custom card-stretch gutter-b">
-        <!-- Header -->
-        <div class="card-header align-items-center border-0 mt-4">
-          <h3 class="card-title align-items-start flex-column">
-            <span class="font-weight-bolder text-dark">Payment</span>
-            <span class="text-muted mt-3 font-weight-bold font-size-sm"
-              ></span
-            >
-          </h3>
-        </div>
-        <!-- Body -->
-        <div class="card-body pt-4">
+    <div class="col-md-12">
+      <div class="container rounded bg-white" style="margin-bottom: 50px">
+        <div class="row d-flex justify-content-center pb-5">
+            
+            <div class="col-sm-5 col-md-5 ml-1" style="margin-top: 40px; margin-bottom: 50px">
+                <div class="py-4 d-flex flex-row">
+                    <h5><span class="fa fa-check-square-o"></span><b>ELIGIBLE</b> | </h5><span class="pl-2">Pay</span>
+                </div>
 
-          <form class="form">
-            <div class="form-group">
-                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Select Test</label>
-                <ng-select bindLabel="name" placeholder="Select Test" name="selectHospital" appendTo="body" multiple="false"
-                  [searchable]="true" [clearable]="true" [(ngModel)]="selected">
-                  <ng-option [value]="item.testId" [disabled]="item.disabled" *ngFor="let item of tests">
-                    {{item.testName}}
-                  </ng-option>
-                </ng-select>
-        
-              </div>
-  
-
-            <div class="form-group">
-              <label for="testName"  class="font-weight-bolder">Amount</label>
+                <form *ngIf="showpendingTest">
+                    <label for="roleSelection" style="color:red" class="font-weight-bolder">Payment Pending</label>
+                    <ng-select bindLabel="name" placeholder="Select Test" name="selected" appendTo="body"
+                          [searchable]="true" [clearable]="true" (ngModelChange)="change($event)" [(ngModel)]="selected">
+                          <ng-option [value]="test.testId"  [disabled]="false" *ngFor="let test of AssignedTest">
+                            {{test.testName}}
+                          </ng-option>
+                        </ng-select>
+                        <div *ngIf="errorSelected" style="color: red;">
+                              Please Select Test
+                         </div>
+                        <br>
+                   </form>
               
-              <input type="number" min="0" class="form-control"
-              id="testName"
-              autocomplete="off"
-              id="amount" aria-describedby="amount" placeholder="amount">
+
+                <h4 class="green">₹ {{totalAmount}}</h4>
+                <h4>{{testName}}</h4>
+                <div class="d-flex pt-2">
+                    <div>
+                        <p><b>Insurance Responsibility.</b><span class="green">₹ 0</span></p>
+                    </div>
+                </div>
+                <p>Insurance claims and all necessary dependencies will be submitted to your insurer for the coverred portion of this order</p>
+                <div class="rounded bg-light d-flex">
+                    <div class="p-2">Payment mode</div>
+                    <div class="ml-auto p-2">Paytm</div>
+                </div>
+                <hr>
+                <div class="pt-2">
+                    <div class="d-flex">
+                        <div>
+                            <p><b>Patient Balance.</b><span class="green">₹ {{totalAmount}}</span></p>
+                        </div>
+                        <!-- <div class="ml-auto p-2">
+                            <p class="text-primary"><i class="fa fa-plus-circle text-primary"></i>Add payment card</p>
+                        </div> -->
+                    </div>
+                    <p> This is an estimate for the portion of your order (not covered by insurance) due today . once insurance finalizes their review refunds and/or balances will reconcile automatically. </p>
+                    <!-- <form class="pb-3">
+                        <div class="d-flex flex-row align-content-center">
+                            <div class="pt-2 pr-2"><input type="radio" name="radio1" id="r1" checked></div>
+                            <div class="rounded border d-flex w-100 px-2">
+                                <div class="pt-2">
+                                    <p><i class="fa fa-cc-visa text-primary pr-2"></i>Visa Debit Card</p>
+                                </div>
+                                <div class="ml-auto pt-2">************3456</div>
+                            </div>
+                        </div>
+                    </form>
+                    <form class="pb-3">
+                        <div class="d-flex flex-row w-100">
+                            <div class="pt-2 pr-2"><input type="radio" name="radio2" id="r2"></div>
+                            <div class="rounded d-flex w-100 px-2">
+                                <div class="pt-2">
+                                    <p><i class="fa fa-cc-mastercard pr-2"></i>Mastercard Office</p>
+                                </div>
+                                <div class="ml-auto pt-2">************1038</div>
+                            </div>
+                        </div>
+                    </form> -->
+                    <div> <input type="button" [disabled]="disablePayment" value="Proceed to payment" (click)="Payment()" class="btn btn-primary btn-block"> </div>
+                </div>
+                <div *ngIf="showLoader" style="text-align: center;padding-top: 25px;">
+                  <span class="spinner spinner-primary ml-5"></span>
+                </div>
             </div>
-  
-            <button type="submit" class="btn btn-primary" >Pay</button>
-            &nbsp;
-          </form>
+            <div class="col-sm-3 col-md-4 offset-md-1 mobile"  style="margin-top: 40px;">
+                <div class="py-4 d-flex justify-content-end">
+                    <h6><a href="#"></a></h6>
+                </div>
+                <div class="bg-light rounded d-flex flex-column">
+                    <div class="p-2 ml-3">
+                        <h4>Order Recap</h4>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Suggested Test</div>
+                        <div class="ml-auto">{{testName}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Price for a test</div>
+                        <div class="ml-auto">₹ {{amountforOnetest}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">No of tests Suggested</div>
+                        <div class="ml-auto">{{Nooftests}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Total Amount</div>
+                        <div class="ml-auto">{{totalAmount}}</div>
+                    </div>
+                    <div class="border-top px-4 mx-3"></div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-8"><b>Amount to Pay</b></div>
+                        <div class="ml-auto"><b class="green">₹ {{totalAmount}}</b></div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     </div>
 
   </div>
+
+ 
 
   
   

@@ -17,6 +17,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PatientSignupComponent } from './patient-signup/patient-signup.component';
 import { PatientLoginComponent } from './patient-login/patient-login.component';
 import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.component';
+import { ReferPatientComponent } from './refer-patient/refer-patient.component';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.com
     ChangePasswordComponent,
     PatientSignupComponent,
     PatientLoginComponent,
-    DoctorNextStepComponent
+    DoctorNextStepComponent,
+    ReferPatientComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,8 @@ import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.com
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxUiLoaderModule
   ]
 })
 export class AuthModule {}

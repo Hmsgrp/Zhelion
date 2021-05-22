@@ -1,0 +1,337 @@
+<ngx-ui-loader fgsSize="120" [fgsType]="spinnerType"></ngx-ui-loader>
+<div class="row">
+  <div class="col-md-12">
+    <div class="container rounded bg-white">
+      <div class="card card-custom card-stretch gutter-b">
+        <!-- Header -->
+        <div class="card-header align-items-center border-0 mt-4">
+          <h3 class="card-title align-items-start flex-column">
+            <span class="font-weight-bolder text-dark">Lab Result</span>
+            <span class="text-muted mt-3 font-weight-bold font-size-sm">
+              Add Results for the paid tests</span>
+          </h3>
+        </div>
+        <!-- begin::Alert info-->
+
+
+        <!-- end::Alert info -->
+
+        <!-- Body -->
+        <div class="card-body pt-4">
+          <div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ErrorOccuredtext}}
+            <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div *ngIf="showSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+            Added Successfully.
+            <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <form class="form" novalidate="novalidate" id="ResultForm" #myForm1="ngForm" (submit)="submitOrderID()">
+
+            <!-- <div class="form-group col-md-3">
+              <label for="uname">Select Hospital</label>
+              <ng-select #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selected"
+                name="selectHospital" [multiple]="false" required>
+                <ng-option [value]="hospital.hospitalId" *ngFor="let hospital of hospitals">
+                  {{hospital.hospitalName}}
+                </ng-option>
+              </ng-select>
+              <div class="invalid-feedback">Oops, you missed this one.</div>
+            </div> -->
+
+            <div class="form-group col-md-6">
+              <label for="roleName" class="font-weight-bolder">Enter the PatientID</label>
+              <input type="text" autocomplete="off" id="patientID" name="patientID" #patientID="ngModel"
+                placeholder="Patient ID" ngModel class="form-control col-md-6" minlength="10" maxlength="30" required>
+              <div *ngIf="patientID.invalid && (patientID.dirty || patientID.touched)" style="color: red;">
+                <div *ngIf="patientID.errors.required">
+                  PatientID is required.
+                </div>
+                <div *ngIf="patientID.errors.minlength">
+                  PatientID cannot be less than 10 characters.
+                </div>
+                <div *ngIf="patientID.errors.maxlength">
+                  PatientID does not exceed 30 characters.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-primary" [disabled]="myForm1.invalid">Search</button>
+            </div>
+            <!-- 
+            <div class="form-group">
+              <label for="roleName" class="font-weight-bolder">Enter the OrderID</label>
+              <input type="text" class="form-control col-md-6" id="OrderID" name="OrderID" formControlName="OrderID"
+                autocomplete="off" placeholder="OrderID">
+              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
+                    validation: 'required',
+                    message: 'OrderID is required',
+                    control: ResultForm.controls['OrderID']
+                  }"></ng-container>
+            </div> -->
+
+          </form>
+
+          <div *ngIf="showOrders">
+            <div class="form-group col-md-3">
+              <label for="uname">Select Order</label>
+              <ng-select #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selectedOrder"
+                name="selectOrder" [multiple]="false" (ngModelChange)="change($event)" required>
+                <ng-option [value]="oR.orderId" *ngFor="let oR of OrderResults">
+                  {{oR.orderId}}
+                </ng-option>
+              </ng-select>
+              <div class="invalid-feedback">Oops, you missed this one.</div>
+            </div>
+          </div>
+
+          <br>
+          <div *ngIf="!ispaid">
+            <div class="rounded bg-light d-flex col-md-12">
+              <div class="p-2"><span style="color: red;" class="font-weight-bolder">We coudn`t find the payment details
+                  if the customer made the payment through offline
+                  please enter the cash receipt number to proceed further.
+                </span></div>
+            </div>
+            <div class="rounded bg-light d-flex col-md-12">
+              <div class="p-2 col-md-6">
+                <input type="text" #cashReceiptNo placeholder="CashReceiptNo" class="form-control" required />
+                <br>
+                <button type="button" (click)="ValidateCashReceipt(cashReceiptNo.value)"
+                  class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="ispaid && showform">
+            <div class="rounded bg-light d-flex col-md-6">
+              <div class="p-2">Patient ID : <span class="font-weight-bolder">{{patientId}}</span></div>
+            </div>
+            <div class="rounded bg-light d-flex col-md-6">
+              <div class="p-2">Test Name : <span class="font-weight-bolder">{{testName}}</span></div>
+            </div>
+
+            <hr>
+
+            <form #formRef="ngForm">
+              <div class="col-md-12 row">
+                <div class="col-md-3">
+                  <br>
+                  <label for="patientName" class="font-weight-bolder">Enter the Patient Name</label>
+                  <input type="text" autocomplete="off" id="patientName" name="patientName" #patientName="ngModel"
+                    placeholder="patient Name" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="patientName.invalid && (patientName.dirty || patientName.touched)" style="color: red;">
+                    <div *ngIf="patientName.errors.required">
+                      Patient Name is required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <br>
+                  <label for="Age" class="font-weight-bolder">Age</label>
+                  <input type="number" autocomplete="off" id="age" name="age" #age="ngModel" placeholder="Age" ngModel
+                    class="form-control" minlength="10" maxlength="30" required>
+                  <div *ngIf="age.invalid && (age.dirty || age.touched)" style="color: red;">
+                    <div *ngIf="age.errors.required">
+                      Age is required.
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-md-3">
+                  <br>
+                  <label class="font-weight-bolder" for="uname">Gender</label>
+                  <ng-select #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selectedgender"
+                    name="select Gender" [multiple]="false" required>
+                    <ng-option [value]="g.Id" *ngFor="let g of GenderVal">
+                      {{g.Name}}
+                    </ng-option>
+                  </ng-select>
+                  <div class="invalid-feedback">Oops, you missed this one.</div>
+                </div>
+
+              </div>
+
+
+              <div class="col-md-12 row">
+                <div class="col-md-3">
+                  <br>
+                  <label for="patientName" class="font-weight-bolder">Pathological Condition</label>
+                  <input type="text" autocomplete="off" id="paCondition" name="paCondition" #paCondition="ngModel"
+                    placeholder="Pathological Condition" ngModel class="form-control" minlength="2" maxlength="30"
+                    required>
+                  <div *ngIf="paCondition.invalid && (paCondition.dirty || paCondition.touched)" style="color: red;">
+                    <div *ngIf="paCondition.errors.required">
+                      Pathological Condition is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <br>
+                  <label for="specimenType" class="font-weight-bolder">Specimen Type</label>
+                  <input type="text" autocomplete="off" id="specimenType" name="specimenType" #specimenType="ngModel"
+                    placeholder="Specimen Type" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="specimenType.invalid && (specimenType.dirty || specimenType.touched)" style="color: red;">
+                    <div *ngIf="specimenType.errors.required">
+                      Specimen Type is required.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <br>
+                  <label for="tmu" class="font-weight-bolder">Test method used</label>
+                  <input type="text" autocomplete="off" id="tmu" name="tmu" #tmu="ngModel"
+                    placeholder="Test method used" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="tmu.invalid && (tmu.dirty || tmu.touched)" style="color: red;">
+                    <div *ngIf="tmu.errors.required">
+                      Please add Test method used.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+           
+              <div class="col-md-12 row">
+
+                <div class="col-md-6">
+                  <br>
+                  <label for="dosp" class="font-weight-bolder">Details of specimen preparation </label>
+                  <input type="text" autocomplete="off" id="dosp" name="dosp" #dosp="ngModel"
+                    placeholder="Details of specimen preparation" ngModel class="form-control" minlength="2"
+                    maxlength="500" required>
+                  <div *ngIf="dosp.invalid && (dosp.dirty || dosp.touched)" style="color: red;">
+                    <div *ngIf="dosp.errors.required">
+                      Please Add Details of specimen preparation.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <br>
+                  <label for="result" class="font-weight-bolder">Result</label>
+                  <input type="text" autocomplete="off" id="result" name="result" #result="ngModel"
+                    placeholder="Detected or NotDetected" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="result.invalid && (result.dirty || result.touched)" style="color: red;">
+                    <div *ngIf="result.errors.required">
+                      Required input Detected or NotDetected.
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-md-12 row">
+
+                <div class="col-md-9">
+                  <br>
+                  <label for="observation" class="font-weight-bolder">Observation</label>
+                  <textarea type="text" rows="5" autocomplete="off" id="observation" name="observation"
+                    #observation="ngModel" placeholder="Observation" ngModel class="form-control" minlength="2"
+                    maxlength="1000" required></textarea>
+                  <div *ngIf="observation.invalid && (observation.dirty || observation.touched)" style="color: red;">
+                    <div *ngIf="observation.errors.required">
+                      Observation is required.
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+              <div class="col-md-12 row">
+                <div class="col-md-3">
+                  <br>
+                  <label for="testcollectedat" class="font-weight-bolder">Collected at</label>
+                  <input type="text" autocomplete="off" id="testcollectedat" name="testcollectedat" #testcollectedat="ngModel"
+                    placeholder="Ward Name/No" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="testcollectedat.invalid && (testcollectedat.dirty || testcollectedat.touched)" style="color: red;">
+                    <div *ngIf="testcollectedat.errors.required">
+                      Required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <br>
+                  <label for="testdoneby" class="font-weight-bolder">Test done by</label>
+                  <input type="text" autocomplete="off" id="testdoneby" name="testdoneby" #testdoneby="ngModel"
+                    placeholder="Test done by" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="testdoneby.invalid && (testdoneby.dirty || testdoneby.touched)" style="color: red;">
+                    <div *ngIf="testdoneby.errors.required">
+                      Required.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <br>
+                  <label for="testapprovedby" class="font-weight-bolder">Test done by</label>
+                  <input type="text" autocomplete="off" id="testdoneby" name="testapprovedby" #testapprovedby="ngModel"
+                    placeholder="Test Approved by" ngModel class="form-control" minlength="2" maxlength="30" required>
+                  <div *ngIf="testapprovedby.invalid && (testapprovedby.dirty || testapprovedby.touched)" style="color: red;">
+                    <div *ngIf="testapprovedby.errors.required">
+                      Required.
+                    </div>
+                  </div>
+                </div>
+
+               
+                </div>
+
+
+              <br><br><br>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ParameterName</th>
+                    <th scope="col">Parameter Ranges</th>
+                    <th scope="col">Add Result</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="orderResult == null">
+                  <tr>
+                    <td></td>
+                    <td style="color: red;">No Records Found</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+
+                <tbody *ngIf="orderResult != null">
+                  <tr *ngFor="let pl of orderResult.parameterList ;let in=index">
+                    <td>{{pl.parameterName}}</td>
+                    <td>
+                      <span>{{pl.rangesFrom}} to {{pl.rangesTo}}</span>
+                    </td>
+                    <td>
+                      <input type="text" [(ngModel)]="orderResult.parameterList[in].testedResult" name="name{{in}}"
+                        class="form-control col-md-6" #name="ngModel" required />
+                  </tr>
+                </tbody>
+              </table>
+              <button class="btn btn-primary" [disabled]="!formRef.form.valid" (click)="add()">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-template #formError let-control="control" let-message="message" let-validation="validation">
+  <ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched)">
+    <div class="fv-plugins-message-container">
+      <div class="fv-help-block">
+        {{ message }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>

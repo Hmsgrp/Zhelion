@@ -11,5 +11,6 @@ namespace Hospital.Core.Models
         public long outMobileNo { get; set; }
         public string hospId { get; set; }
         public string doctorId { get; set; }
+        public int numberOfTest { get; set; }
     }
 }

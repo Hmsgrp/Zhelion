@@ -28,5 +28,7 @@ namespace Hospital.Core.Models
         public bool IsActive { get; set; }
 
         public string CreatedDateTime { get; set; }
+
+        public string OrderId { get; set; }
     }
 }

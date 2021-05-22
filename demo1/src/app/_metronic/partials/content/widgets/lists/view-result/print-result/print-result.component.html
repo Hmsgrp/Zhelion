@@ -1,0 +1,177 @@
+
+
+<div class="row" *ngIf="dataloaded">
+  <div class="col-md-1"></div>
+  <div class="col-md-9">
+    <div class="container rounded bg-white" id="htmlData">
+      <div class="card card-custom card-stretch gutter-b" style="background:white;">
+        <div class="card-body pt-4">
+          <div>
+            <br><br>
+            <img src="./assets//media//logos//Zhdat-01 rounded.png" style="width:18%;float: right;">
+          </div>
+          <div style="padding-top: 81px;"></div>
+          <div>
+            <hr>
+            <h2 style="color: red;text-align: center;">Test Report</h2>
+            <br>
+            <span>Created Date : {{ResultDetails.createdOn | date}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="margin-left:81px">ReportID : {{ResultDetails.orderId}} </span>
+            <br><br>
+            <h4>Patient Information</h4>
+            <br>
+
+            <div class="col-md-12 row">
+              <div class="col-md-4"> <span style="font-weight: bold;">Name &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp;
+                  &nbsp;</span> {{ResultDetails.patientName}}</div>
+              <div class="col-md-4"> <span style="font-weight: bold;">Age &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp;
+                  &nbsp;</span> {{ResultDetails.age}}</div>
+              <div class="col-md-4">
+                <p> <span style="font-weight: bold;">Sex &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp;</span>
+                  {{ResultDetails.sex}}</p>
+              </div>
+            </div>
+            <div class="col-md-12 row">
+              <div class="col-md-12">
+                <p> <span style="font-weight: bold;">PathoLogical Condition &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp;
+                    &nbsp;</span> {{ResultDetails.pathologicalCondition}}</p>
+              </div>
+            </div>
+
+            <br>
+
+            <h4>Test Details</h4>
+            <br>
+            <div class="col-md-12">
+              <p><span style="font-weight: bold;">Name of the Test &nbsp; &nbsp; &nbsp; : &nbsp; &nbsp; &nbsp;</span>
+                {{ResultDetails.testName}}</p>
+              <p><span style="font-weight: bold;">Work Order Number &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp;</span>
+                {{ResultDetails.orderId}}</p>
+              <p><span style="font-weight: bold;">Test Method Used &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp;</span>
+                {{ResultDetails.testMethodUsed}}</p>
+              <p><span style="font-weight: bold;">Specimen Type &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp;</span>
+                {{ResultDetails.specimenType}}</p>
+              <p><span style="font-weight: bold;">Details of specimen preparation</span></p>
+              <p>{{ResultDetails.detailsofspecimenpreparation}}</p><br>
+              <hr>
+              <span style="font-weight: bold;">Result &nbsp; &nbsp; &nbsp;: &nbsp; &nbsp; &nbsp;
+                {{ResultDetails.resultStatus}}</span>
+            </div>
+            <hr>
+            <h2 style="text-align: center;">Report Details</h2>
+            <br>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Test Name</th>
+                  <th scope="col">CT Value</th>
+                  <th scope="col">Average Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let r of getindividualReport">
+                  <td>{{r.parameterName}}</td>
+                  <td style="color: red;">
+                    {{r.rangesFrom}} - {{r.rangesTo}}
+                  </td>
+                  <td style="color: red;">
+                    {{r.testedResult}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+          <hr>
+            <h5 style="text-align: center;">GRAPHICAL REPORT</h5>
+            <br>
+
+            <div id="chart" class="row">
+              <br>
+              <div class="col-xl-9">
+                <div style="display: block;">
+                  <canvas baseChart
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  [plugins]="lineChartPlugins">
+                </canvas>
+                </div>
+              </div>
+            </div><br>
+
+            <div>
+              <h4>OBSERVATION</h4>
+              <p style="word-wrap: break-word;">
+                {{ResultDetails.observation}} </p>
+
+              <h4>INTERPRETATION GUIDELINES</h4>
+              <h4>NOT DETECTED</h4>
+              <p>Indicates absence of RNA Specific for tested Inflammatory genes.</p>
+              <br>
+              <h4>DETECTED</h4>
+              <p style="word-wrap: break-word;">
+                RNA Specific for Inflammatory Genes detected. Cts < 29 are strong positive reactions indicative of
+                  abundant target nucleic acid in the specimen. Cts of 30-37 are positive reactions indicative of
+                  moderate amounts of target nucleic acid. Cts of 38-40 are weak reactions indicative of minimal amounts
+                  of target nucleic acid. </p>
+                  <h4>INVALID</h4>
+                  <p style="word-wrap: break-word;">
+                    This could be due to low RNA load or improper sample handling/storage. A repeat sample is
+                    recommended for confirmation.
+                  </p>
+                  <h4>LIMITATIONS</h4>
+                  <p style="word-wrap: break-word;">Negative results do not rule out active disease conditions and
+                    not be used as a sole basis of patient managements.
+                    <br>
+                    Results must be combined with clinical findings, patient history and epidemiology.
+                  </p>
+
+                  <br>
+            </div>
+
+            <div id="extradesciption1">
+              <h4>NOTE</h4>
+              <p>1. The results relate only to the specimens tested and should be correlated with clinical findings.
+              </p>
+              <p>2. Testing for systemic inflammatory markers was performed on CE-IVD approved Prognoseez RT-PCR Kit.
+              </p>
+              <p>3. Testing of referred clinical specimens was considered on the basis of request/referral received from
+                healthcare facilities affirming requirements of the case.</p>
+              <p>4. A positively detected test result is only tentative and should be reconfirmed by retesting as per
+                the discretion of the referral.</p>
+              <p>5. Reliable results are dependent on adequate specimen collection, transport, storage and processing.
+                Presence of inhibitors, mutations, and insufficient RNA specific to inflammation can influence the test
+                result. It is recommended to correlate the results with clinical findings. Repeat sampling and testing
+                after a gap of 2-4 days of the specimen is strongly recommended in severe or progressive disease.</p>
+              <br>
+              <span>Test Done by : {{ResultDetails.approvedBy}}</span>
+              <span style="float: right;">Verified by : {{ResultDetails.approvedBy}}</span>
+              <hr>
+              <h4 style="text-align: center;">Declaration</h4>
+              <p>I hereby certify that; this test certificate is for the specimen received as per the above work order
+                number</p>
+              <span>Issued to : {{ResultDetails.patientName}}</span>
+              <span style="float: right;">Issued by : {{ResultDetails.approvedBy}}</span><br><br><br>
+
+
+              <span style="font-weight: bold;">Signature</span><br><br><br>
+            </div>
+
+
+            <div class="formGroup">
+              <button class="btn btn-primary btn-block" (click)="htmltoPDF()">Download</button>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

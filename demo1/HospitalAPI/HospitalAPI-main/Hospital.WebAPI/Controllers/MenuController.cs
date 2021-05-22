@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class MenuController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;

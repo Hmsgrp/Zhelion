@@ -1,3 +1,4 @@
+<ngx-ui-loader fgsSize="120" [fgsType]="spinnerType"></ngx-ui-loader>
 <div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
   {{errorText}}
   <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
@@ -30,6 +31,23 @@
         id="kt_hospital_form"
         (ngSubmit)="submitData()"
         >
+        <div class="form-group">
+          <label for="Hospital" class="font-weight-bolder">Select Hospital</label>
+          <ng-select [searchable]="true" placeholder="Select Hospital"  formControlName="selectedHospital">
+            <ng-option *ngFor="let hospital of hospitals" 
+                        [value]="hospital.hospitalId">
+                        {{ hospital.hospitalName }}
+            </ng-option>
+          </ng-select>
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Please Select Hospital',
+            control: LabRegistration.controls['selectedHospital']
+          }"
+        ></ng-container> 
+        </div>
           <div class="form-group">
             <label for="userName" class="font-weight-bolder">User Name</label>
             <input type="text" class="form-control" id="userName"
@@ -50,7 +68,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'minlength',
-              message: 'User Name should have at least 5 symbols',
+              message: 'User Name should have at least 2 symbols',
               control: LabRegistration.controls['userName']
             }"
              ></ng-container>
@@ -59,7 +77,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'maxLength',
-              message: 'User Name should have maximum 15 symbols',
+              message: 'User Name should have maximum 30 symbols',
               control: LabRegistration.controls['userName']
             }"
             ></ng-container>
@@ -86,7 +104,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'minlength',
-              message: 'Password should have at least 5 symbols',
+              message: 'Password should have at least 2 symbols',
               control: LabRegistration.controls['password']
             }"
              ></ng-container>
@@ -95,7 +113,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'maxLength',
-              message: 'Password should have maximum 15 symbols',
+              message: 'Password should have maximum 30 symbols',
               control: LabRegistration.controls['password']
             }"
             ></ng-container>
@@ -121,7 +139,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'minlength',
-              message: 'Lab Name should have at least 5 symbols',
+              message: 'Lab Name should have at least 2 symbols',
               control: LabRegistration.controls['labName']
             }"
              ></ng-container>
@@ -130,7 +148,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'maxLength',
-              message: 'Lab Name should have maximum 15 symbols',
+              message: 'Lab Name should have maximum 30 symbols',
               control: LabRegistration.controls['labName']
             }"
             ></ng-container>
@@ -159,7 +177,7 @@
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'minlength',
-            message: 'Lab Address should have at least 5 symbols',
+            message: 'Lab Address should have at least 2 symbols',
             control: LabRegistration.controls['labAddress']
           }"
            ></ng-container>
@@ -168,7 +186,7 @@
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'maxLength',
-            message: 'Lab Address should have maximum 15 symbols',
+            message: 'Lab Address should have maximum 30 symbols',
             control: LabRegistration.controls['labAddress']
           }"
           ></ng-container>
@@ -195,7 +213,7 @@
             [ngTemplateOutlet]="formError"
             [ngTemplateOutletContext]="{
               validation: 'minlength',
-              message: 'Contact Person should have at least 5 symbols',
+              message: 'Contact Person should have at least 2 symbols',
               control: LabRegistration.controls['contactPerson']
             }"
              ></ng-container>
@@ -306,12 +324,12 @@
          </button>
          </div>
 
-         <div style="color: red;" *ngIf="Labs.length==0">
+         <div style="color: red;" *ngIf="LabsMappingResult.length==0">
           <hr>   
           No records found
         </div>
         <!--begin::Item-->
-        <div *ngFor="let lab of Labs | paginate:{itemsPerPage: 5, currentPage:page}" class="mb-10">
+        <div *ngFor="let lab of LabsMappingResult | paginate:{itemsPerPage: 5, currentPage:page}" class="mb-10">
           <!--begin::Section-->
           <div class="d-flex align-items-center">
             <!--begin::Symbol-->
@@ -332,7 +350,7 @@
                 class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1 cursor-pointer"
                 >{{lab.labName}}</a
               >
-              <span class="text-muted font-weight-bold">{{lab.labAddress}}</span>
+              <span class="text-muted font-weight-bold">{{lab.hospitalName}}</span>
             </div>
             <!--end::Text-->
             <div> 

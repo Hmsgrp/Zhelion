@@ -32,7 +32,7 @@ export class MixedWidget14Component implements OnInit {
   getChartOptions() {
     const strokeColor = '#D13647';
     return {
-      series: [74],
+      series: [2],
       chart: {
         type: 'radialBar',
         height: 200,

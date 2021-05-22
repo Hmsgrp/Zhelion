@@ -1,10 +1,11 @@
 export class HospitalModel {
-    HospitalId:string
-    HospitalName: string;
-    HospitalAddress:string;
-    ContactPerson:number;
-    PhoneNumber:number;
-    IsActive :boolean;
-    CreatedDate:Date;
+    hospitalLogo:any;
+    hospitalId:string
+    hospitalName: string;
+    hospitalAddress:string;
+    contactPerson:number;
+    phoneNumber:number;
+    isActive :boolean;
+    createdDate:Date;
   }
   

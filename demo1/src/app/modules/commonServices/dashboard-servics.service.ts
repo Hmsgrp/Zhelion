@@ -14,6 +14,14 @@ import{environment} from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserModelPatient } from 'src/app/_metronic/partials/content/widgets/models/usermodelPatient';
+import { PaymentDetails } from 'src/app/_metronic/partials/content/widgets/models/PaymentDetails';
+import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { AssignedTest } from 'src/app/_metronic/partials/content/widgets/models/AssignedTest.model';
+import { paymentSplit } from 'src/app/_metronic/partials/content/widgets/models/paymentSplit.model';
+import { AddResult } from 'src/app/_metronic/partials/content/widgets/models/AddResult.model';
+import { resultfilter } from 'src/app/_metronic/partials/content/widgets/models/resultFilter.model';
+import { LabMapping } from 'src/app/_metronic/partials/content/widgets/models/labMapping.model';
+import { LabMappingResult } from 'src/app/_metronic/partials/content/widgets/models/labMappingResult';
 
 
 @Injectable({
@@ -112,13 +120,15 @@ export class DashboardServicsService {
   //user section End
 
     //Hospital section Start
-    AddHospital(FormGroup:FormGroup) : Observable<any>
+    AddHospital(FormGroup:FormGroup,imagesrc:string) : Observable<any>
     {
       const hospital = new HospitalModel();
-      hospital.HospitalName = FormGroup.controls.hospitalName.value;
-      hospital.HospitalAddress =  FormGroup.controls.hospitalAddress.value;
-      hospital.ContactPerson = FormGroup.controls.contactPerson.value;
-      hospital.PhoneNumber = FormGroup.controls.phoneNumber.value;
+      hospital.hospitalName = FormGroup.controls.hospitalName.value;
+      hospital.hospitalAddress =  FormGroup.controls.hospitalAddress.value;
+      hospital.contactPerson = FormGroup.controls.contactPerson.value;
+      hospital.phoneNumber = FormGroup.controls.phoneNumber.value;
+      hospital.hospitalLogo = imagesrc;
+    
   
       const headers = { 'content-type': 'application/json'}  
       const body = JSON.stringify(hospital);
@@ -146,14 +156,15 @@ export class DashboardServicsService {
       return this.http.delete(environment.apiUrl + endPoints + id);
     }
 
-    editHospital(FormGroup:FormGroup,editID:string)
+    editHospital(FormGroup:FormGroup,imagesrc:string,editID:string)
     {
       const Hospital = new HospitalModel();
-      Hospital.HospitalId = editID;
-      Hospital.HospitalName = FormGroup.controls.hospitalName.value;
-      Hospital.HospitalAddress =  FormGroup.controls.hospitalAddress.value;
-      Hospital.ContactPerson = FormGroup.controls.contactPerson.value;
-      Hospital.PhoneNumber = FormGroup.controls.phoneNumber.value;
+      Hospital.hospitalId = editID;
+      Hospital.hospitalName = FormGroup.controls.hospitalName.value;
+      Hospital.hospitalAddress =  FormGroup.controls.hospitalAddress.value;
+      Hospital.contactPerson = FormGroup.controls.contactPerson.value;
+      Hospital.phoneNumber = FormGroup.controls.phoneNumber.value;
+      Hospital.hospitalLogo = imagesrc;
       const headers = { 'content-type': 'application/json'}  
       const data=JSON.stringify(Hospital);
       let endPoints = "api/Hospital/UpdateHospital"
@@ -173,17 +184,21 @@ export class DashboardServicsService {
       const user = new UserModel();
       user.UserName = FormGroup.controls.userName.value;
       user.Password =  FormGroup.controls.password.value;
+
+      const lm = new LabMapping();
+      lm.HospitalID = FormGroup.controls.selectedHospital.value;
+      lm.IsActive = true;
   
       const headers = { 'content-type': 'application/json'}  
       
-      let body = { "userDetails": user, labDetails: lab };
+      let body = { "userDetails": user, labDetails: lab, labMappingDetails : lm};
       let endPoints = "api/Lab/AddLab"
       return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
     }
   
-     getLab(): Observable<LabModel[]> {
+     getLab(): Observable<LabMappingResult[]> {
       let endPoints = "api/Lab/GetLabs"
-      return this.http.get<LabModel[]>(environment.apiUrl + endPoints)
+      return this.http.get<LabMappingResult[]>(environment.apiUrl + endPoints)
     }
 
     deleteLab(id:string) : Observable<any>{
@@ -194,11 +209,11 @@ export class DashboardServicsService {
     editLab(FormGroup:FormGroup,editID:string)
     {
       const Hospital = new HospitalModel();
-      Hospital.HospitalId = editID;
-      Hospital.HospitalName = FormGroup.controls.hospitalName.value;
-      Hospital.HospitalAddress =  FormGroup.controls.hospitalAddress.value;
-      Hospital.ContactPerson = FormGroup.controls.contactPerson.value;
-      Hospital.PhoneNumber = FormGroup.controls.phoneNumber.value;
+      Hospital.hospitalId = editID;
+      Hospital.hospitalName = FormGroup.controls.hospitalName.value;
+      Hospital.hospitalAddress =  FormGroup.controls.hospitalAddress.value;
+      Hospital.contactPerson = FormGroup.controls.contactPerson.value;
+      Hospital.phoneNumber = FormGroup.controls.phoneNumber.value;
       const headers = { 'content-type': 'application/json'}  
       const data=JSON.stringify(Hospital);
       let endPoints = "api/Lab/UpdateLab"
@@ -212,6 +227,8 @@ export class DashboardServicsService {
        const test = new testModel();
        test.testName = FormGroup.controls.testName.value;
        test.testDescription =  FormGroup.controls.testDescription.value;
+       test.amount =  FormGroup.controls.amount.value;
+       test.unit = FormGroup.controls.unit.value;
  
        const headers = { 'content-type': 'application/json'}  
        
@@ -225,9 +242,10 @@ export class DashboardServicsService {
        const test = new prescribeTest();
        test.patientId = FormGroup.controls.patientID.value;
        test.testId = selectedtestID;
-       test.doctorId =localStorage.getItem("userID").toString();
-       test.hospId =localStorage.getItem("SelectedHospital").toString();
+       test.doctorId = localStorage.getItem("userID").toString();
+       test.hospId = localStorage.getItem("SelectedHospital").toString();
        test.outMobileNo =  FormGroup.controls.mobileNumber.value;
+       test.numberOfTest =  FormGroup.controls.TestNumber.value;
  
        const headers = { 'content-type': 'application/json'}  
        
@@ -251,7 +269,9 @@ export class DashboardServicsService {
        const test = new testModel();
        test.testId = editID;
        test.testName = FormGroup.controls.testName.value;
+       test.amount = FormGroup.controls.amount.value;
        test.testDescription =  FormGroup.controls.testDescription.value;
+       test.unit =  FormGroup.controls.unit.value;
 
        const headers = { 'content-type': 'application/json'}  
        const data=JSON.stringify(test);
@@ -391,6 +411,181 @@ export class DashboardServicsService {
         return localStorage.getItem("Menus");
       }
 
+      //payment gateway
+
+      //Test Section Start
+     GoToPayment(Amount:Number,Currency:string,CustomerID:string,OrderID:string) : Observable<any>
+     {
+      const PD = new PaymentDetails();
+       
+      PD.Amount = Amount.toString();
+      PD.Currency = Currency;
+      PD.CustomerId = CustomerID;
+      PD.OrderId = OrderID;
+
+      const headers = { 'content-type': 'application/json'}  
+       
+      const body = JSON.stringify(PD);
+      let endPoints = "api/Payment/TestPayment"
+      return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
+     }
+
+    //payment splitup
+
+
+    AddPaymentSplitUp(FormGroup:FormGroup,selectedTest:string) : Observable<any>
+    {
+      const ps = new paymentSplit();
+      ps.testId = selectedTest;
+      ps.doctorPercent = FormGroup.controls.doctorPercent.value;;
+      ps.labPercent = FormGroup.controls.labPercent.value;
+      ps.company = FormGroup.controls.companyPercent.value;
+
+      const headers = { 'content-type': 'application/json'}  
+
+      const body = JSON.stringify(ps);
       
+      let endPoints = "api/PaySplitUp/AddPaySplitUp"
+      return this.http.post(environment.apiUrl + endPoints, body,{'headers':headers})
+    }
+
+    getPaymentSplitUp(): Observable<paymentSplit[]> {
+      let endPoints = "api/PaySplitUp/GetPaySplitUps"
+      return this.http.get<paymentSplit[]>(environment.apiUrl + endPoints)
+    }
+
+    deleteSplitUp(id:string) : Observable<any>{
+      let endPoints = "api/PaySplitUp/DeletePaySplitUp/"
+      return this.http.delete(environment.apiUrl + endPoints + id);
+    }
+
+    editSplitUp(FormGroup:FormGroup,paymentSplitUpID:string,selectedTest:string)
+    {
+      const ps = new paymentSplit();
+      
+      ps.splitUpID = paymentSplitUpID;
+      ps.testId = selectedTest;
+      ps.doctorPercent = FormGroup.controls.doctorPercent.value;;
+      ps.labPercent = FormGroup.controls.labPercent.value;
+      ps.company = FormGroup.controls.companyPercent.value;
+
+      const headers = { 'content-type': 'application/json'}  
+      const data=JSON.stringify(ps);
+      let endPoints = "api/PaySplitUp/UpdatePaySplitUp"
+      return this.http.put(environment.apiUrl + endPoints, data,{'headers':headers});
+    }
+
+    newGuid() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+        v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
+    //Patient Assigned Test
+
+    getAssignedTest(patientID:string): Observable<AssignedTest[]> {
+      let endPoints = "api/Patient/GetActiveTestByPatientID/"
+      return this.http.get<AssignedTest[]>(environment.apiUrl + endPoints + patientID)
+    }
+
+    //payment status
+
+    getPaymentStatus(OrderID:string): Observable<any> {
+      let endPoints = "api/Payment/PaymentStatus?OrderId="
+      return this.http.get<any>(environment.apiUrl + endPoints + OrderID)
+    }
+
+    //add result 
+
+    getLatestOrder(patientID:string): Observable<any> {
+      let endPoints = "api/Payment/GetLatestOrder?patientID="
+      return this.http.get<any>(environment.apiUrl + endPoints + patientID)
+    }
+
+    isorderPaymentcompleted(OrderID:string): Observable<any> {
+      let endPoints = "api/Test/IsorderPaymentcompleted?orderId="
+      return this.http.get<any>(environment.apiUrl + endPoints + OrderID)
+    }
+
+    GetAllByPatientID(HPID:string): Observable<any> {
+      let hospitalID = localStorage.getItem("HospitalID").toString(); 
+      let endPoints = "api/Patient/GetAllOrdersByPatientID?h_Pid="+HPID+"&hospitalId=";
+      return this.http.get<any>(environment.apiUrl + endPoints + hospitalID)
+    }
+
+    AddResult(Result:any ,FormGroup:FormGroup, cashReceiptNo:string,gender:string,orderID:string): Observable<any> {
+
+      const result = new AddResult();
+      result.approverName = localStorage.getItem("UserName").toString();
+      result.jsonResult = Result[0].parameterList;
+      result.cashReceiptNumber = cashReceiptNo;
+      result.userId = localStorage.getItem("userID").toString();
+      result.isOfflinePayment = false;
+      result.orderId = orderID;
+      result.patientName= FormGroup.controls.patientName.value;
+      result.age= FormGroup.controls.age.value;
+      result.sex= gender;
+      result.pathologicalCondition= FormGroup.controls.paCondition.value;
+      result.specimenType= FormGroup.controls.specimenType.value;
+      result.testMethodUsed= FormGroup.controls.tmu.value;
+      result.detailsofspecimenpreparation = FormGroup.controls.dosp.value;
+      result.observation= FormGroup.controls.observation.value;
+      result.testDoneBy= FormGroup.controls.testdoneby.value;
+      result.resultStatus= FormGroup.controls.result.value;
+      result.hospitalID = localStorage.getItem("HospitalID").toString();
+
+      const headers = { 'content-type': 'application/json'}  
+
+      //const body = JSON.stringify(result);
+      
+      let endPoints = "api/Test/AddResult"
+      return this.http.post(environment.apiUrl + endPoints, result,{'headers':headers})
+    }
+
+    
+    ViewAllResults(): Observable<any> {
+      let endPoints = "api/Test/GetAllTestResults"
+      return this.http.get<any>(environment.apiUrl + endPoints)
+    }
+
+    ViewfilteredResults(result:resultfilter): Observable<any> {
+
+      let endPoints = "api/Test/GetFilteredTestResults"
+      const headers = { 'content-type': 'application/json'}  
+      const body = JSON.stringify(result);
+
+      return this.http.post(environment.apiUrl + endPoints, result,{'headers':headers})
+    }
+
+    RetriveDataForReport(ResultID:string): Observable<any> {
+      let endPoints = "api/Test/RetriveDataForReport?resultID="
+      return this.http.get<any>(environment.apiUrl + endPoints + ResultID);
+    }
+
+    GetActiveNotification(userID:string): Observable<any> {
+      let endPoints = "api/Doctor/GetActiveNotification/"
+      return this.http.get<any>(environment.apiUrl + endPoints + userID);
+    }
+
+
+    CloseNotification(notificationID:string)
+    {
+      let endPoints = "api/Doctor/CloseNotification/"
+      return this.http.get(environment.apiUrl+ endPoints + notificationID);
+    }
+
+    GetpatientList(): Observable<any> {
+      let endPoints = "api/Hospital/GetpatientList/"
+      return this.http.get<any>(environment.apiUrl + endPoints + localStorage.getItem("SelectedHospital").toString())
+    }
+
+    RetriveReportforLatestOrder(): Observable<any> {
+      let hpid = localStorage.getItem("Hospital_PID").toString();
+      let hospitalId =  localStorage.getItem("HospitalID").toString();
+      let endPoints = "api/Test/RetriveReportforLatestOrder?HPID="+hpid+"&HospitalId=";
+      return this.http.get<any>(environment.apiUrl + endPoints + hospitalId);
+    }
 }
 

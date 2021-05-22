@@ -10,6 +10,7 @@ import { HospitalModel } from 'src/app/_metronic/partials/content/widgets/models
 })
 export class ListsWidget4Component implements OnInit {
   hospitalRegistration: FormGroup;
+  imageSrc: string;
   isEdit:boolean;
   editID:string;
   updateMessage:string;
@@ -20,12 +21,15 @@ export class ListsWidget4Component implements OnInit {
   errorText:string;
   postSuccessText:string;
   p:any;
+  files:any;
+  url:any;
 
   defaultVal = {
     hospitalName: '',
     hospitalAddress: '',
     contactPerson: '',
-    phoneNumber: ''   
+    phoneNumber: '',
+    file:''  
   };
   hospitals : HospitalModel[] = [];
 
@@ -68,6 +72,12 @@ export class ListsWidget4Component implements OnInit {
           Validators.minLength(5),
           Validators.maxLength(15),
         ]),
+      ] ,
+      file: [
+        this.defaultVal.file,
+        Validators.compose([
+          Validators.required,
+        ]),
       ]
     });
   }
@@ -88,6 +98,9 @@ export class ListsWidget4Component implements OnInit {
       phoneNumber: [
         phoneNumber
       ],
+      file:[
+        this.imageSrc
+      ]
     });
   }
 
@@ -107,7 +120,7 @@ export class ListsWidget4Component implements OnInit {
   //Api calls
   postData()
   {
-    this.dashboardServices.AddHospital(this.hospitalRegistration)
+    this.dashboardServices.AddHospital(this.hospitalRegistration,this.imageSrc)
       .subscribe(data => {
         this.handleSuccessforPost();
       },
@@ -119,7 +132,7 @@ export class ListsWidget4Component implements OnInit {
 
   updateData()
   {
-    this.dashboardServices.editHospital(this.hospitalRegistration,this.editID)
+    this.dashboardServices.editHospital(this.hospitalRegistration,this.imageSrc,this.editID)
       .subscribe(data => {
         this.handleSuccessforUpdate();
       },
@@ -132,6 +145,7 @@ export class ListsWidget4Component implements OnInit {
   refreshData() {
     this.dashboardServices.getHospital()
       .subscribe(data => {
+        console.log(data);
         this.hospitals = data;
         this.cd.detectChanges();
       },
@@ -201,6 +215,7 @@ export class ListsWidget4Component implements OnInit {
   {
     this.postSuccessText = "Added Successfully";
     this.hospitalRegistration.reset();
+    this.imageSrc = "";
     this.showPostSuccessNotification = true;
     this.refreshData();
     this.closeAllNotification();
@@ -211,7 +226,7 @@ export class ListsWidget4Component implements OnInit {
     this.updateMessage = "Updated Successfully."
     this.showUpdateNotification = true;
     this.refreshData();
-    this.resetData()
+    this.resetData();
     this.closeAllNotification(); 
   }
 
@@ -226,8 +241,30 @@ export class ListsWidget4Component implements OnInit {
   resetData()
   {
     this.hospitalRegistration.reset();
+    this.imageSrc = "";
     this.isEdit = false;
     this.buttontext = "Submit";
+  }
+
+  onFileChange(event) {
+    const reader = new FileReader();
+    
+    if(event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      this.files = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+        this.imageSrc = reader.result as string;
+     
+        this.hospitalRegistration.patchValue({
+          fileSource: reader.result
+        });
+   
+      };
+   
+    }
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

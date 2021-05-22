@@ -28,6 +28,11 @@ export class CommonServicesService {
     return this.http.get<any>(environment.apiUrl + endPoints + refID)
   }
 
+  GetUserMappingDetails(userID:string): Observable<any> {
+    let endPoints = "api/Auth/GetUserMappingDetails/"
+    return this.http.get<any>(environment.apiUrl + endPoints + userID)
+  }
+
   //user
   UpdateUser(FormGroup:FormGroup,userID:string,hospitalIDs:any,roleID:string,passwordtick:boolean,otptick:boolean): Observable<any>{
  
@@ -73,12 +78,14 @@ export class CommonServicesService {
       // store jwt token in local storage to keep user logged in between page refreshes
       const helper = new JwtHelperService();
       const decodedToken = helper.decodeToken((<any> response).jwtToken);
+      console.log(decodedToken);
       localStorage.setItem("access_token",(<any> response).jwtToken);
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
-      localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
       localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
       localStorage.setItem("UserName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
-
+      localStorage.setItem("RoleName",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
+      localStorage.setItem("HospitalID",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata"]);
+      
       return response;
   }));
 
@@ -104,16 +111,17 @@ export class CommonServicesService {
       localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
       localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
       localStorage.setItem("UserName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
-
+      localStorage.setItem("RoleName",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
       return response;
   }));
 
   }
   
-UpdatePatient(FormGroup:FormGroup,userID:string,passwordtick:boolean,otptick:boolean): Observable<any>{
+UpdatePatient(FormGroup:FormGroup,hospitalID:string,userID:string,passwordtick:boolean,otptick:boolean): Observable<any>{
  
     const user = new UserModel();
     user.UserID = userID;
+    user.HospitalId = hospitalID;
     if(passwordtick)
     {
       user.Password =  FormGroup.controls.password.value;
@@ -149,8 +157,11 @@ UpdatePatient(FormGroup:FormGroup,userID:string,passwordtick:boolean,otptick:boo
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
       localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
       localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
-      localStorage.setItem("UserName","Welcome");
-
+      localStorage.setItem("HospitalName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"]);
+      localStorage.setItem("UserName","Member");
+      localStorage.setItem("RoleName",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
+      localStorage.setItem("HospitalID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"]);
+      
       return response;
   }));
 
@@ -163,6 +174,8 @@ UpdatePatient(FormGroup:FormGroup,userID:string,passwordtick:boolean,otptick:boo
     localStorage.removeItem("SelectedHospital");
     localStorage.removeItem("userID");
     localStorage.removeItem("UserName");
+    localStorage.removeItem("HospitalName");
+    localStorage.removeItem("RoleName");
     this.router.navigate(["/auth/login"]);
    }
 
@@ -173,6 +186,9 @@ UpdatePatient(FormGroup:FormGroup,userID:string,passwordtick:boolean,otptick:boo
     localStorage.removeItem("Menus");
     localStorage.removeItem("SelectedHospital");
     localStorage.removeItem("userID");
+    localStorage.removeItem("UserName");
+    localStorage.removeItem("HospitalName");
+    localStorage.removeItem("RoleName");
    }
    
    GenerateOTP(userID:string): Observable<any> {

@@ -1,8 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Hospital.Core.Models
 {
@@ -20,5 +18,7 @@ namespace Hospital.Core.Models
         public long PhoneNumber { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string HospitalLogo { get; set; }
+
     }
 }

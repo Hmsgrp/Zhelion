@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-   // [Authorize]
+    [Authorize]
     public class HospitalController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -35,6 +35,7 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetHospitals());
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetHospital/{id}", Name = "GetHospital")]
         public IActionResult GetHospital(string id)
@@ -67,7 +68,16 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.UpdateHospital(hospital));
         }
 
-     }
+        [HttpGet]
+        [Route("GetpatientList/{hospitalID}", Name = "GetpatientList")]
+        public IActionResult GetpatientList(string hospitalID)
+        {
+            return Ok(_hospitalServices.GetpatientList(hospitalID));
+        }
+
+
+
+    }
 
 
 }

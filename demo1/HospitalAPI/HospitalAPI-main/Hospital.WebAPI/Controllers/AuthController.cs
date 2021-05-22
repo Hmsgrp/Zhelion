@@ -38,17 +38,34 @@ namespace Hospital.WebAPI.Controllers
             {
                 var _user = _hospitalServices.GetUserByUserName(user.UserName);
                 var roleMenuInfo = _hospitalServices.GetMenuRoleMapByRoleId(_user.RoleId);
-                var builder = new StringBuilder();
-                foreach (var menu in roleMenuInfo.MenuInfo)
+                var hospitalID = _hospitalServices.GetSelectedHospitalforLabUser(_user.UserID).HospitalId;
+                if(hospitalID ==null)
                 {
-                    builder.Append(menu.MenuName).Append("|");
+                    hospitalID = "";
+                }
+                var builder = new StringBuilder();
+               
+                if (roleMenuInfo.MenuInfo != null)
+                {
+                    foreach (var menu in roleMenuInfo.MenuInfo)
+                    {
+                        builder.Append(menu.MenuName).Append("|");
+                    }
+                }
+                else
+                {
+                    roleMenuInfo.RoleName = "No Role Added";
+                    builder.Append("NoMenusFound");
                 }
                 string menuIdList = builder.ToString();
+
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Name,_user.FullName),
                     new Claim(ClaimTypes.Role,roleMenuInfo.RoleName),
-                    new Claim(ClaimTypes.Anonymous, menuIdList)
+                    new Claim(ClaimTypes.Anonymous, menuIdList),
+                    new Claim(ClaimTypes.NameIdentifier,_user.UserID),
+                    new Claim(ClaimTypes.UserData,hospitalID),
                 };
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenManagement.Secret));
                 var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -100,7 +117,7 @@ namespace Hospital.WebAPI.Controllers
                 string menuIdList = builder.ToString();
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Name,_user.FullName),
                     new Claim(ClaimTypes.Role,roleMenuInfo.RoleName),
                     new Claim(ClaimTypes.Anonymous, menuIdList),
                     new Claim(ClaimTypes.Uri,hospitalJson),
@@ -137,7 +154,7 @@ namespace Hospital.WebAPI.Controllers
             {
                 var _user = _hospitalServices.GetUserByUserName(user.UserName);
                 var roleMenuInfo = _hospitalServices.GetMenuRoleMapByRoleId(_user.RoleId);
-
+                var hospital = _hospitalServices.GetHospital(_user.HospitalId);
                 var builder = new StringBuilder();
                 foreach (var menu in roleMenuInfo.MenuInfo)
                 {
@@ -146,10 +163,12 @@ namespace Hospital.WebAPI.Controllers
                 string menuIdList = builder.ToString();
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Name,user.UserName),
+                    new Claim(ClaimTypes.Name,_user.FullName),
                     new Claim(ClaimTypes.Role,roleMenuInfo.RoleName),
                     new Claim(ClaimTypes.Anonymous, menuIdList),
                     new Claim(ClaimTypes.NameIdentifier,_user.UserID),
+                    new Claim(ClaimTypes.GivenName,hospital.HospitalName),
+                    new Claim(ClaimTypes.Surname,hospital.HospitalId),
                 };
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenManagement.Secret));
                 var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -167,6 +186,14 @@ namespace Hospital.WebAPI.Controllers
                 });
             }
             return Unauthorized();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("GetUserMappingDetails/{refID}", Name = "GetUserMappingDetails")]
+        public IActionResult GetUserMappingDetails(string refID)
+        {
+            return Ok(_hospitalServices.GetUserMappingDetails(refID));
         }
     }
 }

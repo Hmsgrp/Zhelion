@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -67,7 +67,7 @@ namespace Hospital.WebAPI.Controllers
         {
             return Ok(_hospitalServices.UpdateUser(user));
         }
-	    [AllowAnonymous]
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetSignUpLink/{refID}", Name = "GetSignUpLink")]
         public IActionResult GetSignUpLink(string refID)

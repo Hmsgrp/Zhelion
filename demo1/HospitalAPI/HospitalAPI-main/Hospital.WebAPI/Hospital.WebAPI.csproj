@@ -6,10 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\DoctorAuthenticationController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.11.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.11" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.9.0" />
@@ -19,6 +16,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hospital.Core\Hospital.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PaytmChecksum">
+      <HintPath>ExternalReferences\PaytmChecksum.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

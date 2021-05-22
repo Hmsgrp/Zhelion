@@ -138,7 +138,7 @@ export class ListsWidget10Component implements OnInit {
   { 
     this.updateMessage = "Deleted Successfully."
     this.showUpdateNotification = true;
-    this.refreshData();
+    this.refreshMapping();
     this.closeAllNotification(); 
   }
 

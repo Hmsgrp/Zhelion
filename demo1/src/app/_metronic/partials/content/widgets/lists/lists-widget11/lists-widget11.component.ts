@@ -31,7 +31,9 @@ export class ListsWidget11Component implements OnInit {
 
   defaultVal = {
     testName: '',
-    testDescription: ''
+    testDescription: '',
+    amount : '',
+    unit : ''
   };
 
   ngOnInit(): void { 
@@ -57,11 +59,23 @@ export class ListsWidget11Component implements OnInit {
           Validators.minLength(5),
           Validators.maxLength(30),
         ]),
+      ],
+      amount: [
+        this.defaultVal.amount,
+        Validators.compose([
+          Validators.required,
+        ]),
+      ] ,
+      unit: [
+        this.defaultVal.unit,
+        Validators.compose([
+          Validators.required,
+        ]),
       ] 
     });
   }
 
-  edit(ID:string,testName:string,testDescription:string)
+  edit(ID:string,testName:string,testDescription:string,amount:number,unit:string)
   {
     this.HandleEdit(ID);
     this.TestRegistration = this.fb.group({
@@ -70,6 +84,12 @@ export class ListsWidget11Component implements OnInit {
       ],
       testDescription: [
         testDescription
+      ],
+      amount: [
+        amount
+      ],
+      unit: [
+        unit
       ]
     });
   }

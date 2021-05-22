@@ -1,4 +1,3 @@
-
 <!--begin::Signin-->
 <div class="login-form login-signin">
     <!--begin::Form-->
@@ -88,18 +87,6 @@
           <button class="btn btn-outline-secondary"  (click)="getOTP()" type="button">Click to Sent OTP</button>
         </div>
       </div>
-
-   
-      <div class="form-group">
-        <label class="checkbox mb-0 font-weight-bolder">
-          <input type="checkbox"  formControlName="sgwithPassword" name="sgwithPassword" 
-          (change)="isChangesgwithPasswordToggle($event.target.checked ? 'true' : 'false')"
-          />&nbsp;
-          Login with Password&nbsp;&nbsp;
-          <span></span>
-        </label>
-      </div>
-
             <!--begin::Form group-->
       <div *ngIf="showPasswordFields" class="form-group">
         <div class="d-flex justify-content-between mt-n5">
@@ -116,7 +103,7 @@
           [ngClass]="{ 'is-invalid': loginForm.controls['password'].invalid }"
         />
 
-        <div>
+        <!-- <div>
           <span class="text-muted font-weight-bold font-size-h8"
           >Password Not Created Yet?
           <a
@@ -126,11 +113,19 @@
             >Create Password</a
           >
         </span>
-        </div>
+        </div> -->
   
       </div>
       <!--end::Form group-->
-     
+      <div class="form-group">
+        <label class="checkbox mb-0 font-weight-bolder">
+          <input type="checkbox"  formControlName="sgwithPassword" name="sgwithPassword" 
+          (change)="isChangesgwithOTPToggle($event.target.checked ? 'true' : 'false')"
+          />&nbsp;
+          Login with OTP&nbsp;&nbsp;
+          <span></span>
+        </label>
+      </div>
   
       <!--begin::Action-->
       <div class="pb-lg-0 pb-5">

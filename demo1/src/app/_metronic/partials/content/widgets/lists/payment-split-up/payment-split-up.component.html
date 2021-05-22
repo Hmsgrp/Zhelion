@@ -1,0 +1,174 @@
+<div *ngIf="hasError" class="alert alert-danger alert-dismissible fade show" role="alert">
+  {{errorText}}
+  <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card card-custom card-stretch gutter-b">
+      <!-- Header -->
+      <div class="card-header align-items-center border-0 mt-4">
+        <h3 class="card-title align-items-start flex-column">
+          <span class="font-weight-bolder text-dark">Payment SplitUp</span>
+          <span class="text-muted mt-3 font-weight-bold font-size-sm">Add New SplitUp</span>
+        </h3>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-4">
+        <div *ngIf="showPostSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{postSuccessText}}
+          <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form #myForm="ngForm" (submit)="submitForm()">
+
+          <div class="form-group">
+            <label for="uname">Select Test</label>
+            <ng-select #MyNgSelect bindLabel="name"
+            (change)="onItemSelect($event)"
+            placeholder="Select Test" [(ngModel)]="selected" name="selectTest"
+              [multiple]="false" required>
+              <ng-option [value]="test.testId" *ngFor="let test of testModel">
+                {{test.testName}}
+              </ng-option>
+            </ng-select>
+            <br>
+            <span style="color: red;">Net Payable: {{testAmount}}</span>
+            <div class="invalid-feedback">Oops, you missed this one.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="uname">Doctor Percent</label>
+            <input type="number" autocomplete="off" id="doctorPercent" name="doctorPercent" #doctorPercent="ngModel"
+              placeholder="Doctor Percent" ngModel class="form-control form-control-lg rounded-0" required min="0"
+              max="100" 
+              pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"
+              number>
+
+            <div *ngIf="doctorPercent.invalid && (doctorPercent.dirty || doctorPercent.touched)" style="color: red;">
+              <div *ngIf="doctorPercent.errors.required">
+                Doctor Percent is required.
+              </div>
+              <div [hidden]="!doctorPercent.errors.pattern">
+                Number should be between 0 and 100
+            </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="mobileNumber">Lab Percent</label>
+            <input type="number" min="0" autocomplete="off" id="labPercent" name="labPercent" #labPercent="ngModel"
+              placeholder="Lab Percent" ngModel class="form-control form-control-lg rounded-0" required min="0"
+              max="100" 
+              pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"
+              number>
+
+            <div *ngIf="labPercent.invalid && (labPercent.dirty || labPercent.touched)" style="color: red;">
+              <div *ngIf="labPercent.errors.required">
+                Lab Percent is required.
+              </div>
+              <div [hidden]="!labPercent.errors.pattern">
+                Number should be between 0 and 100
+            </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="uname">Company Percent</label>
+            <input type="number" autocomplete="off" id="companyPercent" name="companyPercent" #companyPercent="ngModel"
+              placeholder="Company Percent" ngModel class="form-control form-control-lg rounded-0" required min="0"
+              max="100"
+              pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"
+              number>
+            <div *ngIf="companyPercent.invalid && (companyPercent.dirty || companyPercent.touched)" style="color: red;">
+              <div *ngIf="companyPercent.errors.required">
+                Company Percent is required.
+              </div>
+              <div [hidden]="!companyPercent.errors.pattern">
+                Number should be between 0 and 100
+            </div>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" [disabled]="!myForm.valid">{{buttontext}}</button>
+          &nbsp;
+          <button *ngIf="isEdit" (click)="resetData()" type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-custom">
+      <!-- Header -->
+      <div class="card-header border-0">
+        <h3 class="card-title font-weight-bolder text-dark">View</h3>
+        <div class="card-toolbar">
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="card-body pt-0">
+        <div *ngIf="showUpdateNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+          {{updateMessage}}
+          <button type="button" (click)="closeNotification()" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">TestName</th>
+              <th scope="col">Doc</th>
+              <th scope="col">Lab</th>
+              <th scope="col">com</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="showEmpty">
+              <td></td>
+              <td style="color: red;">No Records Found</td>
+              <td></td>
+            </tr>
+            <tr *ngFor="let psup of PaymentSplitUp | paginate:{itemsPerPage: 5, currentPage:p}">
+              <td>{{psup.testName}}</td>
+              <td>
+                {{psup.doctorPercent}}
+              </td>
+              <td>
+                {{psup.labPercent}}
+              </td>
+              <td>
+                {{psup.company}}
+              </td>
+              <td>
+                <button title="Edit remark" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
+                (click)="edit(psup.splitUpID,psup.testId,psup.doctorPercent,psup.labPercent,psup.company)">
+                <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
+                  class="svg-icon svg-icon-md svg-icon-primary">
+                </span>
+              </button>
+                <button title="Delete Hospital" class="btn btn-icon btn-light btn-hover-danger btn-sm"
+                  (click)="delete(psup.splitUpID)">
+                  <span [inlineSVG]="'./assets/media/svg/icons/General/Trash.svg'" cacheSVG="true"
+                    class="svg-icon svg-icon-md svg-icon-danger">
+                  </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!--end::Section-->
+      </div>
+      <hr>
+      <div id="pagination" class="pagination justify-content-end marginRight10px">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+      </div> 
+      <!--end::Item-->
+    </div>
+
+  </div>
+</div>

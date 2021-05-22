@@ -10,5 +10,13 @@
     </a>
   </li>
   <!-- end::1 Level -->
+  <li class="menu-item menu-item-rel" routerLinkActive="menu-item-active" style="padding-left: 250px;">
+    <a class="menu-link" routerLink="/dashboard" routerLinkActive="active">
+      <span class="menu-text">{{SelectedhospitalName}}</span>
+      <ng-container *ngIf="rootArrowEnabled">
+        <i class="menu-arrow"></i>
+      </ng-container>
+    </a>
+  </li>
 </ul>
 <!-- end::Header Nav -->

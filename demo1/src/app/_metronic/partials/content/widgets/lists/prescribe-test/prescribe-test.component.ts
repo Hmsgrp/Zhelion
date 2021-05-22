@@ -18,7 +18,8 @@ export class PrescribeTestComponent implements OnInit {
   defaultVal = {
     patientID: '',
     mobileNumber: '',
-    roleSelection:[""]
+    roleSelection:[""],
+    TestNumber : ''
   };
   UserRegistration: FormGroup;
   roles : RoleModel[] = [];
@@ -35,6 +36,8 @@ export class PrescribeTestComponent implements OnInit {
   tests : testModel[] = [];
   selected:string;
   errorSelected :boolean;
+  showPostSuccessNotification:boolean;
+  postSuccessText:string;
    // private fields
    private unsubscribe: Subscription[] = [];
   constructor(private fb: FormBuilder , private dashboardServices: DashboardServicsService,private cd: ChangeDetectorRef) {}
@@ -46,6 +49,8 @@ export class PrescribeTestComponent implements OnInit {
     this.ErrorOccuredtext = "No errors found";
     this.updateMessage = "";
     this.showSuccessNotification = false;
+    this.showPostSuccessNotification=false;
+    this.postSuccessText="";
   }
 
 
@@ -67,8 +72,14 @@ export class PrescribeTestComponent implements OnInit {
         this.defaultVal.patientID,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15),
+          Validators.minLength(1),
+          Validators.maxLength(30),
+        ]),
+      ],
+      TestNumber: [
+        this.defaultVal.TestNumber,
+        Validators.compose([
+          Validators.required
         ]),
       ]
     });
@@ -90,22 +101,22 @@ export class PrescribeTestComponent implements OnInit {
   {
     this.dashboardServices.AddNewPrescribe(this.UserRegistration,this.selected)
       .subscribe(data => {
-        console.log(11);
-       this.UserRegistration.reset();
-       this.updateMessage = "Updated Successfully."
-       this.showSuccessNotification=true;
-       this.closenewNotification();
-       this.cd.detectChanges();
+        this.handleSuccessforPost();
       },
       HttpErrorResponse => {
         this.handleError(HttpErrorResponse.error.errorDetails);
       }  
       );
   }
+
   
   getTests() {
     this.dashboardServices.getTest()
       .subscribe(data => {
+        if(data.length == 1)
+        {
+          this.selected = data[0].testId.toString();
+        }
         this.tests = data;
         this.cd.detectChanges();
       },
@@ -126,6 +137,7 @@ export class PrescribeTestComponent implements OnInit {
   {
     this.closeNotification();
     setTimeout(() => {
+      this.showPostSuccessNotification = false;
       this.showSuccessNotification = false;
       this.cd.detectChanges();
     }, 3000);
@@ -158,9 +170,17 @@ export class PrescribeTestComponent implements OnInit {
 
   handleError(error:string)
   {
-    console.log(error);
     this.ErrorOccuredtext = error;
     this.hasError = true;
+    this.cd.detectChanges();
+  }
+
+  handleSuccessforPost(){
+    this.postSuccessText = "Added Successfully";
+    this.selected = "";
+    this.UserRegistration.reset();
+    this.showPostSuccessNotification = true;
+    this.closenewNotification();
     this.cd.detectChanges();
   }
 

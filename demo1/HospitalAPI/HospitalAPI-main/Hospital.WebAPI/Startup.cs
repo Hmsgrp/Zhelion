@@ -4,12 +4,14 @@ using Hospital.Core.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Hospital.WebAPI
 {
@@ -87,6 +89,15 @@ namespace Hospital.WebAPI
                 {
                     {securityScheme, new string[] { }}
                 });
+
+                services.Configure<FormOptions>(o =>  // currently all set to max, configure it to your needs!
+                {
+                    o.ValueLengthLimit = int.MaxValue;
+                    o.MultipartBodyLengthLimit = long.MaxValue; // <-- !!! long.MaxValue
+                    o.MultipartBoundaryLengthLimit = int.MaxValue;
+                    o.MultipartHeadersCountLimit = int.MaxValue;
+                    o.MultipartHeadersLengthLimit = int.MaxValue;
+                });
             });
             services.AddControllers();
         }
@@ -101,6 +112,12 @@ namespace Hospital.WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hospital.WebAPI v1"));
             }
 
+            app.Use(async (context, next) =>
+            {
+                context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = null; // unlimited I guess
+                await next.Invoke();
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -111,6 +128,10 @@ namespace Hospital.WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("MVC didn't find anything!");
             });
         }
     }

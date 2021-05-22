@@ -8,5 +8,6 @@ namespace Hospital.Core.Models
     {
         public User userDetails { get; set; }
         public Lab labDetails { get; set; }
+        public LabMapping labMappingDetails { get; set; }
     }
 }

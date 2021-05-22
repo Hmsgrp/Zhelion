@@ -1,5 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { LayoutService } from '../../../../../core';
+import { chart } from 'src/app/_metronic/partials/content/widgets/models/chart.model';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+import { DashboardServicsService } from '../../../../../../modules/commonServices/dashboard-servics.service';
+import { DatePipe } from '@angular/common';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 @Component({
   selector: 'app-tiles-widget1',
@@ -17,7 +23,9 @@ export class TilesWidget1Component implements OnInit {
   colorsThemeBaseColor = '';
   colorsThemeLightColor = '';
 
-  constructor(private layout: LayoutService) {
+  constructor(private cd: ChangeDetectorRef,private dashboardServices: DashboardServicsService,private layout: LayoutService,
+    private datePipe: DatePipe
+    ) {
   }
 
   setupLayoutProps() {
@@ -36,9 +44,46 @@ export class TilesWidget1Component implements OnInit {
     );
   }
 
+  public lineChartData:chart[] = [];
+
+  public lineChartLabels: Label[] = [];
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+    	display: true
+    }
+  };
+  public lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,0,0,0.3)',
+    },
+  ];
+  public lineChartLegend = true;
+  public lineChartType = 'line';
+  public lineChartPlugins = [];
+
+  getindividualReport :any;
+  parameterNames: any[];
+  pbnames:any[];
+  ResultID:string;
+  ResultDetails:any;
+  dataloaded:boolean;
+  testdata:any[] = [];
+  craa:chart[] = [];
+  defaultVal = {
+    data: [],
+    label: '',
+  };
+  isempty:boolean;
+  
+
   ngOnInit(): void {
     this.setupLayoutProps();
     this.chartOptions = this.getChartOptions();
+    this.ResultID = "5599c639-572b-4ac1-930d-c48d49a0ec1b";
+    this.isempty =false;
+    this.result();
   }
 
   getChartOptions() {
@@ -180,4 +225,50 @@ export class TilesWidget1Component implements OnInit {
       }
     };
   }
+
+  result()
+  {
+    this.dashboardServices.RetriveReportforLatestOrder()
+      .subscribe(data => {
+        if(data.last30DaysResultsList == null)
+        {
+          this.isempty =true;
+        }
+        this.getindividualReport = data.currentResult.resultJSON;
+        this.parameterNames = [];
+
+        for (var val of this.getindividualReport) {
+          this.parameterNames.push(val.parameterName)
+          this.defaultVal.data.push(val.testedResult);
+       }
+
+        
+       for (var val of data.last30DaysResultsList) {
+         this.lineChartLabels.push(this.datePipe.transform(val.createdOn,"MMM-dd-yy"));
+         if(val.resultJSON)
+         {
+            for (var val1 of val.resultJSON) {
+              if(this.craa.filter(x=>x.label == val1.parameterName).length >0)
+              {
+                this.craa.find(x=>x.label == val1.parameterName).data.push(Number(val1.testedResult));
+              }
+              else
+              {
+                const c = new chart();
+                c.label = val1.parameterName ;
+                c.data.push(Number(val1.testedResult));
+                this.craa.push(c);
+              } 
+            }
+         }
+     }
+        this.lineChartData = this.craa;
+        this.cd.detectChanges();
+      },
+      HttpErrorResponse =>{
+      //  this.handleError(HttpErrorResponse.message+" Check Api");
+      }
+      )    
+  }
+
 }

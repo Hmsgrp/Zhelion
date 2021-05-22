@@ -17,5 +17,15 @@
 	    public string URLMapping_Collection_Name { get; set; }
         public string TestMap_Collection_Name { get; set; }
 
+        public string Counter_Collection_Name { get; set; }
+
+        public string Prescription_Collection_Name { get; set; }
+        public string PaymentHistory_Collection_Name { get; set; }
+
+        public string Result_Collection_Name { get; set; }
+        public string Notification_Collection_Name { get; set; }
+
+        public string Lab_Mapping_Collection_Name { get; set; }
+
     }
 }

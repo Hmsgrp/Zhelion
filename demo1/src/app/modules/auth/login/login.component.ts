@@ -6,6 +6,7 @@ import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonServicesService } from '../_services/common-services.service';
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { CommonServicesService } from '../_services/common-services.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
- 
+  spinnerType = SPINNER.wanderingCubes;
   defaultAuth = {
     username: '',
     password: '',
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit, OnDestroy {
    private route: ActivatedRoute,
    private router: Router,
    private CommonServices: CommonServicesService,
-   private cd: ChangeDetectorRef
+   private cd: ChangeDetectorRef,
+   private ngxService: NgxUiLoaderService
   ) {
    this.isLoading$ = this.authService.isLoading$;
    // redirect to home if already logged in
@@ -101,15 +103,16 @@ export class LoginComponent implements OnInit, OnDestroy {
   
   submit(){
     this.hasError = false;
-  console.log(this.f.password.value);
    if(this.f.password.value =="" && this.f.OTP.value =="")
    {
     this.FieldError=true;
    }
    else{
+    this.ngxService.start(); 
     this.CommonServices.Login(this.f.username.value, this.f.password.value)
      .subscribe(
                 data => {
+                  this.ngxService.stop(); 
                   this.hasError = false;
                   this.router.navigate(["/dashboard"]);
                 },

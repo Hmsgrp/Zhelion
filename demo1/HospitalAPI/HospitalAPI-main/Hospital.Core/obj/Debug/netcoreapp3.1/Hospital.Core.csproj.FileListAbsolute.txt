@@ -38,12 +38,30 @@ E:\APP Devlopment\Rajesh APP\Hospital\Hospital.Core\bin\Debug\netcoreapp3.1\Hosp
 E:\APP Devlopment\Rajesh APP\Hospital\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
 E:\APP Devlopment\Rajesh APP\Hospital\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.dll
 E:\APP Devlopment\Rajesh APP\Hospital\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.pdb
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.deps.json
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.dll
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csprojAssemblyReference.cache
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfoInputs.cache
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfo.cs
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csproj.CoreCompileInputs.cache
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.dll
-C:\MyOwn\demo1\HospitalAPI-main (5)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.deps.json
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csprojAssemblyReference.cache
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfoInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfo.cs
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csproj.CoreCompileInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.pdb
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.deps.json
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.dll
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csprojAssemblyReference.cache
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csproj.CoreCompileInputs.cache
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfoInputs.cache
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfo.cs
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.dll
+E:\OutSource\HospitalAPI-main (8)\HospitalAPI-main (8)\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.deps.json
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfoInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.AssemblyInfo.cs
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csproj.CoreCompileInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.Core\obj\Debug\netcoreapp3.1\Hospital.Core.csprojAssemblyReference.cache

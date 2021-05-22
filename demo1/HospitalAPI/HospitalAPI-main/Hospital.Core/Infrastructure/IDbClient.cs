@@ -21,5 +21,13 @@ namespace Hospital.Core.Infrastructure
 	    IMongoCollection<MappingURL> GetMappingURLCollection();
         IMongoCollection<TestMap> GetTestMapCollection();
 
+        IMongoCollection<Counter> GetCountersCollection();
+
+        IMongoCollection<PrescriptionOrder> GetPrescriptionOrdersCollection();
+        IMongoCollection<PaymentHistory> GetPaymentHistoryCollection();
+        IMongoCollection<Result> GetResultCollection();
+        IMongoCollection<Notification> GetNotificationCollection();
+        IMongoCollection<LabMapping> GetLabMappingCollection();
+
     }
 }

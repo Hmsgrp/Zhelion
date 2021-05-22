@@ -56,7 +56,18 @@ import { AddmenusModalComponent } from './lists/components/add-menus-modal/add-m
 import {NgxPaginationModule} from 'ngx-pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaymentComponent } from './lists/payment/payment.component';
-
+import { PaymentRedirectComponent } from './lists/payment-redirect/payment-redirect.component';
+import { PaymentSplitUpComponent } from './lists/payment-split-up/payment-split-up.component';
+import {NgxPrintModule} from 'ngx-print';
+import { AddResultComponent } from './lists/add-result/add-result.component';
+import { ViewResultComponent } from './lists/view-result/view-result.component';
+import { PrintResultComponent } from './lists/view-result/print-result/print-result.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ChartsModule } from 'ng2-charts';
+import { ViewReportforDoctorComponent } from './lists/view-reportfor-doctor/view-reportfor-doctor.component';
+import { ViewReportforPatientComponent } from './lists/view-reportfor-patient/view-reportfor-patient.component';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { ActivePatientsComponent } from './lists/active-patients/active-patients.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +116,15 @@ import { PaymentComponent } from './lists/payment/payment.component';
     //Edit Grid
     EditParameterModalComponent,
     AddmenusModalComponent,
-    PaymentComponent
+    PaymentComponent,
+    PaymentRedirectComponent,
+    PaymentSplitUpComponent,
+    AddResultComponent,
+    ViewResultComponent,
+    PrintResultComponent,
+    ViewReportforDoctorComponent,
+    ViewReportforPatientComponent,
+    ActivePatientsComponent
   ],
   imports: [
     CommonModule,
@@ -118,6 +137,10 @@ import { PaymentComponent } from './lists/payment/payment.component';
     HttpClientModule,
     NgxPaginationModule,
     NgSelectModule,
+    NgxPrintModule,
+    Ng2SearchPipeModule,
+    ChartsModule,
+    NgxUiLoaderModule
   ],
   exports: [
     // Advanced Tables
@@ -141,6 +164,7 @@ import { PaymentComponent } from './lists/payment/payment.component';
     ListsWidget14Component,
     PrescribeTestComponent,
     PaymentComponent,
+    PaymentSplitUpComponent,
     // Mixed
     MixedWidget1Component,
     MixedWidget4Component,
@@ -164,7 +188,13 @@ import { PaymentComponent } from './lists/payment/payment.component';
     // Other
     Widget4DropdownComponent,
     EditParameterModalComponent,
-    AddmenusModalComponent
+    AddmenusModalComponent,
+    PrintResultComponent,
+    AddResultComponent,
+    ViewResultComponent,
+    ViewReportforDoctorComponent,
+    ViewReportforPatientComponent,
+    ActivePatientsComponent
   ],
 })
 export class WidgetsModule { }

@@ -27,7 +27,14 @@
         "MENUROLEMAPS_COLLECTION_NAME": "MenuRoleMaps",
         "PAYSPLITUP_COLLECTION_NAME": "PaySplitUPs",
         "URLMAPPING_COLLECTION_NAME": "MappingURLs",
-        "TESTMAP_COLLECTION_NAME": "TestMaps"
+        "TESTMAP_COLLECTION_NAME": "TestMaps",
+        "TESTRESULT_COLLECTION_NAME": "TestResults",
+        "COUNTER_COLLECTION_NAME": "Counters",
+        "PRESCRIPTION_COLLECTION_NAME": "PrescriptionOrder",
+        "PAYMENTHISTORY_COLLECTION_NAME": "PaymentHistory",
+        "RESULT_COLLECTION_NAME": "Result",
+        "NOTIFICATION_COLLECTION_NAME": "Notification",
+        "LAB_MAPPING_COLLECTION_NAME": "LabMapping"
       }
     },
     "Hospital.WebAPI": {
@@ -50,7 +57,14 @@
         "MENUROLEMAPS_COLLECTION_NAME": "MenuRoleMaps",
         "PAYSPLITUP_COLLECTION_NAME": "PaySplitUPs",
         "URLMAPPING_COLLECTION_NAME": "MappingURLs",
-        "TESTMAP_COLLECTION_NAME": "TestMaps"
+        "TESTMAP_COLLECTION_NAME": "TestMaps",
+        "TESTRESULT_COLLECTION_NAME": "TestResults",
+        "COUNTER_COLLECTION_NAME": "Counters",
+        "PRESCRIPTION_COLLECTION_NAME": "PrescriptionOrder",
+        "PAYMENTHISTORY_COLLECTION_NAME": "PaymentHistory",
+        "RESULT_COLLECTION_NAME": "Result",
+        "NOTIFICATION_COLLECTION_NAME": "Notification",
+        "LAB_MAPPING_COLLECTION_NAME": "LabMapping"
       }
     }
   }

@@ -7,7 +7,9 @@ export const environment = {
   appVersion: 'v717demo1',
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: true,
-  apiUrl: 'https://localhost:5001/'
+  apiUrl: 'https://localhost:44317/',
+  paytmUrl:'https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?',
+  mid:'VnuRWW38945630279333'
 };
 
 /*

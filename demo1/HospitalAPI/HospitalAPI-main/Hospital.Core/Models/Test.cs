@@ -13,6 +13,7 @@ namespace Hospital.Core.Models
         public string TestName { get; set; }
         public string TestDescription { get; set; }
         public decimal Amount { get; set; }
+        public string Unit { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
     }

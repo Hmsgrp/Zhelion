@@ -4,5 +4,6 @@ export class prescribeTest {
     outMobileNo: number;
     hospId: string;
     doctorId: string;
+    numberOfTest:number;
   }
   

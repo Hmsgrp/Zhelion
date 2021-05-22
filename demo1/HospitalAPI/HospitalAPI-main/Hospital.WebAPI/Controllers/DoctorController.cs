@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class DoctorController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -91,8 +91,23 @@ namespace Hospital.WebAPI.Controllers
         [Route("PrescribeTest", Name = "PrescribeTest")]
         public IActionResult PrescribeTest(PrescribeTestResult prescribeTest)
         {
-            return Ok(_hospitalServices.PrescribeTest(prescribeTest.testId,prescribeTest.patientId,prescribeTest.outMobileNo,prescribeTest.hospId,prescribeTest.doctorId));
+            return Ok(_hospitalServices.PrescribeTest(prescribeTest.testId,prescribeTest.patientId,prescribeTest.outMobileNo,prescribeTest.hospId,prescribeTest.doctorId, prescribeTest.numberOfTest));
             
+        }
+
+        [HttpGet]
+        [Route("GetActiveNotification/{userID}", Name = "GetActiveNotification")]
+        public IActionResult GetActiveNotification(string userID)
+        {
+            return Ok(_hospitalServices.GetActiveNotification(userID));
+        }
+
+
+        [HttpGet]
+        [Route("CloseNotification/{NotificationID}", Name = "CloseNotification")]
+        public IActionResult CloseNotification(string NotificationID)
+        {
+            return Ok(_hospitalServices.CloseNotification(NotificationID));
         }
     }
 }

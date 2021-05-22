@@ -1,0 +1,65 @@
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container rounded bg-white">
+        <div class="card card-custom card-stretch gutter-b">
+          <!-- Header -->
+          <div class="card-header align-items-center border-0 mt-4">
+            <h3 class="card-title align-items-start flex-column">
+              <span class="font-weight-bolder text-dark">Patients</span>
+              <span class="text-muted mt-3 font-weight-bold font-size-sm">
+                Active Patient List</span>
+            </h3>
+          </div>
+          <!-- begin::Alert info-->
+  
+  
+          <!-- end::Alert info -->
+  
+          <!-- Body -->
+          <div class="card-body pt-4">
+            <br>
+            <div class="form-group pull-right" style="float: left;">
+              <input type="text"  [(ngModel)]="searchText" class="search form-control" placeholder="What you looking for?">
+            </div>
+            <div>
+              <br>
+
+              <form #formRef="ngForm">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">PatientID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let r of results | filter:searchText | paginate:{itemsPerPage: 5, currentPage:p} ">
+                      <td>{{r.hospital_PID}}</td>
+                      <td>
+                      {{r.name}}
+                      </td>
+                      <td>
+                        <button title="Generate Report" class="btn btn-primary"
+                        (click)="GenerateReport(r.hospitalID,r.hospital_PID)">
+                        View Report
+                      </button>
+                    </td>
+                    </tr>
+                  </tbody>
+               
+                </table>
+              </form>
+              <hr>
+                   <div id="pagination" class="pagination justify-content-end marginRight10px">
+                          <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                     </div> 
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

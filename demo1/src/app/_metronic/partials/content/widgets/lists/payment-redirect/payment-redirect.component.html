@@ -1,0 +1,122 @@
+
+  <div class="row" id="print-section">
+    <div class="col-md-12">
+      <div class="container rounded bg-white" style="margin-bottom: 50px">
+        <div class="row d-flex justify-content-center pb-5">
+            <div class="col-sm-5 col-md-5 ml-1" style="margin-top: 40px; margin-bottom: 50px">
+                <div class="py-4 d-flex flex-row">
+                    <h4><span class="fa fa-check-square-o"></span><b>Transaction Status</b> </h4>
+                </div>
+                <!-- <div class="rounded bg-light d-flex">
+                    <div class="p-2">Payment mode</div>
+                    <div class="ml-auto p-2">Paytm</div>
+                </div> -->
+                <hr>
+
+                <div class="payment">
+                    <div class="payment_header" *ngIf="transactionstatus">
+                       <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+                    </div>
+                    <div class="payment_headerError" *ngIf="!transactionstatus">
+                        <div class="check"><i class="fa fa-times" aria-hidden="true"></i></div>
+                     </div>
+                    <div class="content" *ngIf="transactionstatus">
+                       <h1>Payment Success !</h1>
+                       <p>Your Payment for the following test is success.Thanks for the Payment </p>
+                       <div> <button
+                        printTitle="Payment Receipt"  
+                        [printStyle]="{h4 : {'color': 'red'}}"
+                        [useExistingCss]="true" 
+                        printSectionId="print-section"  class="btn btn-primary btn-block" ngxPrint>Print Receipt</button> </div>
+                        
+                    </div>
+                    <div class="content" *ngIf="!transactionstatus">
+                        <h1>Payment Failed !</h1>
+                        <p>Your Payment for the following test is failed/Pending.Please try again </p>
+                        <div> <input type="button" disabled  value="Print Receipt"  class="btn btn-primary btn-block"> </div>
+                     </div>
+                 </div>
+            </div>
+
+
+
+            <div class="col-sm-5 col-md-5 ml-1 offset-md-1" *ngIf="transactionstatus" style="margin-top: 40px; margin-bottom: 50px" >
+                <div class="py-4 d-flex justify-content-end">
+                    <h6><a href="#"></a></h6>
+                </div>
+                <div class="bg-light rounded d-flex flex-column">
+                    <div class="p-2 ml-3">
+                        <h4>Transaction Details</h4>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">OrderID</div>
+                        <div class="ml-auto">{{orderId}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Bank TransactionID</div>
+                        <div class="ml-auto">{{bankTxnId}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Bank Name</div>
+                        <div class="ml-auto">{{bankName}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Card type</div>
+                        <div class="ml-auto">{{cardScheme}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">PaymentMode</div>
+                        <div class="ml-auto">Paytm</div>
+                    </div>
+                    <div class="border-top px-4 mx-3"> </div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-6">Patient ref</div>
+                        <div class="ml-auto">{{patientName}}</div>
+                    </div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-6">Test Name</div>
+                        <div class="ml-auto">{{testName}}</div>
+                    </div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-6">No Of Test</div>
+                        <div class="ml-auto">{{noOftest}}</div>
+                    </div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-6">Transaction Date</div>
+                        <div class="ml-auto">{{txnDate}}</div>
+                    </div>
+
+                    <div class="border-top px-4 mx-3"></div>
+                    <div class="border-top px-4 mx-3"></div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-8"><b>Total Amount Paid</b></div>
+                        <div class="ml-auto"><b class="green">{{txnAmount}}</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+  </div>
+
+
+
+ 
+
+  
+  
+
+ 
+
+  
+  
+ 
+
+  
+  
+
+ 
+
+  
+  

@@ -1,0 +1,67 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:55240",
+      "sslPort": 44317
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_NAME": "HospitalDB",
+        "ROLES_COLLECTION_NAME": "Roles",
+        "HOSPITALS_COLLECTION_NAME": "Hospitals",
+        "USERS_COLLECTION_NAME": "Users",
+        "LABS_COLLECTION_NAME": "Labs",
+        "TESTS_COLLECTION_NAME": "Tests",
+        "TESTPARAMETERS_COLLECTION_NAME": "TestParameters",
+        "USERHOSPITALS_COLLECTION_NAME": "UserHospitalMaps",
+        "MENUS_COLLECTION_NAME": "Menus",
+        "MENUROLEMAPS_COLLECTION_NAME": "MenuRoleMaps",
+        "PAYSPLITUP_COLLECTION_NAME": "PaySplitUPs",
+        "URLMAPPING_COLLECTION_NAME": "MappingURLs",
+        "TESTMAP_COLLECTION_NAME": "TestMaps",
+        "TESTRESULT_COLLECTION_NAME": "TestResults",
+        "COUNTER_COLLECTION_NAME": "Counters",
+        "PRESCRIPTION_COLLECTION_NAME": "PrescriptionOrder",
+        "PAYMENTHISTORY_COLLECTION_NAME": "PaymentHistory",
+        "RESULT_COLLECTION_NAME": "Result"
+      }
+    },
+    "Hospital.WebAPI": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_NAME": "HospitalDB",
+        "ROLES_COLLECTION_NAME": "Roles",
+        "HOSPITALS_COLLECTION_NAME": "Hospitals",
+        "USERS_COLLECTION_NAME": "Users",
+        "LABS_COLLECTION_NAME": "Labs",
+        "TESTS_COLLECTION_NAME": "Tests",
+        "TESTPARAMETERS_COLLECTION_NAME": "TestParameters",
+        "USERHOSPITALS_COLLECTION_NAME": "UserHospitalMaps",
+        "MENUS_COLLECTION_NAME": "Menus",
+        "MENUROLEMAPS_COLLECTION_NAME": "MenuRoleMaps",
+        "PAYSPLITUP_COLLECTION_NAME": "PaySplitUPs",
+        "URLMAPPING_COLLECTION_NAME": "MappingURLs",
+        "TESTMAP_COLLECTION_NAME": "TestMaps",
+        "TESTRESULT_COLLECTION_NAME": "TestResults",
+        "COUNTER_COLLECTION_NAME": "Counters",
+        "PRESCRIPTION_COLLECTION_NAME": "PrescriptionOrder",
+        "PAYMENTHISTORY_COLLECTION_NAME": "PaymentHistory",
+        "RESULT_COLLECTION_NAME": "Result"
+      }
+    }
+  }
+}

@@ -38,7 +38,7 @@
             id="testName"
             formControlName="testName" 
             autocomplete="off"
-            id="testName" aria-describedby="testName" placeholder="Test Name">
+            aria-describedby="testName" placeholder="Test Name">
         
             <ng-container
             [ngTemplateOutlet]="formError"
@@ -111,9 +111,39 @@
             <label for="testName"  class="font-weight-bolder">Amount</label>
             
             <input type="number" min="0" class="form-control"
-            id="testName"
+            id="amount"
+            formControlName="amount" 
             autocomplete="off"
-            id="amount" aria-describedby="amount" placeholder="amount">
+            aria-describedby="amount" placeholder="amount">
+
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Amount is required',
+              control: TestRegistration.controls['amount']
+            }"
+          ></ng-container> 
+          </div>
+
+          <div class="form-group">
+            <label for="unit"  class="font-weight-bolder">Unit</label>
+            
+            <input type="text" class="form-control"
+            id="unit"
+            formControlName="unit" 
+            autocomplete="off"
+            aria-describedby="unit" placeholder="Unit">
+        
+            <ng-container
+            [ngTemplateOutlet]="formError"
+            [ngTemplateOutletContext]="{
+              validation: 'required',
+              message: 'Unit is required',
+              control: TestRegistration.controls['unit']
+            }"
+          ></ng-container> 
+
           </div>
 
           <button type="submit" class="btn btn-primary" [disabled]="TestRegistration.invalid">{{buttontext}}</button>
@@ -183,7 +213,7 @@
           </div>
           <div>
                 <button title="Edit remark" class="btn btn-icon btn-light btn-hover-primary btn-sm mx-3"
-                  (click)="edit(test.testId,test.testName,test.testDescription)">
+                  (click)="edit(test.testId,test.testName,test.testDescription,test.amount,test.unit)">
                   <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'" cacheSVG="true"
                     class="svg-icon svg-icon-md svg-icon-primary">
                   </span>

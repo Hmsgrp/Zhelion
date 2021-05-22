@@ -1,13 +1,22 @@
 ﻿using Hospital.Core.Infrastructure;
 using Hospital.Core.Models;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Operations;
 using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.Extensions.Options;
+using MimeKit;
+using MimeKit.Text;
+using System.Net.Mail;
 
 namespace Hospital.Core.Services
 {
@@ -25,6 +34,13 @@ namespace Hospital.Core.Services
         private readonly IMongoCollection<PaySplitUp> _paySplitUps;
         private readonly IMongoCollection<MappingURL> _mappingURLS;
         private readonly IMongoCollection<TestMap> _testMaps;
+        private readonly IMongoCollection<Counter> _counterColvals;
+        private readonly IMongoCollection<PrescriptionOrder> _prescriptionOrders;
+        private readonly IMongoCollection<PaymentHistory> _payHistory;
+        private readonly IMongoCollection<Result> _results;
+        private readonly IMongoCollection<Notification> _notifications;
+        private readonly IMongoCollection<LabMapping> _labMapping;
+
         private readonly IConfiguration _iconfiguration;
         private static Random random = new Random();
         readonly ExceptionResult excep = new ExceptionResult();
@@ -43,7 +59,12 @@ namespace Hospital.Core.Services
             _mappingURLS = dbClient.GetMappingURLCollection();
             _testMaps = dbClient.GetTestMapCollection();
             _iconfiguration = iconfiguration;
-
+            _counterColvals = dbClient.GetCountersCollection();
+            _prescriptionOrders = dbClient.GetPrescriptionOrdersCollection();
+            _payHistory = dbClient.GetPaymentHistoryCollection();
+            _results = dbClient.GetResultCollection();
+            _notifications = dbClient.GetNotificationCollection();
+            _labMapping = dbClient.GetLabMappingCollection();
         }
 
         public Hospitaal AddHospital(Hospitaal hospital)
@@ -115,6 +136,11 @@ namespace Hospital.Core.Services
             return _users.Find(user => user.UserID == id).First();
         }
 
+        public User GetUserbyPatientID(string id)
+        {
+            return _users.Find(user => user.Hospital_PID == id).First();
+        }
+
         public User GetUserByUserName(string userName)
         {
             return _users.Find(user => user.UserName == userName).First();
@@ -123,8 +149,23 @@ namespace Hospital.Core.Services
         {
 
             user.UserID = Guid.NewGuid().ToString();
-            user.Password = RandomString(8);
+            user.Password = user.Password;
             user.CreatedDate = DateTime.Now;
+            _users.InsertOne(user);
+            return user;
+        }
+
+        public User AddLabUser(User user)
+        {
+            var _role = _roles.Find(i => i.RoleName.ToLower().Contains("lab")).FirstOrDefault();
+            user.UserID = Guid.NewGuid().ToString();
+            user.Password = user.Password;
+            user.UserName = user.UserName;
+            user.FullName = user.UserName;
+            user.CreatedDate = DateTime.Now;
+            user.RoleId = _role.RoleId;
+            user.IsRegistered = true;
+            user.IsActive = true;
             _users.InsertOne(user);
             return user;
         }
@@ -192,8 +233,9 @@ namespace Hospital.Core.Services
 
         public User UpdatePatient(User user)
         {
-             var _user = GetUser(user.UserID);
+            var _user = GetUser(user.UserID);
             _user.IsActive = true;
+            _user.HospitalId = user.HospitalId;
             _user.IsRegistered = true;
             _user.Password = user.Password;
 
@@ -206,20 +248,68 @@ namespace Hospital.Core.Services
 
         /*********************************************************************************************************/
 
-        public List<Lab> GetLabs()
+        public List<LabMappingresult> GetLabs()
         {
-            return _labs.Find(lab => true).ToList();
+            var labresults = _labs.Find(lab => true).ToList();
+            List<LabMappingresult> labMappingresult = new List<LabMappingresult>();
+            foreach (var labresult in labresults)
+            {
+                LabMappingresult lmr = new LabMappingresult();
+                lmr.LabId = labresult.LabId;
+                lmr.LabName = labresult.LabName;
+                lmr.HospitalID = _labMapping.Find(lab => lab.LabID == lmr.LabId).First().HospitalID;
+                lmr.LabName = labresult.LabName;
+                lmr.LabAddress = labresult.LabAddress;
+                lmr.PhoneNumber = labresult.PhoneNumber;
+                lmr.LandlineNumber = labresult.LandlineNumber;
+                lmr.UserId = labresult.UserId;
+                lmr.CreatedDate = labresult.CreatedDate;
+                labMappingresult.Add(lmr);
+            }
+            return labMappingresult;
         }
-        public Lab AddLab(Lab lab)
+
+        public Hospitaal GetSelectedHospitalforLabUser(string UserID)
+        {
+            var lab = _labs.Find(i => i.UserId == UserID).FirstOrDefault();
+            LabMapping lb = new LabMapping();
+            if (lab !=null)
+            {
+                lb = _labMapping.Find(i => i.LabID == lab.LabId).FirstOrDefault();
+                return _hospitals.Find(i => i.HospitalId == lb.HospitalID).FirstOrDefault();
+            }
+            else
+            {
+                return new Hospitaal();
+            }      
+        }
+        public Lab AddLab(Lab lab,LabMapping labmapping)
         {
             lab.LabId = Guid.NewGuid().ToString();
             lab.CreatedDate = DateTime.Now;
             _labs.InsertOne(lab);
+            labmapping.LabMappingId = Guid.NewGuid().ToString();
+            labmapping.LabID = lab.LabId;
+            labmapping.HospitalID = labmapping.HospitalID;
+            _labMapping.InsertOne(labmapping);
             return lab;
         }
-        public Lab GetLab(string id)
+        public LabMappingresult GetLab(string id)
         {
-            return _labs.Find(user => user.LabId == id).First();
+            var labresult = _labs.Find(user => user.LabId == id).First();
+            var labMappingresult = _labMapping.Find(lab => lab.LabID == id).First();
+            LabMappingresult lmr = new LabMappingresult();
+            lmr.LabId = labresult.LabId;
+            lmr.LabName = labresult.LabName;
+            lmr.HospitalID = labMappingresult.HospitalID;
+            lmr.LabName = labresult.LabName;
+            lmr.LabAddress = labresult.LabAddress;
+            lmr.PhoneNumber = labresult.PhoneNumber;
+            lmr.LandlineNumber = labresult.LandlineNumber;
+            lmr.UserId = labresult.UserId;
+            lmr.CreatedDate = labresult.CreatedDate;
+
+            return lmr;
         }
         public void DeleteLab(string id)
         {
@@ -557,27 +647,35 @@ namespace Hospital.Core.Services
         {
             var menuList = new List<MenuResult>();
             var _menuRole = _menuRoleMaps.Find(m => m.RoleId == RoleId).FirstOrDefault();
-            var _role = GetRole(_menuRole.RoleId);
-            var _menuList = GetMenus();
-            foreach (var MenuId in _menuRole.MenuId)
+            if (_menuRole != null)
             {
-                var menuResult = new MenuResult
+                var _role = GetRole(_menuRole.RoleId);
+                var _menuList = GetMenus();
+                foreach (var MenuId in _menuRole.MenuId)
                 {
-                    MenuId = MenuId,
-                    MenuName = _menuList.Where(x => x.MenuId == MenuId).Select(x => x.MenuName).FirstOrDefault(),
+                    var menuResult = new MenuResult
+                    {
+                        MenuId = MenuId,
+                        MenuName = _menuList.Where(x => x.MenuId == MenuId).Select(x => x.MenuName).FirstOrDefault(),
+                    };
+                    menuList.Add(menuResult);
+                }
+                var menuRole = new MenuRoleMapResult
+                {
+                    MappingId = _menuRole.MappingId,
+                    RoleId = _menuRole.RoleId,
+                    RoleName = _role.RoleName,
+                    MenuInfo = menuList,
+                    CreatedDate = _menuRole.CreatedDate,
+                    IsActive = _menuRole.IsActive
                 };
-                menuList.Add(menuResult);
+                return menuRole;
             }
-            var menuRole = new MenuRoleMapResult
+            else
             {
-                MappingId = _menuRole.MappingId,
-                RoleId = _menuRole.RoleId,
-                RoleName = _role.RoleName,
-                MenuInfo = menuList,
-                CreatedDate = _menuRole.CreatedDate,
-                IsActive = _menuRole.IsActive
-            };
-            return menuRole;
+                return new MenuRoleMapResult { };
+            }
+
         }
         public MenuRoleMapResult GetMenuRoleMap(string id)
         {
@@ -650,7 +748,7 @@ namespace Hospital.Core.Services
 
         public MappingURL GetSignUpLink(string refID)
         {
-            var result =_mappingURLS.Find(m => m.URLGenerated.Contains(refID)).FirstOrDefault();
+            var result = _mappingURLS.Find(m => m.URLGenerated.Contains(refID)).FirstOrDefault();
             return result;
         }
 
@@ -670,6 +768,17 @@ namespace Hospital.Core.Services
         public PaySplitUp GetPaySplitup(string id)
         {
             return _paySplitUps.Find(paysplitup => paysplitup.SplitUpID == id).FirstOrDefault();
+        }
+
+        public PaySplitUp UpdatePaySplitUp(PaySplitUp paySplitUp)
+        {
+            _paySplitUps.ReplaceOne(t => t.SplitUpID == paySplitUp.SplitUpID, paySplitUp);
+            return GetPaySplitup(paySplitUp.SplitUpID);
+        }
+
+        public void DeletePaySplitup(string id)
+        {
+            _paySplitUps.DeleteOne(pay => pay.SplitUpID == id);
         }
 
         public bool isAuthorized(Login login)
@@ -702,7 +811,7 @@ namespace Hospital.Core.Services
         {
             User _user = null;
 
-            _user = _users.Find(user => user.UserName == login.UserName  && user.Password == login.Password).FirstOrDefault();
+            _user = _users.Find(user => user.UserName == login.UserName && user.Password == login.Password).FirstOrDefault();
 
             if (_user != null)
                 return true;
@@ -765,7 +874,7 @@ namespace Hospital.Core.Services
             return hoslist;
         }
 
-        public bool PrescribeTest(string testId, string patientId, long outMobileNo, string hospId, string doctorId)
+        public bool PrescribeTest(string testId, string patientId, long outMobileNo, string hospId, string doctorId, int numberOfTest)
         {
             string user_name = string.Format("{0}_{1}", hospId, patientId);
             var _user = _users.Find(u => u.UserName == user_name).FirstOrDefault();
@@ -789,22 +898,155 @@ namespace Hospital.Core.Services
                 };
                 AddUser(_user);
             }
-            MappingURL mappingURL = GenerateMapURL(hospId, doctorId, _user);
-            SendSMSString(mappingURL, outMobileNo.ToString(), false, "");
-            var _testMap = new TestMap()
-            {
-                UserId = _user.UserID,
-                TestId = testId,
-                Patient_HID = patientId,
-                DoctorId = doctorId,
-                CreatedDate = DateTime.Now
+            string OrderID = GenerateOrderAndSave(testId, patientId, outMobileNo, hospId, doctorId, numberOfTest);
 
-            };
-            AddMTestMap(_testMap);
+            MappingURL mappingURL = GenerateMapURL(hospId, doctorId, _user, OrderID);
+            SendSMSString(mappingURL, outMobileNo.ToString(), false, "");
+          //  sendMailPrescribeTest();
+            //var _testMap = new TestMap()
+            //{
+            //    UserId = _user.UserID,
+            //    TestId = testId,
+            //    Patient_HID = patientId,
+            //    DoctorId = doctorId,
+            //    CreatedDate = DateTime.Now,
+
+
+            //};
+            //AddMTestMap(_testMap);
+
+
+
             return true;
         }
 
-        private MappingURL GenerateMapURL(string hospId, string doctorId, User _user)
+        public void sendMailPrescribeTest()
+        {
+            try
+            {
+                var email = new MimeMessage();
+                email.From.Add(MailboxAddress.Parse("coleman79@ethereal.email"));
+                email.To.Add(MailboxAddress.Parse("samjinsam1992@gmail.com"));
+                email.Subject = "ZumHelion";
+                email.Body = new TextPart(TextFormat.Html) { Text = "<h1>Example HTML Message Body</h1>" };
+
+                // send email
+                using var smtp = new MailKit.Net.Smtp.SmtpClient();
+                smtp.Connect("smtp.ethereal.email", 587, SecureSocketOptions.StartTls);
+                smtp.Authenticate("coleman79@ethereal.email", "ruawJxehdZyfqeueS8");
+                smtp.Send(email);
+                smtp.Disconnect(true);
+                //return true;
+            }
+            catch(Exception ex)
+            {
+                // return false;
+
+            }
+        }
+
+            private string GenerateOrderAndSave(string testId, string patientId, long outMobileNo, string hospId, string doctorId, int numberOfTest)
+        {
+            string OrderID = string.Empty;
+            var filter = Builders<Counter>.Filter.Eq(a => a.Id, "OrderSeq");
+            var update = Builders<Counter>.Update.Inc(a => a.Value, 1);
+            var ret = _counterColvals.FindOneAndUpdate(filter, update);
+            if (ret == null)
+            {
+                _counterColvals.InsertOne(new Counter
+                {
+                    Id = "OrderSeq",
+                    Value = 1
+                });
+            }
+            OrderID = "ZHUM" + ret.Value.ToString("000000");
+
+            PrescriptionOrder prescription = new PrescriptionOrder
+            {
+                PrescriptionId = Guid.NewGuid().ToString(),
+                CreatedTime = DateTime.Now,
+                HospitalId = hospId,
+                Hospital_PID = patientId,
+                IsPaid = false,
+                IsSplitPaymentDone = false,
+                ModifiedOn = DateTime.Now,
+                NoOfTest = numberOfTest,
+                OrderId = OrderID,
+                PatientId = patientId,
+                PaymentStatus = "Ordered",
+                PrescribedBy = doctorId,
+                TestId = testId,
+                TotalAmount = numberOfTest * RetriveTestAmount(testId)
+            };
+            _prescriptionOrders.InsertOne(prescription);
+
+            return OrderID;
+        }
+
+        public PrescriptionOrder GetPrescriptionOrder(string orderId)
+        {
+            return _prescriptionOrders.Find(po => po.OrderId == orderId).FirstOrDefault();
+        }
+
+        public PrescriptionOrder GetPrescriptionOrderwithStatus(string patientID)
+        {
+            var _order = _prescriptionOrders.Find(po => po.PatientId == patientID && po.IsPaid == false).ToList();
+            return _order.Where(_order => true).OrderByDescending(i => i.CreatedTime).FirstOrDefault();
+        }
+
+        public List<PrescriptionOrder> GetPrescriptionPaidOrder(string patientID)
+        {
+            var _order = _prescriptionOrders.Find(po => po.PatientId == patientID && po.IsPaid == true).ToList();
+            return _order;
+        }
+
+        public PrescriptionOrder UpdatePrescriptionOrder(PrescriptionOrder pOrder)
+        {
+            _prescriptionOrders.ReplaceOne(tm => tm.OrderId == pOrder.OrderId, pOrder);
+            return pOrder;
+        }
+
+        private decimal RetriveTestAmount(string testId)
+        {
+            var test = _tests.Find(u => u.TestId == testId).FirstOrDefault();
+            return test == null ? 0 : test.Amount;
+        }
+
+        public List<ActiveTestList> GetActiveTestByPatientID(string patientId)
+        {
+
+            List<ActiveTestList> activeList = new List<ActiveTestList>();
+
+            var _patientPres = _prescriptionOrders.Find(i => i.PatientId == patientId && i.IsPaid == false).ToList();
+
+            foreach (var prescription in _patientPres)
+            {
+                string testId = prescription.TestId;
+                if (!activeList.Any(k => k.TestId == testId))
+                {
+                    var latestOrder = _patientPres.Where(j => j.TestId == testId).FirstOrDefault();
+                    var test = _tests.Find(i => i.TestId == testId).FirstOrDefault();
+                    ActiveTestList activeTest = new ActiveTestList
+                    {
+                        AmountforOneTest = test.Amount,
+                        TestId = test.TestId,
+                        TestName = test.TestName,
+                        NoOfTestSugested = latestOrder.NoOfTest,
+                        HospitalId = latestOrder.HospitalId,
+                        TotalAmount = test.Amount * latestOrder.NoOfTest,
+                        OrderId = latestOrder.OrderId,
+                        CreatedDate = latestOrder.CreatedTime
+                    };
+
+                    activeList.Add(activeTest);
+                }
+            }
+
+            return activeList.OrderByDescending(i => i.CreatedDate).ToList();
+        }
+
+
+        private MappingURL GenerateMapURL(string hospId, string doctorId, User _user, string OrderID)
         {
             MappingURL mappingURL = new MappingURL
             {
@@ -816,7 +1058,8 @@ namespace Hospital.Core.Services
                 IsDoctor = false,
                 CreatedDateTime = DateTime.Now.ToString("dd/MMM/yyyy"),
                 URLGenerated = GenerateUniqueURL(10, false),
-                HospitalID = hospId
+                HospitalID = hospId,
+                OrderId = OrderID
             };
             mappingURL.RediectionLink = "/signup/patient/" + mappingURL.UserID;
             _mappingURLS.InsertOne(mappingURL);
@@ -846,6 +1089,365 @@ namespace Hospital.Core.Services
         {
             return _testMaps.Find(testMap => testMap.TestMapId == id).FirstOrDefault();
         }
+
+        public userMappingDetails GetUserMappingDetails(string refID)
+        {
+            var mappingURL = _mappingURLS.Find(m => m.URLGenerated.Contains(refID)).FirstOrDefault();
+            var user = _users.Find(user => user.UserID == mappingURL.UserID).FirstOrDefault();
+            bool ispaid = false; 
+            if (!string.IsNullOrEmpty(mappingURL.OrderId))
+            {
+                var order = _prescriptionOrders.Find(m => m.OrderId == mappingURL.OrderId).FirstOrDefault();
+                if (order != null)
+                {
+                    ispaid = order.IsPaid;
+                }
+            }
+
+            userMappingDetails mp = new userMappingDetails
+            {
+                UserID = user.UserID,
+                UserName = user.UserName,
+                Password = user.Password,
+                Hospital_PID = user.Hospital_PID,
+                IsRegistered = user.IsRegistered,
+                MappingURLActive = mappingURL.IsActive,
+                RedirectionLink = mappingURL.RediectionLink,
+                URLGenerated = mappingURL.URLGenerated,
+                IsPaid = ispaid
+            };
+
+            return mp;
+        }
+
+        public PaymentHistory AddPaymentHistory(PaymentHistory payHistory)
+        {
+            payHistory.PaymentHistoryId = Guid.NewGuid().ToString();
+            payHistory.CreatedOn = DateTime.Now;
+            _payHistory.InsertOne(payHistory);
+            return payHistory;
+        }
+
+        public PaymentHistory UpdatePaymentHistory(PaymentHistory payHistory)
+        {
+            _payHistory.ReplaceOne(ph => ph.PaymentHistoryId == payHistory.PaymentHistoryId, payHistory);
+            return payHistory;
+        }
+
+        public PrintReceiptResult GetPrintReceipt(string orderId)
+        {
+            var printReceipt = new PrintReceiptResult();
+            var pOrder = GetPrescriptionOrder(orderId);
+            printReceipt.AmountPaid = pOrder.TotalAmount;
+            printReceipt.PatientName = pOrder.PatientId;
+            printReceipt.TestName = GetTest(pOrder.TestId).TestName;
+            printReceipt.OrderID = orderId;
+            printReceipt.PaymentReferenceNo = pOrder.PaymentReferenceNumber;
+            printReceipt.NoOfTest = pOrder.NoOfTest;
+            return printReceipt;
+        }
+
+        public PrescriptionOrder GetOrderWithStatus(string patientID)
+        {
+            var pOrder = GetPrescriptionOrderwithStatus(patientID);
+            return pOrder;
+        }
+
+        public OrderStatus IsorderPaymentcompleted(string orderId)
+        {
+            var orderDetails = _prescriptionOrders.Find(m => m.OrderId == orderId).FirstOrDefault();
+            OrderStatus orderStatus = new OrderStatus();
+            List<TestParameterResult> rs = new List<TestParameterResult>();
+            if (orderDetails == null)
+            {
+                // GetSetErrorInfo(excep, Convert.ToInt16(HttpStatusCode.BadRequest), "Bad Request", "OrderID is not valid");                
+            }
+            else
+            {
+                var Test = _tests.Find(m => m.TestId == orderDetails.TestId).FirstOrDefault();
+                var Result = _results.Find(m => m.OrderId == orderId).ToList();
+                var testParameters = _testParameters.Find(j => j.TestId == orderDetails.TestId).ToList();
+
+                foreach (var tp in testParameters)
+                {
+                    TestParameterResult res = new TestParameterResult();
+                    res.TestId = tp.TestId;
+                    res.ParameterName = tp.ParameterName;
+                    res.RangesFrom = tp.RangesFrom;
+                    res.RangesTo = tp.RangesTo;
+                    res.TestedResult = "";
+                    rs.Add(res);
+                }
+
+                orderStatus.OrderId = orderId;
+                orderStatus.Hospital_PId = orderDetails.Hospital_PID;
+                orderStatus.IsPaid = orderDetails.IsPaid;
+                orderStatus.NoOfResultAdded = Result.Count;
+                orderStatus.ParameterList = rs;
+                orderStatus.PatientId = orderDetails.PatientId;
+                orderStatus.ReferenceNumber = orderDetails.PaymentReferenceNumber;
+                orderStatus.TestID = orderDetails.TestId;
+                orderStatus.TestName = Test.TestName;
+                orderStatus.TotalNumberOfResult = orderDetails.NoOfTest;
+            }
+
+            return orderStatus;
+        }
+
+        public Result AddResult(ResultInput resultinputs)
+        {
+            var orderDetails = _prescriptionOrders.Find(m => m.OrderId == resultinputs.OrderId).FirstOrDefault();
+            Result result = new Result();
+            if (orderDetails == null)
+            {
+                // GetSetErrorInfo(excep, Convert.ToInt16(HttpStatusCode.BadRequest), "Bad Request", "OrderID is not valid");                
+            }
+            else
+            {
+                var patientDetails = _users.Find(u => u.Hospital_PID == orderDetails.PatientId && u.HospitalId == resultinputs.HospitalID).FirstOrDefault();
+                if(patientDetails !=null)
+                {
+                    patientDetails.FullName = resultinputs.PatientName;
+                    _users.ReplaceOne(tm => tm.UserID == patientDetails.UserID, patientDetails);
+                }
+                result.ResultId = Guid.NewGuid().ToString();
+                result.OrderId = orderDetails.OrderId;
+                result.ApprovedBy = resultinputs.ApproverName;
+                result.cashreciptNumber = resultinputs.CashReceiptNumber;
+                result.CreatedOn = DateTime.Now;
+                result.LabId = _labs.Find(i => i.UserId == resultinputs.userId).FirstOrDefault().LabId;
+                result.PatientId = orderDetails.PatientId;
+                result.ResultJSON = resultinputs.JsonResult;
+                result.RefferedBy = orderDetails.PrescribedBy;
+                result.TestName = _tests.Find(m => m.TestId == orderDetails.TestId).FirstOrDefault().TestName;
+                result.PatientName = resultinputs.PatientName;
+                result.Age = resultinputs.Age;
+                result.ApprovedBy = resultinputs.ApproverName;
+                result.Detailsofspecimenpreparation = resultinputs.Detailsofspecimenpreparation;
+                result.Observation = resultinputs.Observation;
+                result.PathologicalCondition = resultinputs.PathologicalCondition;
+                result.Sex = resultinputs.Sex;
+                result.SpecimenType = resultinputs.SpecimenType;
+                result.TestMethodUsed = resultinputs.TestMethodUsed;
+                result.ResultStatus = resultinputs.ResultStatus;
+                result.HospitalID  = resultinputs.HospitalID;
+                result.TestId = orderDetails.TestId;
+                _results.InsertOne(result);
+
+                AddNotificationTriggerSMS(result.PatientId, result.ResultId, orderDetails.OrderId, result.PatientName, result.TestName, result.HospitalID, orderDetails.PrescribedBy);
+            }
+
+            return result;
+        }
+
+
+        public List<Result> GetResultListLab(ResultFilter resultFilter)
+        {
+            List<Result> results = new List<Result>();
+            results = _results.Find(i => true).ToList();
+            CultureInfo provider = CultureInfo.InvariantCulture;
+
+
+            if (!string.IsNullOrEmpty(resultFilter.TestId))
+            {
+                results = results.Where(i => i.TestId == resultFilter.TestId).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(resultFilter.LabId))
+            {
+                var lab =_labs.Find(i => i.UserId == resultFilter.LabId).FirstOrDefault();
+                results = results.Where(i => i.LabId == lab.LabId).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(resultFilter.StartDate))
+            {
+                DateTime startDateTime = DateTime.ParseExact(resultFilter.StartDate, "dd-MM-yyyy", provider);
+
+                results = results.Where(i => i.CreatedOn > startDateTime).ToList();
+            }
+            if (!string.IsNullOrEmpty(resultFilter.EndDate))
+            {
+                DateTime enddateTime = DateTime.ParseExact(resultFilter.EndDate, "dd-MM-yyyy", provider);
+
+                results = results.Where(i => i.CreatedOn < enddateTime).ToList();
+            }
+            if (!string.IsNullOrEmpty(resultFilter.ReferredBy))
+            {
+                results = results.Where(i => i.RefferedBy == resultFilter.ReferredBy).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(resultFilter.HospitalID))
+            {
+                results = results.Where(i => i.HospitalID == resultFilter.HospitalID).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(resultFilter.HPID))
+            {
+                results = results.Where(i => i.PatientId == resultFilter.HPID).ToList();
+            }
+
+            return results;
+        }
+
+        public Result TestResultByID(string resultID)
+        {
+            var result = _results.Find(i => i.ResultId == resultID).FirstOrDefault();
+            return result == null ? new Result() : result;
+        }
+
+        public List<Result> GetAllTestResults()
+        {
+            return _results.Find(i => true).ToList();
+        }
+
+        public List<OrderStatus> GetAllOrdersByPatientID(string h_Pid, string hospitalId)
+        {
+            var orderDetails = _prescriptionOrders.Find(m => m.Hospital_PID == h_Pid && m.HospitalId == hospitalId).ToList();
+            List<OrderStatus> orderStatusResult = new List<OrderStatus>();
+            List<TestParameterResult> rs = new List<TestParameterResult>();
+            if (orderDetails.Count < 1)
+            {
+                return orderStatusResult;
+            }
+            else
+            {
+                foreach (var order in orderDetails)
+                {
+                    OrderStatus orderStatus = new OrderStatus();
+                    var Test = _tests.Find(m => m.TestId == order.TestId).FirstOrDefault();
+                    var Result = _results.Find(m => m.OrderId == order.OrderId).ToList();
+                    var testParameters = _testParameters.Find(j => j.TestId == order.TestId ).ToList();
+                    rs.Clear();
+
+                    foreach (var tp in testParameters)
+                    {
+                        TestParameterResult res = new TestParameterResult();
+                        res.TestId = tp.TestId;
+                        res.ParameterName = tp.ParameterName;
+                        res.RangesFrom = tp.RangesFrom;
+                        res.RangesTo = tp.RangesTo;
+                        res.TestedResult = "";
+                        rs.Add(res);
+                    }
+
+                    orderStatus.OrderId = order.OrderId;
+                    orderStatus.Hospital_PId = order.Hospital_PID;
+                    orderStatus.IsPaid = order.IsPaid;
+                    orderStatus.NoOfResultAdded = Result.Count;
+                    orderStatus.ParameterList = rs;
+                    orderStatus.PatientId = order.PatientId;
+                    orderStatus.ReferenceNumber = order.PaymentReferenceNumber;
+                    orderStatus.TestID = order.TestId;
+                    orderStatus.TestName = Test.TestName;
+                    orderStatus.TotalNumberOfResult = order.NoOfTest;
+                    orderStatusResult.Add(orderStatus);
+                }
+            }
+
+            return orderStatusResult;
+        }
+
+        public TestResultReturnObject RetriveDataForReport(string resultID)
+        {
+            TestResultReturnObject testResultReturnObject = new TestResultReturnObject();
+            var result = _results.Find(i => i.ResultId == resultID).FirstOrDefault();
+            testResultReturnObject.CurrentResult = result;
+            if (result != null)
+            {
+                var results30Days = _results.Find(i => i.PatientId == result.PatientId && i.HospitalID == result.HospitalID
+                       && i.CreatedOn > result.CreatedOn.AddDays(-31) && i.TestId == result.TestId).ToList().OrderBy(i =>i.CreatedOn);
+                testResultReturnObject.Last30DaysResultsList = new List<Result>();
+                testResultReturnObject.Last30DaysResultsList.AddRange(results30Days);
+            }
+
+            return testResultReturnObject;
+        }
+
+        private void AddNotificationTriggerSMS(string patientId,string resultID, string orderId, string patientName, string testName, string hospitalId, string doctorID)
+        {
+            var hospital = _hospitals.Find(i => i.HospitalId == hospitalId).FirstOrDefault();
+            var user = _users.Find(i => i.Hospital_PID == patientId && i.HospitalId == hospitalId).FirstOrDefault();
+            Notification notification = new Notification();
+            notification.NotificationId = Guid.NewGuid().ToString();
+            notification.ResultId = resultID;
+            notification.IsActive = true;
+            notification.IsResult = true;
+            notification.CreatedOn = DateTime.Now;
+            notification.Message = String.Format("Result added for Patient {0}({1})/{2} - Test {3}", patientId, patientName, hospital.HospitalName, testName);
+            notification.UserId = doctorID;
+            notification.OrderID = orderId;
+            _notifications.InsertOne(notification);
+
+            Notification notification1 = new Notification();
+            notification1.NotificationId = Guid.NewGuid().ToString();
+            notification1.ResultId = resultID;
+            notification1.IsActive = true;
+            notification1.IsResult = true;
+            notification1.CreatedOn = DateTime.Now;
+            notification1.Message = String.Format("New result added for Test {0}", testName);
+            notification1.UserId = user.UserID;
+            notification1.OrderID = orderId;
+            _notifications.InsertOne(notification1);
+
+        }
+
+        public List<Notification> GetActiveNotification(string userID)
+        {
+            return _notifications.Find(i => i.UserId == userID && i.IsActive).ToList();
+        }
+
+        public bool CloseNotification(string Notification)
+        {
+            var notification = _notifications.Find(i => i.NotificationId == Notification && i.IsActive).FirstOrDefault();
+            notification.IsActive = false;
+            _notifications.ReplaceOne(t => t.NotificationId == Notification, notification);
+            return true;
+        }
+        public List<Patient> GetpatientList(string hospitalID)
+        {
+            List<Patient> patients = new List<Patient>();
+            var users = _users.Find(u => u.HospitalId == hospitalID && u.IsActive && !string.IsNullOrEmpty(u.Hospital_PID)).ToList();
+            foreach(var user in users)
+            {
+                Patient pat = new Patient();
+                pat.HospitalID = user.HospitalId;
+                pat.Hospital_PID = user.Hospital_PID;
+                pat.Name = user.FullName == null ? "" : user.FullName;
+                pat.PatientID = user.Hospital_PID;
+                pat.Referredby = user.ReferredBy;
+                patients.Add(pat);
+            }
+            return patients;
+        }
+
+
+        public TestResultReturnObject RetriveReportforLatestOrder(string HPID,string HospitalId)
+        {
+            TestResultReturnObject testResultReturnObject = new TestResultReturnObject();
+            Result result = new Result();
+            var results = _results.Find(i => i.HospitalID == HospitalId && i.PatientId == HPID).ToList();
+            if(results.Count > 0)
+            {
+                result = results.OrderBy(i => i.CreatedOn).LastOrDefault();
+            }
+            else
+            {
+                return testResultReturnObject;
+            }
+            testResultReturnObject.CurrentResult = result;
+            if (result != null)
+            {
+                var results30Days = _results.Find(i => i.PatientId == result.PatientId && i.HospitalID == result.HospitalID
+                       && i.CreatedOn > result.CreatedOn.AddDays(-31) && i.TestId == result.TestId).ToList().OrderBy(i => i.CreatedOn);
+                testResultReturnObject.Last30DaysResultsList = new List<Result>();
+                testResultReturnObject.Last30DaysResultsList.AddRange(results30Days);
+            }
+            
+            return testResultReturnObject;
+        }
+
+
+
     }
 }
 

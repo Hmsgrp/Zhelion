@@ -2,7 +2,9 @@
 <div class="brand flex-column-auto" id="kt_brand" [ngClass]="brandClasses">
   <!--begin::Logo-->
   <a routerLink="/" class="brand-logo">
-    <img alt="Logo" [attr.src]="headerLogo" />
+    <!-- <img alt="Logo" [attr.src]="headerLogo" width="160"  height="60"/> -->
+    <span style="color:green;font-size: 24px;">ZUM</span>
+    <span style="color:#1bc5bd;font-size: 24px;">&nbsp;HEILEN</span>
   </a>
   <!--end::Logo-->
 
@@ -82,7 +84,7 @@
       >
         <a class="menu-link" routerLink="/roleManagement" routerLinkActive="active">
           <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            [inlineSVG]="'./assets/media/svg/icons/Design/user-tag-solid.svg'"
             cacheSVG="true"
             class="svg-icon menu-icon"
           ></span>
@@ -97,7 +99,7 @@
       >
         <a class="menu-link" routerLink="/userManagement" routerLinkActive="active">
           <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+            [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
             cacheSVG="true"
             class="svg-icon menu-icon"
           ></span>
@@ -112,7 +114,7 @@
     >
       <a class="menu-link" routerLink="/hospitalManagement" routerLinkActive="active">
         <span
-          [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          [inlineSVG]="'./assets/media/svg/icons/Design/hospital-alt-solid.svg'"
           cacheSVG="true"
           class="svg-icon menu-icon"
         ></span>
@@ -127,7 +129,7 @@
   >
     <a class="menu-link" routerLink="/labManagement" routerLinkActive="active">
       <span
-        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
         cacheSVG="true"
         class="svg-icon menu-icon"
       ></span>
@@ -142,7 +144,7 @@
   >
     <a class="menu-link" routerLink="/testManagement" routerLinkActive="active">
       <span
-        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        [inlineSVG]="'./assets/media/svg/icons/Design/vials-solid.svg'"
         cacheSVG="true"
         class="svg-icon menu-icon"
       ></span>
@@ -157,7 +159,7 @@
   >
     <a class="menu-link" routerLink="/doctorReferral" routerLinkActive="active">
       <span
-        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        [inlineSVG]="'./assets/media/svg/icons/Design/user-md-solid.svg'"
         cacheSVG="true"
         class="svg-icon menu-icon"
       ></span>
@@ -172,7 +174,7 @@
   >
     <a class="menu-link" routerLink="/roleMap" routerLinkActive="active">
       <span
-        [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+        [inlineSVG]="'./assets/media/svg/icons/Design/object-group-solid.svg'"
         cacheSVG="true"
         class="svg-icon menu-icon"
       ></span>
@@ -187,7 +189,7 @@
 >
   <a class="menu-link" routerLink="/prescribeTest" routerLinkActive="active">
     <span
-      [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+      [inlineSVG]="'./assets/media/svg/icons/Design/hospital-user-solid.svg'"
       cacheSVG="true"
       class="svg-icon menu-icon"
     ></span>
@@ -201,15 +203,109 @@ aria-haspopup="true"
 routerLinkActive="menu-item-active"
 *ngIf="showmenus('payment')"
 >
-<a class="menu-link" routerLink="/payment" routerLinkActive="active">
+<a class="menu-link" routerLink="/payment/viewTransaction" routerLinkActive="active">
   <span
-    [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+    [inlineSVG]="'./assets/media/svg/icons/Design/money-check-alt-solid.svg'"
     cacheSVG="true"
     class="svg-icon menu-icon"
   ></span>
   <span class="menu-text">Payment</span>
 </a>
 </li>
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('PaymentSplitUp')"
+>
+<a class="menu-link" routerLink="/paymentSplitUp" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/cash-register-solid.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">Payment SplitUp</span>
+</a>
+</li>
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('AddResult')"
+>
+<a class="menu-link" routerLink="/AddResult" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">Add Result</span>
+</a>
+</li>
+
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('ViewResult')"
+>
+<a class="menu-link" routerLink="/ViewResult" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">View Result</span>
+</a>
+</li>
+
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('viewreportdoctor')"
+>
+<a class="menu-link" routerLink="/ViewReport" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">View Report</span>
+</a>
+</li>
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('patientreport')"
+>
+<a class="menu-link" routerLink="/PatientReport" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">Your Reports</span>
+</a>
+</li>
+<li
+class="menu-item"
+aria-haspopup="true"
+routerLinkActive="menu-item-active"
+*ngIf="showmenus('activepatients')"
+>
+<a class="menu-link" routerLink="/ActivePatients" routerLinkActive="active">
+  <span
+    [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
+    cacheSVG="true"
+    class="svg-icon menu-icon"
+  ></span>
+  <span class="menu-text">Active Patients</span>
+</a>
+</li>
+
+
       <!-- end::1 Level -->
 
       <!-- Components -->

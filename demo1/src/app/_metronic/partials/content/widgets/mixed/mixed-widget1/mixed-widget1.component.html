@@ -30,99 +30,148 @@
       <!--begin::Row-->
       <div class="row m-0"> 
         <div *ngIf="showmenus('RoleManagement')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color:#f8a405"
+            [inlineSVG]="'./assets/media/svg/icons/Design/user-tag-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
           
           <a (click)="setActiveTab(1)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
              Role Management
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Roles : 4</span>
         </div>
         <div *ngIf="showmenus('UserManagement')" class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
+          <span style="color:#f64e60"
             [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
             class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
           ></span>
           <a (click)="setActiveTab(2)" class="text-primary font-weight-bold font-size-h6" style="cursor: pointer;">
             User Management
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Users : 2</span>
         </div>
         <div *ngIf="showmenus('HospitalManagement')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color: #f8a407"
+            [inlineSVG]="'./assets/media/svg/icons/Design/hospital-alt-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
           <a (click)="setActiveTab(3)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
             Hospital Management
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active hospitals : 3</span>
+          <!-- <span class="text-muted mt-3 font-weight-bold font-size-sm">Active hospitals : 3</span> -->
         </div>
         <div *ngIf="showmenus('LabManagement')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color:#1bb1aa"
+            [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
           ></span>
           <a (click)="setActiveTab(4)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
             Lab Management
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Labs : 1</span>
         </div>
         <div  *ngIf="showmenus('TestManagement')"  class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color:#f64e60"
+            [inlineSVG]="'./assets/media/svg/icons/Design/vials-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-danger d-block my-2"
           ></span>
           <a (click)="setActiveTab(5)" class="text-danger font-weight-bold font-size-h6" style="cursor: pointer;">
             Test Management
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Tests : 4</span>
         </div>
         
         <div *ngIf="showmenus('DoctorReferral')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color:#ffa800"
+            [inlineSVG]="'./assets/media/svg/icons/Design/user-md-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
           <a (click)="setActiveTab(6)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
             Doctor Referral
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Refferred Doctors : 4</span>
         </div>
 
         <div *ngIf="showmenus('RoleMap')" class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color:#3699ff"
+            [inlineSVG]="'./assets/media/svg/icons/Design/object-group-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
           ></span>
           <a (click)="setActiveTab(7)" class="text-primary font-weight-bold font-size-h6" style="cursor: pointer;">
             Role Map
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Mapped Roles : 4</span>
         </div>
         <div *ngIf="showmenus('PrescribeTest')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
+          <span style="color: #f8a407"
+            [inlineSVG]="'./assets/media/svg/icons/Design/hospital-user-solid.svg'"
             class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
           ></span>
           <a (click)="setActiveTab(8)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
             Prescribe Test
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Tests : 3</span>
         </div>
-        <div *ngIf="showmenus('Payment')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
-          <span
-            [inlineSVG]="'./assets/media/svg/icons/Design/Layers.svg'"
-            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+        <div *ngIf="showmenus('Payment')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#1bb1aa"
+            [inlineSVG]="'./assets/media/svg/icons/Design/money-check-alt-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
           ></span>
-          <a (click)="setActiveTab(9)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+          <a (click)="setActiveTab(9)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
             Payment
           </a>
-          <span class="text-muted mt-3 font-weight-bold font-size-sm">Active Payment : 3</span>
         </div>
-       
+        <div *ngIf="showmenus('PaymentSplitUP')" class="col bg-light-danger px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#f64e60"
+            [inlineSVG]="'./assets/media/svg/icons/Design/cash-register-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-danger d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(10)" class="text-danger font-weight-bold font-size-h6" style="cursor: pointer;">
+            Payment SplitUp
+          </a>
+        </div>
+
+        <div *ngIf="showmenus('addresult')" class="col bg-light-warning px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#f8a405"
+            [inlineSVG]="'./assets/media/svg/icons/Design/user-tag-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-warning d-block my-2"
+          ></span>
+          
+          <a (click)="setActiveTab(11)" class="text-warning font-weight-bold font-size-h6" style="cursor: pointer;">
+             Add Result
+          </a>
+        </div>
+        <div *ngIf="showmenus('viewresult')" class="col bg-light-primary px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#f64e60"
+            [inlineSVG]="'./assets/media/svg/icons/Communication/Add-user.svg'"
+            class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(12)" class="text-primary font-weight-bold font-size-h6" style="cursor: pointer;">
+            View Result
+          </a>
+        </div>
+        <div *ngIf="showmenus('viewreportdoctor')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#1bb1aa"
+            [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(13)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
+            View Report
+          </a>
+        </div>
+        <div *ngIf="showmenus('patientreport')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#1bb1aa"
+            [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(14)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
+            your Report
+          </a>
+        </div>
+        <div *ngIf="showmenus('activepatients')" class="col bg-light-success px-6 py-8 rounded-xl mr-7 mb-7 col-md-2">
+          <span style="color:#1bb1aa"
+            [inlineSVG]="'./assets/media/svg/icons/Design/clinic-medical-solid.svg'"
+            class="svg-icon svg-icon-3x svg-icon-success d-block my-2"
+          ></span>
+          <a (click)="setActiveTab(15)" class="text-success font-weight-bold font-size-h6" style="cursor: pointer;">
+            Active Patients
+          </a>
+        </div>
+        
+   
       </div>
     
       <!--end::Row-->

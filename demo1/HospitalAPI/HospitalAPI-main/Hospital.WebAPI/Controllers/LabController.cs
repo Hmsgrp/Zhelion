@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize]
+    [Authorize]
     public class LabController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -36,9 +36,9 @@ namespace Hospital.WebAPI.Controllers
         [Route("AddLab", Name = "AddLab")]
         public IActionResult AddLab(LabList lab)
         {
-            var result = _hospitalServices.AddUser(lab.userDetails);
+            var result = _hospitalServices.AddLabUser(lab.userDetails);
             lab.labDetails.UserId = result.UserID;
-            _hospitalServices.AddLab(lab.labDetails);
+            _hospitalServices.AddLab(lab.labDetails,lab.labMappingDetails);
             return CreatedAtRoute("AddLab", new { id = lab.labDetails.LabId }, lab);
 
         }

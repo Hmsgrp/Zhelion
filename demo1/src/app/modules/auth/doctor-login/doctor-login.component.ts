@@ -6,6 +6,7 @@ import { UserModel } from '../_models/user.model';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonServicesService } from '../_services/common-services.service';
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-doctor-login',
@@ -14,6 +15,7 @@ import { CommonServicesService } from '../_services/common-services.service';
 })
 export class DoctorLoginComponent implements OnInit {
 // KeenThemes mock, change it to:
+spinnerType = SPINNER.wanderingCubes;
 defaultAuth = {
   username: '',
   password: '',
@@ -42,7 +44,8 @@ constructor(
  private route: ActivatedRoute,
  private router: Router,
  private CommonServices: CommonServicesService,
- private cd: ChangeDetectorRef
+ private cd: ChangeDetectorRef,
+ private ngxService: NgxUiLoaderService
 ) {
  this.isLoading$ = this.authService.isLoading$;
  // redirect to home if already logged in
@@ -55,8 +58,8 @@ ngOnInit(): void {
  this.initForm();
  this.FieldError=false;
 
- this.showPasswordFields = false;
- this.showOTPField = true;
+ this.showPasswordFields = true;
+ this.showOTPField = false;
 
  localStorage.removeItem("access_token");
  localStorage.removeItem("Menus");
@@ -95,17 +98,17 @@ initForm() {
 }
 
 
-isChangesgwithPasswordToggle(val:string)
+isChangesgwithOTPToggle(val:string)
 {
   if(val == 'true')
   {
-    this.showPasswordFields = true;
-    this.showOTPField =false; 
+    this.showPasswordFields = false;
+    this.showOTPField =true; 
   }
   else
   {
-    this.showPasswordFields = false;
-    this.showOTPField = true; 
+    this.showPasswordFields = true;
+    this.showOTPField = false; 
   }
   this.cd.detectChanges();
 }
@@ -123,9 +126,11 @@ console.log(this.f.password.value);
   this.FieldError=true;
  }
  else{
+  this.ngxService.start(); 
   this.CommonServices.LoginUser(this.f.username.value, this.f.password.value)
    .subscribe(
               data => {
+                this.ngxService.stop(); 
                 this.hasError = false;
                 this.router.navigate(["auth/doctor/doctorNextStep"]);
               },

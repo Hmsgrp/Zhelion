@@ -3,13 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DashboardServicsService } from '../../../../../../modules/commonServices/dashboard-servics.service';
 import { Subscription, Observable } from 'rxjs';
 import { LabModel } from 'src/app/_metronic/partials/content/widgets/models/lab.model';
-
+import { HospitalModel } from 'src/app/_metronic/partials/content/widgets/models/hospital.model';
+import { LabMappingResult } from 'src/app/_metronic/partials/content/widgets/models/labMappingResult';
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-lists-widget8',
   templateUrl: './lists-widget8.component.html',
 })
 export class ListsWidget8Component {
+  spinnerType = SPINNER.cubeGrid;
   @Input() cssClass;
   LabRegistration: FormGroup;
   isEdit:boolean;
@@ -22,11 +25,13 @@ export class ListsWidget8Component {
   errorText:string;
   postSuccessText:string;
   Labs : LabModel[] = [];
+  LabsMappingResult : LabMappingResult[] = [];
   page:any;
+  hospitals : HospitalModel[] = [];
 
   private unsubscribe: Subscription[] = [];
 
-  constructor(private fb: FormBuilder , private dashboardServices: DashboardServicsService,private cd: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder , private dashboardServices: DashboardServicsService,private cd: ChangeDetectorRef,private ngxService: NgxUiLoaderService) { }
 
   defaultVal = {
     userName: '',
@@ -35,12 +40,15 @@ export class ListsWidget8Component {
     labAddress: '',
     contactPerson:'',
     mobileNumber:'',
-    landlineNumber:''
+    landlineNumber:'',
+    selectedHospital :null
   };
 
   ngOnInit(): void {
+    this.ngxService.start(); 
     this.initForm();
-    this.refreshData();
+    this.getHospital();
+   // this.refreshData();
     this.Initializevariables();
   }
 
@@ -50,15 +58,15 @@ export class ListsWidget8Component {
         this.defaultVal.userName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
+          Validators.minLength(2),
+          Validators.maxLength(30), // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
         ]),
       ],
       password: [
         this.defaultVal.password,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(2),
           Validators.maxLength(30),
         ]),
       ],
@@ -66,24 +74,24 @@ export class ListsWidget8Component {
         this.defaultVal.labName,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15),
+          Validators.minLength(2),
+          Validators.maxLength(30),
         ]),
       ],
       labAddress: [
         this.defaultVal.labAddress,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15),
+          Validators.minLength(2),
+          Validators.maxLength(30),
         ]),
       ],
       contactPerson: [
         this.defaultVal.contactPerson,
         Validators.compose([
           Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(15),
+          Validators.minLength(2),
+          Validators.maxLength(30),
         ]),
       ],
       mobileNumber: [
@@ -101,8 +109,26 @@ export class ListsWidget8Component {
           Validators.minLength(5),
           Validators.maxLength(15),
         ]),
+      ],
+      selectedHospital: [
+        this.defaultVal.selectedHospital,
+        Validators.compose([
+          Validators.required
+        ]),
       ]
     });
+  }
+
+  getHospital() {
+    this.dashboardServices.getHospital()
+      .subscribe(data => {
+        this.hospitals = data;
+        this.refreshData();
+        this.cd.detectChanges();
+      },
+      HttpErrorResponse =>{
+        this.handleError(HttpErrorResponse.message+" Check Api");
+      });    
   }
 
   submitData()
@@ -145,7 +171,15 @@ export class ListsWidget8Component {
   refreshData() {
     this.dashboardServices.getLab()
       .subscribe(data => {
-        this.Labs = data;
+        this.LabsMappingResult = [];
+        for (var val of data) {
+          let mdl = new LabMappingResult();
+           mdl.labName = val.labName;
+           mdl.hospitalName =  this.hospitals.filter(x => x.hospitalId == val.hospitalID)[0].hospitalName;
+           mdl.labId = val.labId;
+          this.LabsMappingResult.push(mdl)
+        }
+        this.ngxService.stop(); 
         this.cd.detectChanges();
       },
       error => {
@@ -162,6 +196,14 @@ export class ListsWidget8Component {
     error => {
       this.handleError(error.message);
     });
+  }
+
+  getHospitalName(HospitalID:string)
+  {
+    if(HospitalID)
+    {
+      return "sdd";
+    }
   }
 
 

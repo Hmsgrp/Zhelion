@@ -8,7 +8,7 @@ namespace Hospital.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+    [Authorize]
     public class PaySplitUpController : ControllerBase
     {
         private readonly IHospitalServices _hospitalServices;
@@ -39,9 +39,21 @@ namespace Hospital.WebAPI.Controllers
         {
             _hospitalServices.AddPaySplitup(splitup);
             return CreatedAtRoute("AddPaySplitUp", new { id = splitup.SplitUpID }, splitup);
-
         }
 
-        
+        [HttpPut]
+        [Route("UpdatePaySplitUp", Name = "UpdatePaySplitUp")]
+        public IActionResult UpdatePaySplitUp(PaySplitUp paySplitUp)
+        {
+            return Ok(_hospitalServices.UpdatePaySplitUp(paySplitUp));
+        }
+
+        [HttpDelete]
+        [Route("DeletePaySplitUp/{id}", Name = "DeletePaySplitUp")]
+        public IActionResult DeletePaySplitUp(string id)
+        {
+            _hospitalServices.DeletePaySplitup(id);
+            return NoContent();
+        }
     }
 }

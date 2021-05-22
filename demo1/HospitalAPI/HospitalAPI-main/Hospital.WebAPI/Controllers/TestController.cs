@@ -57,5 +57,62 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.UpdateTest(test));
         }
 
+        [HttpGet]
+        [Route("IsorderPaymentcompleted", Name = "IsorderPaymentcompleted")]
+        public IActionResult IsorderPaymentcompleted(string orderId)
+        {
+            return Ok(_hospitalServices.IsorderPaymentcompleted(orderId));
+        }
+
+        [HttpPost]
+        [Route("AddResult", Name = "AddResult")]
+        public IActionResult AddResult(ResultInput result)
+        {
+            return Ok(_hospitalServices.AddResult(result));
+        }
+
+        [HttpGet]
+        [Route("ViewResult", Name = "ViewResult")]
+        public IActionResult GetResultListLab(ResultFilter resultFilter)
+        {
+            return Ok(_hospitalServices.GetResultListLab(resultFilter));
+        }
+
+        [HttpGet]
+        [Route("GetAllTestResults", Name = "GetAllTestResults")]
+        public IActionResult GetAllTestResults()
+        {
+            return Ok(_hospitalServices.GetAllTestResults());
+        }
+
+        [HttpGet]
+        [Route("TestResultByID", Name = "TestResultByID")]
+        public IActionResult TestResultByID(string resultID)
+        {
+            return Ok(_hospitalServices.TestResultByID(resultID));
+        }
+
+        [HttpGet]
+        [Route("RetriveDataForReport", Name = "RetriveDataForReport")]
+        public IActionResult RetriveDataForReport(string resultID)
+        {
+            return Ok(_hospitalServices.RetriveDataForReport(resultID));
+        }
+
+
+        [HttpPost]
+        [Route("GetFilteredTestResults", Name = "GetFilteredTestResults")]
+        public IActionResult GetFilteredTestResults(ResultFilter resultFilter)
+        {
+            return Ok(_hospitalServices.GetResultListLab(resultFilter));
+        }
+
+        [HttpGet]
+        [Route("RetriveReportforLatestOrder", Name = "RetriveReportforLatestOrder")]
+        public IActionResult RetriveReportforLatestOrder(string HPID, string HospitalId)
+        {
+            return Ok(_hospitalServices.RetriveReportforLatestOrder(HPID,HospitalId));
+        }
+
     }
 }

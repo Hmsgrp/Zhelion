@@ -22,6 +22,8 @@ import { DashboardServicsService } from './modules/commonServices/dashboard-serv
 import { JwtModule } from "@auth0/angular-jwt";
 import { AddRequestHeaderService } from './modules/auth/_services/add-request-header.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DatePipe } from '@angular/common';
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -47,6 +49,7 @@ export function tokenGetter() {
     HighlightModule,
     ClipboardModule,
     NgSelectModule,
+    NgxUiLoaderModule,
     // #fake-start#
     environment.isMockEnabled
       ? HttpClientInMemoryWebApiModule.forRoot(FakeAPIService, {
@@ -67,6 +70,7 @@ export function tokenGetter() {
     }),
   ],
   providers: [
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       

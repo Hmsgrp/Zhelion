@@ -32,6 +32,26 @@
         id="kt_hospital_form"
         (ngSubmit)="submitData()">
 
+        <div class="form-group">
+        
+          <label for="file">Choose Hospital Logo</label>
+        
+          <input formControlName="file" id="file" type="file" class="form-control"  accept="image/png, image/jpeg" (change)="onFileChange($event)">
+
+          <ng-container
+          [ngTemplateOutlet]="formError"
+          [ngTemplateOutletContext]="{
+            validation: 'required',
+            message: 'Logo is required',
+            control: hospitalRegistration.controls['file']
+          }"
+        ></ng-container> 
+
+          <br>
+          <img [src]="imageSrc" *ngIf="imageSrc" style="height: 75px; width:100px">
+        
+        </div>
+
           <div class="form-group">
             <label for="hospitalName" class="font-weight-bolder">Hospital Name</label>
             <input type="text" class="form-control" id="hospitalName"
@@ -175,9 +195,8 @@
         <!--begin::Symbol-->
         <div class="symbol symbol-40 symbol-light-success mr-5 col-md-1">
           <span class="symbol-label">
-            <img
-              alt="boy avatar"
-              src="./assets/media/svg/avatars/hospital-building.svg"
+            <img 
+              src="{{hospital.hospitalLogo}}"
               class="h-75 align-self-end"
             />
           </span>

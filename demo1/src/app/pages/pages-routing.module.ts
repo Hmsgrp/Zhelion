@@ -12,6 +12,16 @@ import { ListsWidget10Component } from 'src/app/_metronic/partials/content/widge
 import { PrescribeTestComponent } from 'src/app/_metronic/partials/content/widgets/lists/prescribe-test/prescribe-test.component';
 import { AuthGuard } from '../modules/auth/_services/auth.guard';
 import { PaymentComponent } from 'src/app/_metronic/partials/content/widgets/lists/payment/payment.component';
+import { PaymentRedirectComponent } from 'src/app/_metronic/partials/content/widgets/lists/payment-redirect/payment-redirect.component';
+import { PaymentSplitUpComponent } from 'src/app/_metronic/partials/content/widgets/lists/payment-split-up/payment-split-up.component';
+import { AddResultComponent } from 'src/app/_metronic/partials/content/widgets/lists/add-result/add-result.component';
+import { ViewResultComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-result/view-result.component';
+import { PrintResultComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-result/print-result/print-result.component';
+import { ViewReportforDoctorComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-reportfor-doctor/view-reportfor-doctor.component';
+import { ViewReportforPatientComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-reportfor-patient/view-reportfor-patient.component';
+import { ActivePatientsComponent } from 'src/app/_metronic/partials/content/widgets/lists/active-patients/active-patients.component';
+
+
 
 const routes: Routes = [
   {
@@ -67,23 +77,68 @@ const routes: Routes = [
       },
       {
         path: 'doctorReferral',
-       // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: ListsWidget9Component
       },
       {
         path: 'roleMap',
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: ListsWidget10Component
       },
       {
         path: 'prescribeTest',
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: PrescribeTestComponent
       },
       {
-        path: 'payment',
-        //canActivate: [AuthGuard],
+        path: 'payment/:term1',
+        canActivate: [AuthGuard],
         component: PaymentComponent
+      },
+      {
+        path: 'transactionStatus/:term1',
+        canActivate: [AuthGuard],
+        component: PaymentRedirectComponent
+      },
+      {
+        path: 'paymentSplitUp',
+        canActivate: [AuthGuard],
+        component: PaymentSplitUpComponent
+      },
+      {
+        path: 'AddResult',
+        canActivate: [AuthGuard],
+        component: AddResultComponent
+      },
+      {
+        path: 'ViewResult',
+        canActivate: [AuthGuard],
+        component: ViewResultComponent
+      },
+      {
+        path: 'ViewReport/:term1/:term2',
+        canActivate: [AuthGuard],
+        component: ViewReportforDoctorComponent
+      },
+      {
+        path: 'ViewReport',
+        canActivate: [AuthGuard],
+        component: ViewReportforDoctorComponent
+      },
+      {
+        path: 'PatientReport',
+        canActivate: [AuthGuard],
+        component: ViewReportforPatientComponent
+      },
+      {
+        path: 'PrintResult/:term1',
+        canActivate: [AuthGuard],
+        component: PrintResultComponent
+      },
+      {
+        path: 'ActivePatients',
+        canActivate: [AuthGuard],
+        component: ActivePatientsComponent
       },
       {
         path: '',

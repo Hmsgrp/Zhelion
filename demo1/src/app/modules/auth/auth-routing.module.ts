@@ -6,6 +6,7 @@ import {RegistrationComponent} from './registration/registration.component';
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {LogoutComponent} from './logout/logout.component';
 import { ReferComponent } from './refer/refer.component';
+import { ReferPatientComponent } from './refer-patient/refer-patient.component';
 import { DoctorSignupComponent } from './doctor-signup/doctor-signup.component';
 import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
 import { PatientSignupComponent } from './patient-signup/patient-signup.component';
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'refer/:term1/:term2/:term3',
         component: ReferComponent
+      },
+      {
+        path: 'referPatient/:term1/:term2/:term3',
+        component: ReferPatientComponent
       },
       {
         path: 'doctor/login',

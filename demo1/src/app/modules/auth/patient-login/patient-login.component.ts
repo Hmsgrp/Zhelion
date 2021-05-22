@@ -7,6 +7,7 @@ import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonServicesService } from '../_services/common-services.service';
 import { DashboardServicsService } from '../../../modules/commonServices/dashboard-servics.service';
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-patient-login',
@@ -29,9 +30,10 @@ returnUrl: string;
 isLoading$: Observable<boolean>;
 patientID:string;
 username:string;
+password:string;
 // private fields
 private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
-
+spinnerType = SPINNER.wanderingCubes;
 showPasswordFields:boolean;
 showOTPField:boolean;
 isSignUpwithOTPDisabled:boolean;
@@ -46,7 +48,8 @@ constructor(
  private router: Router,
  private CommonServices: CommonServicesService,
  private cd: ChangeDetectorRef,
- private dashboardServices: DashboardServicsService
+ private dashboardServices: DashboardServicsService,
+ private ngxService: NgxUiLoaderService
 ) {
  this.isLoading$ = this.authService.isLoading$;
  // redirect to home if already logged in
@@ -60,11 +63,14 @@ ngOnInit(): void {
  this.route.params.subscribe(params => {
   this.refID = params['term1'].toString();
 });
-this.getPatientbyID();
+
+ this.getPatientbyID();
+
+
  this.FieldError=false;
 
- this.showPasswordFields = false;
- this.showOTPField = true;
+ this.showPasswordFields = true;
+ this.showOTPField = false;
 
  localStorage.removeItem("access_token");
  localStorage.removeItem("Menus");
@@ -103,17 +109,17 @@ initForm() {
 }
 
 
-isChangesgwithPasswordToggle(val:string)
+isChangesgwithOTPToggle(val:string)
 {
   if(val == 'true')
   {
-    this.showPasswordFields = true;
-    this.showOTPField =false; 
+    this.showPasswordFields = false;
+    this.showOTPField =true; 
   }
   else
   {
-    this.showPasswordFields = false;
-    this.showOTPField = true; 
+    this.showPasswordFields = true;
+    this.showOTPField = false; 
   }
   this.cd.detectChanges();
 }
@@ -125,17 +131,18 @@ getOTP()
 
 submit(){
   this.hasError = false;
-console.log(this.f.password.value);
  if(this.f.password.value =="" && this.f.OTP.value =="")
  {
   this.FieldError=true;
  }
  else{
+  this.ngxService.start(); 
   this.CommonServices.LoginPatient(this.username , this.f.password.value)
    .subscribe(
               data => {
+                this.ngxService.stop(); 
                 this.hasError = false;
-                this.router.navigate(["/dashboard"]);
+                this.router.navigate(["/payment/transaction"]);
               },
               error => {
                 this.hasError = true;

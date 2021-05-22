@@ -135,7 +135,7 @@ export class ListsWidget3Component implements OnInit {
   getRoles() {
     this.dashboardServices.getRoles()
       .subscribe(data => {
-        this.roles = data;
+        this.roles = data.filter(x => x.roleName.toLowerCase() !='doctor' && x.roleName.toLowerCase() !='patient');
         this.cd.detectChanges();
       });      
   }
@@ -204,8 +204,6 @@ export class ListsWidget3Component implements OnInit {
       this.cd.detectChanges();
     }, 3000);
   }
-
- 
 
   closenUpdNotification()
   {
