@@ -20,6 +20,8 @@ export class AuthService implements OnDestroy {
   isLoading$: Observable<boolean>;
   currentUserSubject: BehaviorSubject<UserModel>;
   isLoadingSubject: BehaviorSubject<boolean>;
+  menus:string;
+  
 
 
   get currentUserValue(): UserModel {
@@ -136,6 +138,17 @@ export class AuthService implements OnDestroy {
       console.error(error);
       return undefined;
     }
+  }
+
+  showmenus(menuname:string)
+  {
+    this.menus = localStorage.getItem("Menus");
+    console.log(menuname);
+    if (this.menus.toLowerCase().search(menuname.toLowerCase()) == -1 ) { 
+      return false;
+    } else { 
+      return true
+    } 
   }
 
   ngOnDestroy() {

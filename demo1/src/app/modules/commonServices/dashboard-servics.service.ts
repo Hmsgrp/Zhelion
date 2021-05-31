@@ -79,6 +79,7 @@ export class DashboardServicsService {
     user.RoleId = FormGroup.controls.roleSelection.value;
     user.MobileNumber = FormGroup.controls.mobileNumber.value;
     user.EmailId =  FormGroup.controls.emailID.value;
+    user.FullName = FormGroup.controls.userName.value;
     user.CreatedDate=new Date()
 
     const headers = { 'content-type': 'application/json'}  
@@ -146,11 +147,15 @@ export class DashboardServicsService {
       return this.http.get<HospitalPatientModel>(environment.apiUrl + endPoints +id)
     }
 
-    getAllHospital(): Observable<any> {
-      let endPoints = "api/Hospital/GetAllHospitals"
+    // getAllHospital(): Observable<any> {
+    //   let endPoints = "api/Hospital/GetAllHospitals"
+    //   return this.http.get<any>(environment.apiUrl + endPoints)
+    // }
+
+    getAllHospitalV2(): Observable<any> {
+      let endPoints = "api/Hospital/GetAllHospitalsV2"
       return this.http.get<any>(environment.apiUrl + endPoints)
     }
-
     deleteHospital(id:string) : Observable<any>{
       let endPoints = "api/Hospital/DeleteHospital/"
       return this.http.delete(environment.apiUrl + endPoints + id);
@@ -515,7 +520,7 @@ export class DashboardServicsService {
       return this.http.get<any>(environment.apiUrl + endPoints + hospitalID)
     }
 
-    AddResult(Result:any ,FormGroup:FormGroup, cashReceiptNo:string,gender:string,orderID:string): Observable<any> {
+    AddResult(Result:any ,FormGroup:FormGroup, cashReceiptNo:string,gender:string,orderID:string,selectedSpecimen:string,selectedResult:string): Observable<any> {
 
       const result = new AddResult();
       result.approverName = localStorage.getItem("UserName").toString();
@@ -528,12 +533,12 @@ export class DashboardServicsService {
       result.age= FormGroup.controls.age.value;
       result.sex= gender;
       result.pathologicalCondition= FormGroup.controls.paCondition.value;
-      result.specimenType= FormGroup.controls.specimenType.value;
+      result.specimenType= selectedSpecimen;
       result.testMethodUsed= FormGroup.controls.tmu.value;
       result.detailsofspecimenpreparation = FormGroup.controls.dosp.value;
       result.observation= FormGroup.controls.observation.value;
       result.testDoneBy= FormGroup.controls.testdoneby.value;
-      result.resultStatus= FormGroup.controls.result.value;
+      result.resultStatus= selectedResult;
       result.hospitalID = localStorage.getItem("HospitalID").toString();
 
       const headers = { 'content-type': 'application/json'}  
@@ -586,6 +591,16 @@ export class DashboardServicsService {
       let hospitalId =  localStorage.getItem("HospitalID").toString();
       let endPoints = "api/Test/RetriveReportforLatestOrder?HPID="+hpid+"&HospitalId=";
       return this.http.get<any>(environment.apiUrl + endPoints + hospitalId);
+    }
+
+    DischargePatient(hospitalID:string,hospital_PID:string): Observable<any> {
+      let endPoints = "api/Doctor/DischargePatient?HospitalID="+hospitalID+"&Hospital_PID=";
+      return this.http.get<any>(environment.apiUrl + endPoints + hospital_PID)
+    }
+
+    ReAdmintPatient(hospitalID:string,hospital_PID:string): Observable<any> {
+      let endPoints = "api/Doctor/ReAdmintPatient?HospitalID="+hospitalID+"&Hospital_PID=";
+      return this.http.get<any>(environment.apiUrl + endPoints + hospital_PID)
     }
 }
 

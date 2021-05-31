@@ -109,5 +109,19 @@ namespace Hospital.WebAPI.Controllers
         {
             return Ok(_hospitalServices.CloseNotification(NotificationID));
         }
+
+        [HttpGet]
+        [Route("DischargePatient", Name = "DischargePatient")]
+        public IActionResult DischargePatient(string HospitalID,string Hospital_PID)
+        {
+            return Ok(_hospitalServices.DischargePatient(HospitalID, Hospital_PID));
+        }
+
+        [HttpGet]
+        [Route("ReAdmintPatient", Name = "ReAdmintPatient")]
+        public IActionResult ReAdmintPatient(string HospitalID, string Hospital_PID)
+        {
+            return Ok(_hospitalServices.ReAdmintPatient(HospitalID, Hospital_PID));
+        }
     }
 }

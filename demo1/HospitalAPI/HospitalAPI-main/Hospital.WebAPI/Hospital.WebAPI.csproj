@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>69825f1c-708e-4b3b-8db7-a4ee22df431f</UserSecretsId>
+    <Nullable>annotations</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

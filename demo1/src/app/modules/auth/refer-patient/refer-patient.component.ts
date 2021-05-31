@@ -35,7 +35,7 @@ export class ReferPatientComponent implements OnInit {
         }
         else if(data.isRegistered == false && data.mappingURLActive == true)
         {
-          var gotoURL= window.location.origin + "/auth" + data.redirectionLink;
+          var gotoURL= window.location.origin + "/#/auth" + data.redirectionLink;
           window.location.href = gotoURL;
         }
         else if(data.isRegistered == true && data.mappingURLActive == false)
@@ -44,7 +44,7 @@ export class ReferPatientComponent implements OnInit {
         }
         else
         {
-          var gotoURL= window.location.origin + "/auth/patient/login/" + data.userID ;
+          var gotoURL= window.location.origin + "/#/auth/patient/login/" + data.userID ;
           window.location.href = gotoURL;
         }
       },

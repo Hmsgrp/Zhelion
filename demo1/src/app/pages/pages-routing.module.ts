@@ -52,92 +52,110 @@ const routes: Routes = [
       },
       {
         path: 'roleManagement',
-        //canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ["roleManagement"] },
         component: ListsWidget1Component
       },
       {
         path: 'userManagement',
         canActivate: [AuthGuard],
+        data: { roles: ["userManagement"] },
         component: ListsWidget3Component
       },
       {
         path: 'hospitalManagement',
         canActivate: [AuthGuard],
+        data: { roles: ["hospitalManagement"] },
         component: ListsWidget4Component
       },
       {
         path: 'labManagement',
         canActivate: [AuthGuard],
+        data: { roles: ["labManagement"] },
         component: ListsWidget8Component
       },
       {
         path: 'testManagement',
         canActivate: [AuthGuard],
+        data: { roles: ["testManagement"] },
         component: ListsWidget11Component
       },
       {
         path: 'doctorReferral',
         canActivate: [AuthGuard],
+        data: { roles: ["doctorReferral"] },
         component: ListsWidget9Component
       },
       {
         path: 'roleMap',
         canActivate: [AuthGuard],
+        data: { roles: ["roleMap"] },
         component: ListsWidget10Component
       },
       {
         path: 'prescribeTest',
         canActivate: [AuthGuard],
+        data: { roles: ["prescribeTest"] },
         component: PrescribeTestComponent
       },
       {
         path: 'payment/:term1',
         canActivate: [AuthGuard],
+        data: { roles: ["payment"] },
         component: PaymentComponent
       },
       {
         path: 'transactionStatus/:term1',
         canActivate: [AuthGuard],
+        data: { roles: ["transactionStatus"] },
         component: PaymentRedirectComponent
       },
       {
         path: 'paymentSplitUp',
         canActivate: [AuthGuard],
+        data: { roles: ["paymentSplitUp"] },
         component: PaymentSplitUpComponent
       },
       {
         path: 'AddResult',
         canActivate: [AuthGuard],
+        data: { roles: ["AddResult"] },
         component: AddResultComponent
       },
       {
         path: 'ViewResult',
         canActivate: [AuthGuard],
+        data: { roles: ["ViewResult"] },
         component: ViewResultComponent
       },
       {
         path: 'ViewReport/:term1/:term2',
         canActivate: [AuthGuard],
+        data: { roles: ["ViewReport"] },
         component: ViewReportforDoctorComponent
       },
       {
         path: 'ViewReport',
         canActivate: [AuthGuard],
+        data: { roles: ["ViewReport"] },
         component: ViewReportforDoctorComponent
       },
       {
         path: 'PatientReport',
         canActivate: [AuthGuard],
+        data: { roles: ["PatientReport"] },
         component: ViewReportforPatientComponent
       },
       {
         path: 'PrintResult/:term1',
         canActivate: [AuthGuard],
+        data: { roles: ["PrintResult"] },
         component: PrintResultComponent
       },
       {
         path: 'ActivePatients',
         canActivate: [AuthGuard],
+        data: { roles: ["ActivePatients"] },
         component: ActivePatientsComponent
       },
       {

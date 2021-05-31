@@ -34,7 +34,9 @@ export class AddResultComponent implements OnInit {
   patientId:string;
   testName:string;
   selectedgender:string;
+  selectedSpecimen:string;
   allOrders:any
+  testUnit : string;
   GenderVal : Gender[] = [{
     Id: 'Male',
     Name: 'Male'
@@ -43,6 +45,25 @@ export class AddResultComponent implements OnInit {
     Id: 'Female',
     Name: 'FeMale'
   }];
+
+  SpecimanType : Gender[] = [{
+    Id: 'Blood',
+    Name: 'Blood'
+  },
+  {
+    Id: 'Saliva',
+    Name: 'Saliva'
+  }];
+
+  Result : Gender[] = [{
+    Id: 'Significant',
+    Name: 'Significant'
+  },
+  {
+    Id: 'InSignificant',
+    Name: 'InSignificant'
+  }];
+  selectedResult:string;
 
   constructor(private dashboardServices: DashboardServicsService,private fb: FormBuilder,private cd: ChangeDetectorRef,private ngxService: NgxUiLoaderService) { }
 
@@ -100,6 +121,8 @@ export class AddResultComponent implements OnInit {
         this.ngxService.stop(); 
         this.showOrders = true;
         this.OrderResults = data;
+        this.testUnit = data[0].testUnit;
+        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -111,7 +134,7 @@ export class AddResultComponent implements OnInit {
   add()
   {
     if(this.NoOfResultAdded < this.TotalNumberOfResult){
-      this.dashboardServices.AddResult(this.OrderResults ,this.MyForm.form ,this.cashReceiptNo,this.selectedgender,this.selectedOrder)
+      this.dashboardServices.AddResult(this.OrderResults ,this.MyForm.form ,this.cashReceiptNo,this.selectedgender,this.selectedOrder,this.selectedSpecimen,this.selectedResult)
       .subscribe(data => {
         this.NoOfResultAdded = this.NoOfResultAdded + 1;
         this.handleSuccessforPost();

@@ -36,14 +36,14 @@ export class HeaderMobileComponent implements OnInit, AfterViewInit {
   private getLogoUrl() {
     const headerSelfTheme = this.layout.getProp('header.self.theme') || '';
     const brandSelfTheme = this.layout.getProp('brand.self.theme') || '';
-    let result = 'logo-light.png';
+    let result = 'zumhelien.png';
     if (!this.asideSelfDisplay) {
       if (headerSelfTheme === 'light') {
-        result = 'logo-dark.png';
+        result = 'zumhelien.png';
       }
     } else {
       if (brandSelfTheme === 'light') {
-        result = 'logo-dark.png';
+        result = 'zumhelien.png';
       }
     }
     return `./assets/media/logos/${result}`;

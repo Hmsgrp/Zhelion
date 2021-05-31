@@ -162,7 +162,7 @@ export class DoctorSignupComponent implements OnInit,OnDestroy {
   }
   
   getHospitals() {
-    this.dashboardServices.getAllHospital()
+    this.dashboardServices.getAllHospitalV2()
       .subscribe(data => {
         for (var val of data) {
           let selectAllHospital = new selectHospital();

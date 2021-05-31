@@ -89,6 +89,28 @@ namespace Hospital.Core.Services
         {
             return _hospitals.Find(hospital => true).ToList();
         }
+
+        public List<Hospitaal> GetHospitalsV2()
+        {
+            List<Hospitaal> lh = new List<Hospitaal>();
+            var results = _hospitals.Find(Builders<Hospitaal>.Filter.Eq(hospital => hospital.IsActive, true))
+                        .Project(u => new { u.HospitalId, u.HospitalAddress,u.HospitalName,u.PhoneNumber,u.ContactPerson,u.CreatedDate }).ToList();
+            foreach(var res in results)
+            {
+                Hospitaal h = new Hospitaal();
+                h.HospitalId = res.HospitalId;
+                h.HospitalAddress = res.HospitalAddress;
+                h.HospitalName = res.HospitalName;
+                h.PhoneNumber = res.PhoneNumber;
+                h.ContactPerson = res.ContactPerson;
+                h.CreatedDate = res.CreatedDate;
+                h.HospitalLogo = "";
+
+                lh.Add(h);
+            }
+
+            return lh;
+        }
         public Hospitaal UpdateHospital(Hospitaal hospital)
         {
             GetHospital(hospital.HospitalId);
@@ -150,6 +172,10 @@ namespace Hospital.Core.Services
 
             user.UserID = Guid.NewGuid().ToString();
             user.Password = user.Password;
+            if(string.IsNullOrEmpty(user.UserName))
+            {
+                user.FullName = user.UserName;
+            }
             user.CreatedDate = DateTime.Now;
             _users.InsertOne(user);
             return user;
@@ -882,6 +908,12 @@ namespace Hospital.Core.Services
             if (_user != null)
             {
                 _user.MobileNumber = outMobileNo;
+                if (_user.IsDischarged)
+                {
+                    _user.DischargeID = _user.DischargeID + 1;
+                    _user.IsDischarged = false;
+                }
+
                 UpdateUser(_user);
             }
             else
@@ -894,7 +926,10 @@ namespace Hospital.Core.Services
                     HospitalId = hospId,
                     MobileNumber = outMobileNo,
                     ReferredBy = doctorId,
-                    RoleId = _role.RoleId
+                    RoleId = _role.RoleId,
+                    DischargeID=1,
+                    IsDischarged=false,
+                    IsRegistered = false
                 };
                 AddUser(_user);
             }
@@ -1232,6 +1267,7 @@ namespace Hospital.Core.Services
                 result.ResultStatus = resultinputs.ResultStatus;
                 result.HospitalID  = resultinputs.HospitalID;
                 result.TestId = orderDetails.TestId;
+                result.DischargeID = patientDetails.DischargeID;
                 _results.InsertOne(result);
 
                 AddNotificationTriggerSMS(result.PatientId, result.ResultId, orderDetails.OrderId, result.PatientName, result.TestName, result.HospitalID, orderDetails.PrescribedBy);
@@ -1340,27 +1376,12 @@ namespace Hospital.Core.Services
                     orderStatus.TestID = order.TestId;
                     orderStatus.TestName = Test.TestName;
                     orderStatus.TotalNumberOfResult = order.NoOfTest;
+                    orderStatus.TestUnit = Test.Unit;
                     orderStatusResult.Add(orderStatus);
                 }
             }
 
             return orderStatusResult;
-        }
-
-        public TestResultReturnObject RetriveDataForReport(string resultID)
-        {
-            TestResultReturnObject testResultReturnObject = new TestResultReturnObject();
-            var result = _results.Find(i => i.ResultId == resultID).FirstOrDefault();
-            testResultReturnObject.CurrentResult = result;
-            if (result != null)
-            {
-                var results30Days = _results.Find(i => i.PatientId == result.PatientId && i.HospitalID == result.HospitalID
-                       && i.CreatedOn > result.CreatedOn.AddDays(-31) && i.TestId == result.TestId).ToList().OrderBy(i =>i.CreatedOn);
-                testResultReturnObject.Last30DaysResultsList = new List<Result>();
-                testResultReturnObject.Last30DaysResultsList.AddRange(results30Days);
-            }
-
-            return testResultReturnObject;
         }
 
         private void AddNotificationTriggerSMS(string patientId,string resultID, string orderId, string patientName, string testName, string hospitalId, string doctorID)
@@ -1419,34 +1440,59 @@ namespace Hospital.Core.Services
             }
             return patients;
         }
+        public TestResultReturnObject RetriveDataForReport(string resultID)
+        {
+            TestResultReturnObject testResultReturnObject = new TestResultReturnObject();
+            var result = _results.Find(i => i.ResultId == resultID).FirstOrDefault();
+            testResultReturnObject.CurrentResult = result;
+            var patientDetails = _users.Find(u => u.Hospital_PID == result.PatientId && u.HospitalId == result.HospitalID).FirstOrDefault();
 
+            if (result != null && patientDetails != null)
+            {
+                var results30Days = _results.Find(i => i.PatientId == result.PatientId && i.HospitalID == result.HospitalID
+                       && i.DischargeID == patientDetails.DischargeID && i.TestId == result.TestId).ToList().OrderBy(i => i.CreatedOn);
+                testResultReturnObject.Last30DaysResultsList = new List<Result>();
+                testResultReturnObject.Last30DaysResultsList.AddRange(results30Days);
+            }
+
+            return testResultReturnObject;
+        }
 
         public TestResultReturnObject RetriveReportforLatestOrder(string HPID,string HospitalId)
         {
             TestResultReturnObject testResultReturnObject = new TestResultReturnObject();
-            Result result = new Result();
-            var results = _results.Find(i => i.HospitalID == HospitalId && i.PatientId == HPID).ToList();
-            if(results.Count > 0)
-            {
-                result = results.OrderBy(i => i.CreatedOn).LastOrDefault();
-            }
-            else
-            {
-                return testResultReturnObject;
-            }
+            var result = _results.Find(i => i.PatientId == HPID).FirstOrDefault();
+            
+            var patientDetails = _users.Find(u => u.Hospital_PID == result.PatientId && u.HospitalId == result.HospitalID).FirstOrDefault();
+ 
             testResultReturnObject.CurrentResult = result;
-            if (result != null)
+
+            if (result != null && patientDetails != null)
             {
                 var results30Days = _results.Find(i => i.PatientId == result.PatientId && i.HospitalID == result.HospitalID
-                       && i.CreatedOn > result.CreatedOn.AddDays(-31) && i.TestId == result.TestId).ToList().OrderBy(i => i.CreatedOn);
+                       && i.DischargeID == patientDetails.DischargeID && i.TestId == result.TestId).ToList().OrderBy(i => i.CreatedOn);
                 testResultReturnObject.Last30DaysResultsList = new List<Result>();
                 testResultReturnObject.Last30DaysResultsList.AddRange(results30Days);
             }
-            
+
             return testResultReturnObject;
         }
 
+        public bool DischargePatient(string HospitalID, string Hospital_PID)
+        {
+            var patientDetails = _users.Find(u => u.Hospital_PID == Hospital_PID && u.HospitalId == HospitalID).FirstOrDefault();
+            patientDetails.IsDischarged = true;
+            UpdateUser(patientDetails);
+            return true;
+        }
 
+        public bool ReAdmintPatient(string HospitalID, string Hospital_PID)
+        {
+            var patientDetails = _users.Find(u => u.Hospital_PID == Hospital_PID && u.HospitalId == HospitalID).FirstOrDefault();
+            patientDetails.IsDischarged = false;
+            UpdateUser(patientDetails);
+            return true;
+        }
 
     }
 }

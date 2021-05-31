@@ -1,6 +1,6 @@
+<ngx-ui-loader fgsSize="120" [fgsType]="spinnerType"></ngx-ui-loader>
 
-
-<div class="row" *ngIf="dataloaded">
+<div id="printResultdiv" class="row" *ngIf="dataloaded">
   <div class="col-md-1"></div>
   <div class="col-md-9">
     <div class="container rounded bg-white" id="htmlData">
@@ -64,8 +64,8 @@
               <thead>
                 <tr>
                   <th scope="col">Test Name</th>
-                  <th scope="col">CT Value</th>
                   <th scope="col">Average Value</th>
+                  <th scope="col">CT Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,7 +74,7 @@
                   <td style="color: red;">
                     {{r.rangesFrom}} - {{r.rangesTo}}
                   </td>
-                  <td style="color: red;">
+                  <td style="color:darkgreen;">
                     {{r.testedResult}}
                   </td>
                 </tr>
@@ -88,7 +88,7 @@
             <div id="chart" class="row">
               <br>
               <div class="col-xl-9">
-                <div style="display: block;">
+                <div style="display: block;text-align: center;">
                   <canvas baseChart
                   [datasets]="lineChartData"
                   [labels]="lineChartLabels"
@@ -101,8 +101,56 @@
                 </div>
               </div>
             </div><br>
-
+         
+            <div id="ReportSummary">
             <div>
+              <br>
+              <h2 style="text-align: center;">Report Summary</h2>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td style="text-align: center;" colspan="3">TestName : {{ResultDetails.testName}}</td>
+                  </tr>
+                  <tr>
+                    <td scope="col">Date</td>
+                    <td scope="col">
+                      <div>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th scope="col">Test Parameter</th>
+                              <th scope="col">Average Value</th>
+                              <th scope="col">CT Value</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rs of resultSummary">
+                    <td>{{rs.createdOn | date}}</td>
+                    <td>
+                      <div>
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr *ngFor="let rj of rs.resultJSON">
+                              <th scope="col">{{rj.parameterName}}</th>
+                              <th scope="col"> {{rj.rangesFrom}} - {{rj.rangesTo}}</th>
+                              <th scope="col"> {{rj.testedResult}}</th>
+                            </tr>
+                          </thead>
+                        </table>
+                      </div>
+                     </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+            </div>
+
+            <div id="observationDiv">
               <h4>OBSERVATION</h4>
               <p style="word-wrap: break-word;">
                 {{ResultDetails.observation}} </p>
@@ -159,9 +207,9 @@
 
               <span style="font-weight: bold;">Signature</span><br><br><br>
             </div>
+          </div>
 
-
-            <div class="formGroup">
+            <div id="printButton" class="formGroup">
               <button class="btn btn-primary btn-block" (click)="htmltoPDF()">Download</button>
             </div>
 

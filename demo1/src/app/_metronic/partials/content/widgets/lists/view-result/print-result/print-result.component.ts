@@ -7,7 +7,7 @@ import { DashboardServicsService } from '../../../../../../../modules/commonServ
 import { chart } from 'src/app/_metronic/partials/content/widgets/models/chart.model';
 import { DatePipe } from '@angular/common';
 import html2canvas from 'html2canvas';
-
+import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
 @Component({
   selector: 'app-print-result',
   templateUrl: './print-result.component.html',
@@ -23,7 +23,8 @@ export class PrintResultComponent implements OnInit {
    dataloaded:boolean;
    testdata:any[] = [];
    craa:chart[] = [];
-
+   spinnerType = SPINNER.chasingDots;
+   resultSummary:any;
 
    defaultVal = {
     data: [],
@@ -31,7 +32,7 @@ export class PrintResultComponent implements OnInit {
   };
   
 
-  constructor(private dashboardServices: DashboardServicsService,private route: ActivatedRoute,private cd: ChangeDetectorRef,private datePipe: DatePipe) { }
+  constructor(private dashboardServices: DashboardServicsService,private route: ActivatedRoute,private cd: ChangeDetectorRef,private datePipe: DatePipe,private ngxService: NgxUiLoaderService) { }
 
   // public lineChartData: ChartDataSets[] = [
   //   { data: [2, 3 ,6], label: 'P-IL6' },
@@ -87,6 +88,7 @@ export class PrintResultComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.ngxService.start();
     this.dataloaded = false;
     this.route.params.subscribe(params => {
       this.ResultID = params['term1'].toString();
@@ -103,12 +105,14 @@ export class PrintResultComponent implements OnInit {
         this.dataloaded = true;
         this.ResultDetails = data.currentResult;
         this.getindividualReport = data.currentResult.resultJSON;
+        this.resultSummary = data.last30DaysResultsList;
         this.parameterNames = [];
 
         for (var val of this.getindividualReport) {
           this.parameterNames.push(val.parameterName)
           this.defaultVal.data.push(val.testedResult);
        }
+       console.log(data.last30DaysResultsList);
 
      
         
@@ -117,7 +121,7 @@ export class PrintResultComponent implements OnInit {
          if(val.resultJSON)
          {
             for (var val1 of val.resultJSON) {
-              if(this.craa.filter(x=>x.label == val1.parameterName).length >0)
+              if(this.craa.filter(x => x.label == val1.parameterName).length > 0)
               {
                 this.craa.find(x=>x.label == val1.parameterName).data.push(Number(val1.testedResult));
               }
@@ -131,9 +135,10 @@ export class PrintResultComponent implements OnInit {
               } 
             }
          }
-     }
+       }
         this.lineChartData = this.craa;
         this.cd.detectChanges();
+        this.ngxService.stop();
       },
       HttpErrorResponse =>{
       //  this.handleError(HttpErrorResponse.message+" Check Api");
@@ -143,27 +148,7 @@ export class PrintResultComponent implements OnInit {
 
 
   htmltoPDF() {
-    var data = document.getElementById('htmlData');  
-    const divHeight = data.clientHeight
-    const divWidth = data.clientWidth
-    const ratio = divHeight / divWidth;
-    html2canvas(data,
-      {
-        height: window.outerHeight + window.innerHeight,
-        width: window.outerWidth + window.innerWidth,
-        windowHeight: window.outerHeight + window.innerHeight,
-        windowWidth: window.outerWidth + window.innerWidth,
-        scrollX: 0,
-        scrollY: 0
-      }
-      ).then(canvas => {  
-      var pdf = new jsPDF("l", "mm", "a4"); 
-      var imgData = canvas.toDataURL('image/png');
-      var width = pdf.internal.pageSize.getWidth();
-      var height = pdf.internal.pageSize.getHeight();
-      pdf.addImage(imgData, 'PNG', 0, 0, width, height*ratio); 
-      pdf.save('usuariodispositivo.pdf'); 
-    });  
+    window.print(); 
   }
 
 }

@@ -78,15 +78,13 @@ export class ViewReportforDoctorComponent implements OnInit {
 
   GenerateReport(resultId:string)
   {
-    //console.log(1);
     this.getindividualReport = this.results.filter(m => m.resultId == resultId);
-    // this.router.navigate(['/PrintResult']);
-    let urlprint = "/PrintResult/"+ this.getindividualReport[0].resultId;
+    let urlprint = "/1/PrintResult/"+ this.getindividualReport[0].resultId;
     const url = this.router.serializeUrl(
       this.router.createUrlTree([urlprint])
     );
-  
-    window.open(url, '_blank');
+    //console.log(url);
+    window.open(url.replace("1", "#"), '_blank');
   }
 
 }

@@ -108,3 +108,53 @@
 {
   margin-right: 10px;
 }
+
+@media print {
+  #kt_header_mobile
+  {
+    display: none !important;
+  }
+
+  #kt_header
+  {
+    display: none !important;
+  }
+  
+  #printResultdiv {
+    display: block !important;
+  }
+  
+  #printResultdiv {
+    position: absolute !important;
+    left: 10;
+  }
+
+  #ReportSummary
+  {
+    position:absolute;
+    top:1500px;
+    left:10px;
+  }
+
+  #kt_subheader{
+    display: none !important;
+  }
+
+  #printButton
+  {
+    display: none !important;
+  }
+
+  app-topbar{
+    display: none !important;
+  }
+
+  app-header
+  {
+    display: none !important;
+  }
+
+  // :host {
+  //   display: none;
+  // }
+}

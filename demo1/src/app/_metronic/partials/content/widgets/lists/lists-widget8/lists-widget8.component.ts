@@ -120,7 +120,7 @@ export class ListsWidget8Component {
   }
 
   getHospital() {
-    this.dashboardServices.getHospital()
+    this.dashboardServices.getAllHospitalV2()
       .subscribe(data => {
         this.hospitals = data;
         this.refreshData();

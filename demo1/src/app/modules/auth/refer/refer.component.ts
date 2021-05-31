@@ -34,17 +34,17 @@ export class ReferComponent implements OnInit {
       .subscribe(data => {
         if(data.isActive == true)
         {
-          var gotoURL= window.location.origin + "/auth" + data.rediectionLink;
+          var gotoURL= window.location.origin + "/#/auth" + data.rediectionLink;
           window.location.href = gotoURL;
         }
         else if(data.rediectionLink.includes("patient"))
         {
-          var gotoURL= window.location.origin + "/auth/patient/login/" + data.userID ;
+          var gotoURL= window.location.origin + "/#//auth/patient/login/" + data.userID ;
           window.location.href = gotoURL;
         }
         else
         {
-          var gotoURL= window.location.origin + "/auth/doctor/login";
+          var gotoURL= window.location.origin + "/#//auth/doctor/login";
           window.location.href = gotoURL;
         }
       },

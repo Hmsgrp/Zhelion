@@ -30,5 +30,6 @@ namespace Hospital.Core.Models
         public string TestName { get; set; }
         public string ResultStatus { get; set; }
         public string HospitalID { get; set; }
+        public int DischargeID { get;  set; }
     }
 }

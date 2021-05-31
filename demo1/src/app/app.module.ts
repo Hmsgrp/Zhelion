@@ -24,6 +24,7 @@ import { AddRequestHeaderService } from './modules/auth/_services/add-request-he
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -91,7 +92,9 @@ export function tokenGetter() {
       },
     }
     ,
-    { provide: HTTP_INTERCEPTORS, useClass: AddRequestHeaderService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AddRequestHeaderService, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy}
+    
   ],
   bootstrap: [AppComponent],
 })

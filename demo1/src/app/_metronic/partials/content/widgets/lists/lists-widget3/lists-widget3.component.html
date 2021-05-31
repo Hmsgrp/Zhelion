@@ -138,17 +138,18 @@
           ></ng-container>
         </div>
         <div class="form-group">
-          <label for="roleSelection" class="font-weight-bolder">Role Selection</label>
-          <select id="roleSelection" formControlName="roleSelection"  class="form-control" data-role="select-dropdown">
-            <option *ngFor="let role of (roles || []);  let i = index" [selected]="i == i" value={{role.roleId}}>
-            {{role.roleName}}
-          </option>
-          </select>
+          <label for="Role" class="font-weight-bolder">Select Role</label>
+          <ng-select [searchable]="true" placeholder="Select Role"  formControlName="roleSelection">
+            <ng-option *ngFor="let role of roles" 
+                        [value]="role.roleId">
+                        {{ role.roleName }}
+            </ng-option>
+          </ng-select>
           <ng-container
           [ngTemplateOutlet]="formError"
           [ngTemplateOutletContext]="{
             validation: 'required',
-            message: 'Please select Role',
+            message: 'Please Select Role',
             control: UserRegistration.controls['roleSelection']
           }"
         ></ng-container> 

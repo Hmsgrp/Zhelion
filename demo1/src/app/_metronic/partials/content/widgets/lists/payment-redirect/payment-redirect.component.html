@@ -14,13 +14,21 @@
                 <hr>
 
                 <div class="payment">
-                    <div class="payment_header" *ngIf="transactionstatus">
+                    <div class="payment_header" *ngIf="transactionstatus == 'success'">
                        <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
                     </div>
-                    <div class="payment_headerError" *ngIf="!transactionstatus">
+                    <div class="payment_headerError"   *ngIf="transactionstatus == 'failed'">
                         <div class="check"><i class="fa fa-times" aria-hidden="true"></i></div>
                      </div>
-                    <div class="content" *ngIf="transactionstatus">
+                     <div class="content" *ngIf="transactionstatus == 'inprogress'">
+                        <h1>Please wait !</h1>
+                        <p>while we progress your paymemt </p>
+                     </div>
+                     <div class="content" *ngIf="transactionstatus == 'pending'">
+                        <h1>Please wait !</h1>
+                        <p>Your Payment is Pending. </p>
+                     </div>
+                    <div class="content" *ngIf="transactionstatus == 'success'">
                        <h1>Payment Success !</h1>
                        <p>Your Payment for the following test is success.Thanks for the Payment </p>
                        <div> <button
@@ -30,7 +38,7 @@
                         printSectionId="print-section"  class="btn btn-primary btn-block" ngxPrint>Print Receipt</button> </div>
                         
                     </div>
-                    <div class="content" *ngIf="!transactionstatus">
+                    <div class="content" *ngIf="transactionstatus == 'failed'">
                         <h1>Payment Failed !</h1>
                         <p>Your Payment for the following test is failed/Pending.Please try again </p>
                         <div> <input type="button" disabled  value="Print Receipt"  class="btn btn-primary btn-block"> </div>
@@ -40,7 +48,7 @@
 
 
 
-            <div class="col-sm-5 col-md-5 ml-1 offset-md-1" *ngIf="transactionstatus" style="margin-top: 40px; margin-bottom: 50px" >
+            <div class="col-sm-5 col-md-5 ml-1 offset-md-1" *ngIf="transactionstatus == 'success'" style="margin-top: 40px; margin-bottom: 50px" >
                 <div class="py-4 d-flex justify-content-end">
                     <h6><a href="#"></a></h6>
                 </div>

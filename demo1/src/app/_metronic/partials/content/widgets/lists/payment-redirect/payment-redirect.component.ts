@@ -17,15 +17,15 @@ export class PaymentRedirectComponent implements OnInit {
   resultStatus:string;
   bankName:string;
   cardScheme:string;
-  transactionstatus:boolean;
+  transactionstatus:string;
   responsejson:any;
   patientName:string;
   testName:string;
   noOftest:number;
   OrderID:string;
 
-  ngOnInit(): void {
-    this.transactionstatus = true;
+  ngOnInit(): void { 
+    this.transactionstatus = "inprogress"
     this.route.params.subscribe(params => {
       this.OrderID = params['term1'].toString();
     });
@@ -47,18 +47,18 @@ export class PaymentRedirectComponent implements OnInit {
         this.patientName = data.printReceiptResult.patientName;
         this.testName = data.printReceiptResult.testName;
         this.noOftest = data.printReceiptResult.noOfTest;
-
+        console.log(this.resultStatus);
         if(this.resultStatus == "TXN_FAILURE")
         {
-          this.transactionstatus = false;
+          this.transactionstatus = "failed"
         }
         else if(this.resultStatus == "PENDING")
         {
-          this.transactionstatus = false;
+          this.transactionstatus = "pending"
         }
         else
         {
-          this.transactionstatus = true;
+          this.transactionstatus = "success"
         }
         this.cd.detectChanges();
       },

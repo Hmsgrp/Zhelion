@@ -16,7 +16,7 @@ namespace Hospital.Core.Services
         public int TotalNumberOfResult { get; set; }
 
         public string TestID { get; set; }
-
+        public string TestUnit { get; set; }
         public string PatientId { get; set; }
 
         public string Hospital_PId { get; set; }

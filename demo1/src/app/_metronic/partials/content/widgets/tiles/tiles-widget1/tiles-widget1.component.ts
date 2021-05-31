@@ -51,6 +51,30 @@ export class TilesWidget1Component implements OnInit {
     responsive: true,
     legend: {
     	display: true
+    },
+    tooltips:{
+      axis : 'y'
+    },scales: {
+      xAxes: [
+        {
+         // drawOnChartArea: false
+        }
+      ],
+      yAxes: [
+        {
+          type: "linear",
+          time: {
+           // parser: "YYYY/MM/DD",
+          //  unit: "day",
+           // displayFormats: {
+           //   day: "YYYY/MM/DD"
+          //  }
+          },
+          ticks: {
+            reverse: true
+          }       
+        }
+      ]
     }
   };
   public lineChartColors: Color[] = [
@@ -256,6 +280,7 @@ export class TilesWidget1Component implements OnInit {
               {
                 const c = new chart();
                 c.label = val1.parameterName ;
+                c.fill = false;
                 c.data.push(Number(val1.testedResult));
                 this.craa.push(c);
               } 

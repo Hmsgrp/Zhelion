@@ -471,3 +471,147 @@ C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\ne
 C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.dll
 C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.pdb
 C:\MyOwn\demo1\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.genruntimeconfig.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\appsettings.Development.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\appsettings.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.exe
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.deps.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.runtimeconfig.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.runtimeconfig.dev.json
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.pdb
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\DnsClient.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MailKit.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MimeKit.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Bson.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Driver.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Driver.Core.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Libmongocrypt.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\SharpCompress.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.AccessControl.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Principal.Windows.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Windows.Extensions.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\libzstd.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy32.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy64.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Security.AccessControl.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.Core.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\PaytmChecksum.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csprojAssemblyReference.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csproj.CoreCompileInputs.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.MvcApplicationPartsAssemblyInfo.cs
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.MvcApplicationPartsAssemblyInfo.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.AssemblyInfoInputs.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.AssemblyInfo.cs
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.RazorTargetAssemblyInfo.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csproj.CopyComplete
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\staticwebassets\Hospital.WebAPI.StaticWebAssets.Manifest.cache
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\staticwebassets\Hospital.WebAPI.StaticWebAssets.xml
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.dll
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.pdb
+E:\OutSource\HospitalAPI-main -9\HospitalAPI-main -9\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.genruntimeconfig.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\appsettings.json
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.exe
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.deps.json
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.runtimeconfig.json
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.runtimeconfig.dev.json
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.WebAPI.pdb
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\DnsClient.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MailKit.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MimeKit.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Bson.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Driver.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Driver.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\MongoDB.Libmongocrypt.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\SharpCompress.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Configuration.ConfigurationManager.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.AccessControl.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Permissions.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Security.Principal.Windows.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\System.Windows.Extensions.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\libzstd.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy32.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\native\snappy64.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Security.AccessControl.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Security.Principal.Windows.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.Core.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\PaytmChecksum.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\bin\Debug\netcoreapp3.1\Hospital.Core.pdb
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csprojAssemblyReference.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.AssemblyInfoInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.AssemblyInfo.cs
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csproj.CoreCompileInputs.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.MvcApplicationPartsAssemblyInfo.cs
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\staticwebassets\Hospital.WebAPI.StaticWebAssets.Manifest.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\staticwebassets\Hospital.WebAPI.StaticWebAssets.xml
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\scopedcss\bundle\Hospital.WebAPI.styles.css
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.RazorTargetAssemblyInfo.cache
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.csproj.CopyComplete
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.dll
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.pdb
+C:\MyOwn\demo1\HospitalAPI-main -11\HospitalAPI-main\Hospital.WebAPI\obj\Debug\netcoreapp3.1\Hospital.WebAPI.genruntimeconfig.cache

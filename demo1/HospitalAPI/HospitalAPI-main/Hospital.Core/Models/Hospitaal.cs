@@ -20,5 +20,10 @@ namespace Hospital.Core.Models
         public DateTime CreatedDate { get; set; }
         public string HospitalLogo { get; set; }
 
+        public Hospitaal()
+        {
+            this.IsActive = true;
+        }
+
     }
 }

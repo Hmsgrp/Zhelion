@@ -35,6 +35,15 @@ namespace Hospital.WebAPI.Controllers
             return Ok(_hospitalServices.GetHospitals());
         }
 
+        //This method returns hospital with no logo
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("GetAllHospitalsV2", Name = "GetAllHospitalsV2")]
+        public IActionResult GetAllHospitalsV2()
+        {
+            return Ok(_hospitalServices.GetHospitalsV2());
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("GetHospital/{id}", Name = "GetHospital")]

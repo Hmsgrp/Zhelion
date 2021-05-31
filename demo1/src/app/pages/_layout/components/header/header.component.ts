@@ -90,14 +90,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private getLogoURL(): string {
-    let result = 'logo-light.png';
+    let result = 'zumhelien.png';
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'light') {
-      result = 'logo-dark.png';
+      result = 'zumhelien.png';
     }
 
     if (this.headerSelfTheme && this.headerSelfTheme === 'dark') {
-      result = 'logo-dark.png';
+      result = 'zumhelien.png';
     }
 
     return `./assets/media/logos/${result}`;

@@ -29,25 +29,25 @@ namespace Hospital.Core.Infrastructure
         {
             // var client = new MongoClient(hospitalDbConfig.Value.Connection_String);
             var client = new MongoClient(@"mongodb+srv://Rajesh:Password0123@cluster0.wt11k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
-            var database = client.GetDatabase(hospitalDbConfig.Value.Database_Name);
-            _roles = database.GetCollection<Role>(hospitalDbConfig.Value.Roles_Collection_Name);
-            _hospitals = database.GetCollection<Hospitaal>(hospitalDbConfig.Value.Hospitals_Collection_Name);
-            _users = database.GetCollection<User>(hospitalDbConfig.Value.Users_Collection_Name);
-            _labs = database.GetCollection<Lab>(hospitalDbConfig.Value.Labs_Collection_Name);
-            _tests = database.GetCollection<Test>(hospitalDbConfig.Value.Tests_Collection_Name);
-            _testParameters = database.GetCollection<TestParameter>(hospitalDbConfig.Value.TestParameters_Collection_Name);
-            _userHospitals = database.GetCollection<UserHospitalMap>(hospitalDbConfig.Value.UserHospitals_Collection_Name);
-            _menus = database.GetCollection<Menu>(hospitalDbConfig.Value.Menus_Collection_Name);
-            _menuRoleMaps = database.GetCollection<MenuRoleMap>(hospitalDbConfig.Value.MenuRoleMaps_Collection_Name);
-            _paySplitUps = database.GetCollection<PaySplitUp>(hospitalDbConfig.Value.PaySplitUp_Collection_Name);
-            _mappingURLS = database.GetCollection<MappingURL>(hospitalDbConfig.Value.URLMapping_Collection_Name);
-            _testMaps = database.GetCollection<TestMap>(hospitalDbConfig.Value.TestMap_Collection_Name);
-            _counterColvals = database.GetCollection<Counter>(hospitalDbConfig.Value.Counter_Collection_Name);
-            _prescriptionOrders = database.GetCollection<PrescriptionOrder>(hospitalDbConfig.Value.Prescription_Collection_Name);
-            _payHistorys = database.GetCollection<PaymentHistory>(hospitalDbConfig.Value.PaymentHistory_Collection_Name);
-            _results = database.GetCollection<Result>(hospitalDbConfig.Value.Result_Collection_Name);
-            _notifications = database.GetCollection<Notification>(hospitalDbConfig.Value.Notification_Collection_Name);
-            _labMapping = database.GetCollection<LabMapping>(hospitalDbConfig.Value.Lab_Mapping_Collection_Name);
+            var database = client.GetDatabase("HospitalDB");
+            _roles = database.GetCollection<Role>("Roles");
+            _hospitals = database.GetCollection<Hospitaal>("Hospitals");
+            _users = database.GetCollection<User>("Users");
+            _labs = database.GetCollection<Lab>("Labs");
+            _tests = database.GetCollection<Test>("Tests");
+            _testParameters = database.GetCollection<TestParameter>("TestParameters");
+            _userHospitals = database.GetCollection<UserHospitalMap>("UserHospitalMaps");
+            _menus = database.GetCollection<Menu>("Menus");
+            _menuRoleMaps = database.GetCollection<MenuRoleMap>("MenuRoleMaps");
+            _paySplitUps = database.GetCollection<PaySplitUp>("PaySplitUPs");
+            _mappingURLS = database.GetCollection<MappingURL>("MappingURLs");
+            _testMaps = database.GetCollection<TestMap>("TestMaps");
+            _counterColvals = database.GetCollection<Counter>("Counters");
+            _prescriptionOrders = database.GetCollection<PrescriptionOrder>("PrescriptionOrder");
+            _payHistorys = database.GetCollection<PaymentHistory>("PaymentHistory");
+            _results = database.GetCollection<Result>("Result");
+            _notifications = database.GetCollection<Notification>("Notification");
+            _labMapping = database.GetCollection<LabMapping>("LabMapping");
         }
 
         public IMongoCollection<Hospitaal> GetHospitalsCollection()

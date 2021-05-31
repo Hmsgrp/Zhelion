@@ -19,6 +19,12 @@
           <!-- Body -->
           <div class="card-body pt-4">
             <br>
+            <div *ngIf="showSuccessNotification" class="alert alert-success alert-dismissible fade show" role="alert">
+              Updated Successfully.
+              <button type="button"  class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
             <div class="form-group pull-right" style="float: left;">
               <input type="text"  [(ngModel)]="searchText" class="search form-control" placeholder="What you looking for?">
             </div>
@@ -41,10 +47,21 @@
                       {{r.name}}
                       </td>
                       <td>
+                        <div> 
+                          <button title="ReAdmit" class="btn btn-primary"
+                          (click)="ReAdmit(r.hospitalID,r.hospital_PID)">
+                          ReAdmit
+                        </button>&nbsp;
+                          <button title="Discharge" class="btn btn-danger"
+                          (click)="Discharge(r.hospitalID,r.hospital_PID)">
+                          Discharge
+                        </button>&nbsp;
                         <button title="Generate Report" class="btn btn-primary"
                         (click)="GenerateReport(r.hospitalID,r.hospital_PID)">
                         View Report
                       </button>
+                      </div>
+                       
                     </td>
                     </tr>
                   </tbody>

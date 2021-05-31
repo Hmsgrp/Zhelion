@@ -13,6 +13,7 @@ namespace Hospital.Core.Services
         Role UpdateRole(Role role);
 
         List<Hospitaal> GetHospitals();
+        List<Hospitaal> GetHospitalsV2();
         Hospitaal AddHospital(Hospitaal hospital);
         Hospitaal GetHospital(string id);
         void DeleteHospital(string id);
@@ -124,6 +125,10 @@ namespace Hospital.Core.Services
         List<Patient> GetpatientList(string hospitalID);
 
         TestResultReturnObject RetriveReportforLatestOrder(string HPID, string HospitalId);
+
+        bool ReAdmintPatient(string HospitalID, string Hospital_PID);
+
+        bool DischargePatient(string HospitalID, string Hospital_PID);
 
 
     }

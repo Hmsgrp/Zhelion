@@ -30,5 +30,17 @@ namespace Hospital.Core.Models
         public DateTime CreatedDate { get; set; }
         public string ReferredBy { get; set; }
 
+        public int DischargeID { get; set; }
+
+        public bool IsDischarged { get; set; }
+
+
+        public User()
+        {
+            this.IsActive = true;
+            this.IsRegistered = true;
+            this.IsDischarged = false;
+        }
+
     }
 }

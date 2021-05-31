@@ -97,7 +97,7 @@ export class ListsWidget9Component implements OnInit {
   }
 
   getHospital() {
-    this.dashboardServices.getHospital()
+    this.dashboardServices.getAllHospitalV2()
       .subscribe(data => {
         this.hospitals = data;
         this.cd.detectChanges();

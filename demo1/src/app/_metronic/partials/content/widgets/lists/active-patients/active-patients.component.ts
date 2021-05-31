@@ -12,13 +12,16 @@ export class ActivePatientsComponent implements OnInit {
   results:any;
   p:any;
   searchText:string;
+  showSuccessNotification:boolean;
+  successText:string;
 
   constructor(private dashboardServices: DashboardServicsService,private cd: ChangeDetectorRef,
     private router: Router,private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    
+    this.showSuccessNotification = false;
+    this.successText ="";
     this.refreshData();
   }
 
@@ -43,6 +46,42 @@ export class ActivePatientsComponent implements OnInit {
     );
   
     window.open(url, '_blank');
+  }
+
+  ReAdmit(hospitalID:string,hospital_PID:string)
+  {
+    this.dashboardServices.ReAdmintPatient(hospitalID,hospital_PID)
+    .subscribe(data => {
+      this.showSuccessNotification = true;
+      this.closenUpdNotification();
+      this.cd.detectChanges();
+    },
+    HttpErrorResponse =>{
+    //  this.handleError(HttpErrorResponse.message+" Check Api");
+    }
+    )      
+  }
+
+  Discharge(hospitalID:string,hospital_PID:string)
+  {
+    this.dashboardServices.DischargePatient(hospitalID,hospital_PID)
+    .subscribe(data => {
+      this.showSuccessNotification = true;
+      this.closenUpdNotification();
+      this.cd.detectChanges();
+    },
+    HttpErrorResponse =>{
+    //  this.handleError(HttpErrorResponse.message+" Check Api");
+    }
+    )      
+  }
+
+  closenUpdNotification()
+  {
+    setTimeout(() => {
+      this.showSuccessNotification = false;
+      this.cd.detectChanges();
+    }, 3000);
   }
 
 }

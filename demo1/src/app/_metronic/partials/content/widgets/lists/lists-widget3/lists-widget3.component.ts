@@ -16,7 +16,7 @@ export class ListsWidget3Component implements OnInit {
     password: '',
     mobileNumber: '',
     emailID: '',
-    roleSelection:[""]
+    roleSelection:null
   };
   UserRegistration: FormGroup;
   roles : RoleModel[] = [];
@@ -83,7 +83,12 @@ export class ListsWidget3Component implements OnInit {
           Validators.maxLength(25),
         ]),
       ],
-      roleSelection:[]
+      roleSelection: [
+        this.defaultVal.roleSelection,
+        Validators.compose([
+          Validators.required
+        ]),
+      ]
     });
   }
 
