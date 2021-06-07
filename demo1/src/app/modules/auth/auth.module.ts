@@ -19,6 +19,8 @@ import { PatientLoginComponent } from './patient-login/patient-login.component';
 import { DoctorNextStepComponent } from './doctor-next-step/doctor-next-step.component';
 import { ReferPatientComponent } from './refer-patient/refer-patient.component';
 import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { LabNextStepComponent } from './lab-next-step/lab-next-step.component';
+import { LabLoginComponent } from './lab-login/lab-login.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { NgxUiLoaderModule } from  'ngx-ui-loader';
     PatientSignupComponent,
     PatientLoginComponent,
     DoctorNextStepComponent,
-    ReferPatientComponent
+    ReferPatientComponent,
+    LabNextStepComponent,
+    LabLoginComponent
   ],
   imports: [
     CommonModule,

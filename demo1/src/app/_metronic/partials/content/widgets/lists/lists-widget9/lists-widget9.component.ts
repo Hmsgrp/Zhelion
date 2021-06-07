@@ -79,7 +79,6 @@ export class ListsWidget9Component implements OnInit {
     this.dashboardServices.getDoctorReferrals()
       .subscribe(data => {
         this.DoctorReferrals = data;
-        console.log(data);
         if(this.DoctorReferrals.length > 0)
         {
           this.showEmpty = false;
@@ -122,10 +121,6 @@ export class ListsWidget9Component implements OnInit {
     }
 
     this.selected = this.DoctorReferrals.filter(x => x.user.userID == userid)[0]["UserHospitalMapResult"];
-  }
-
-  getSelectedValue(){
-    console.log(this.selected);
   }
 
   get userformcontrol() {

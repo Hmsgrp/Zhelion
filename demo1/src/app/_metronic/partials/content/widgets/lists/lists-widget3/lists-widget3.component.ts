@@ -235,7 +235,6 @@ export class ListsWidget3Component implements OnInit {
 
   handleError(error:string)
   {
-    console.log(error);
     this.ErrorOccuredtext = error;
     this.hasError = true;
     this.cd.detectChanges();

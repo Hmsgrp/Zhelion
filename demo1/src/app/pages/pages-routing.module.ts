@@ -20,6 +20,7 @@ import { PrintResultComponent } from 'src/app/_metronic/partials/content/widgets
 import { ViewReportforDoctorComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-reportfor-doctor/view-reportfor-doctor.component';
 import { ViewReportforPatientComponent } from 'src/app/_metronic/partials/content/widgets/lists/view-reportfor-patient/view-reportfor-patient.component';
 import { ActivePatientsComponent } from 'src/app/_metronic/partials/content/widgets/lists/active-patients/active-patients.component';
+import { MappingUrlsComponent } from 'src/app/_metronic/partials/content/widgets/lists/mapping-urls/mapping-urls.component';
 
 
 
@@ -40,14 +41,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('../modules/user-profile/user-profile.module').then(
             (m) => m.UserProfileModule
-          ),
-      },
-      {
-        path: 'ngbootstrap',
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('../modules/ngbootstrap/ngbootstrap.module').then(
-            (m) => m.NgbootstrapModule
           ),
       },
       {
@@ -157,6 +150,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { roles: ["ActivePatients"] },
         component: ActivePatientsComponent
+      },
+      {
+        path: 'mappingurls',
+        canActivate: [AuthGuard],
+        data: { roles: ["mappingurls"] },
+        component: MappingUrlsComponent
       },
       {
         path: '',

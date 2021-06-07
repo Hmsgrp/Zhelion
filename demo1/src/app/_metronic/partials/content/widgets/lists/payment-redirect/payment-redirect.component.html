@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <div class="container rounded bg-white" style="margin-bottom: 50px">
         <div class="row d-flex justify-content-center pb-5">
-            <div class="col-sm-5 col-md-5 ml-1" style="margin-top: 40px; margin-bottom: 50px">
+            <div class="col-sm-4 col-md-4 ml-1" style="margin-top: 40px; margin-bottom: 50px">
                 <div class="py-4 d-flex flex-row">
                     <h4><span class="fa fa-check-square-o"></span><b>Transaction Status</b> </h4>
                 </div>
@@ -48,7 +48,7 @@
 
 
 
-            <div class="col-sm-5 col-md-5 ml-1 offset-md-1" *ngIf="transactionstatus == 'success'" style="margin-top: 40px; margin-bottom: 50px" >
+            <div class="col-sm-7 col-md-7 ml-1 offset-md-1" *ngIf="transactionstatus == 'success'" style="margin-top: 40px; margin-bottom: 50px" >
                 <div class="py-4 d-flex justify-content-end">
                     <h6><a href="#"></a></h6>
                 </div>
@@ -57,8 +57,12 @@
                         <h4>Transaction Details</h4>
                     </div>
                     <div class="p-2 d-flex">
+                        <div class="col-8">HospitalName</div>
+                        <div class="ml-auto">{{hospitalname}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
                         <div class="col-8">OrderID</div>
-                        <div class="ml-auto">{{orderId}}</div>
+                        <div class="ml-auto">{{OrderID}}</div>
                     </div>
                     <div class="p-2 d-flex">
                         <div class="col-8">Bank TransactionID</div>

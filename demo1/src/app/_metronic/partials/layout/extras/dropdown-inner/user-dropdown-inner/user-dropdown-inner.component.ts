@@ -4,6 +4,7 @@ import { LayoutService } from '../../../../../core';
 import { UserModel } from '../../../../../../modules/auth/_models/user.model';
 import { AuthService } from '../../../../../../modules/auth/_services/auth.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-user-dropdown-inner',
   templateUrl: './user-dropdown-inner.component.html',
@@ -30,7 +31,6 @@ export class UserDropdownInnerComponent implements OnInit {
  }
 
   logout() {
-    localStorage.removeItem("access_token");
-    this.router.navigate(["/auth/login"]);
+    this.auth.logout();
   }
 }

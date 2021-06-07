@@ -24,6 +24,7 @@ namespace Hospital.Core.Models
         public string Hospital_PID { get; set; }
 
         public string TestId { get; set; }
+
         public Int32 NoOfTest { get; set; }
 
         public bool IsPaid { get; set; }
@@ -33,6 +34,7 @@ namespace Hospital.Core.Models
         public DateTime ModifiedOn { get; set; }
 
         public DateTime PaymentDate { get; set; }
+
         public string PaymentStatus { get; set; }
 
         public bool IsSplitPaymentDone { get; set; }
@@ -42,6 +44,5 @@ namespace Hospital.Core.Models
         public string SplitPaymentStatus { get; set; }
 
         public decimal TotalAmount { get; set; }
-
     }
 }

@@ -39,5 +39,10 @@ namespace Hospital.Core.Models
         public string ResultStatus { get; set; }
 
         public string HospitalID { get; set; }
+        public int DischargeID { get; set; }
+        public string TestApprovedBy { get; set; }
+        public string TestCollectedWard { get; set; }
+        public DateTime TestReportedDate { get; set; }
+        public DateTime TestReceivedDate { get; set; }
     }
 }

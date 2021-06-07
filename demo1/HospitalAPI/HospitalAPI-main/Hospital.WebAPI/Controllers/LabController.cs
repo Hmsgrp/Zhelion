@@ -57,5 +57,12 @@ namespace Hospital.WebAPI.Controllers
         {
             return Ok(_hospitalServices.UpdateLab(lab));
         }
+
+        [HttpGet]
+        [Route("GetPatientsforLabEntry/{hospitalID}", Name = "GetPatientsforLabEntry")]
+        public IActionResult GetPatientsforLabEntry(string hospitalID)
+        {
+            return Ok(_hospitalServices.GetPatientsforLabEntry(hospitalID));
+        }
     }
 }

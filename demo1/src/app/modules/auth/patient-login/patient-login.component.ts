@@ -145,6 +145,7 @@ submit(){
                 this.router.navigate(["/payment/transaction"]);
               },
               error => {
+                this.ngxService.stop(); 
                 this.hasError = true;
               });
  }

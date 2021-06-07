@@ -27,9 +27,10 @@ namespace Hospital.WebAPI.Controllers
         [Route("TestPayment", Name = "TestPayment")]
         public IActionResult TestPayment(PaymentInitiator paymentInitiatorParams)
         {
+            string orderId = _hospitalServices.AddRetryOrder(paymentInitiatorParams.OrderId);
             string currency = paymentInitiatorParams.Currency;
             string Amount = paymentInitiatorParams.Amount;
-            string orderId = paymentInitiatorParams.OrderId;
+            //string orderId = paymentInitiatorParams.OrderId;
             string customerId = paymentInitiatorParams.CustomerId;
 
             Dictionary<string, string> head = new Dictionary<string, string>();
@@ -98,7 +99,11 @@ namespace Hospital.WebAPI.Controllers
                 Console.WriteLine(responseData);
             }
 
-            return Ok(responseData);
+            paymentToken pk = new paymentToken();
+            pk.response = responseData;
+            pk.OrderID = orderId;
+
+            return Ok(pk);
         }
 
 
@@ -106,7 +111,7 @@ namespace Hospital.WebAPI.Controllers
         [Route("PaymentStatus", Name = "PaymentStatus")]
         public IActionResult TransactionStatus(string OrderId)
         {
-           // var OrderId = _hospitalServices.GetPrescriptionOrderwithStatus(PatientID).OrderId;
+            var _OrderId = _hospitalServices.getRetryOrderID(OrderId);
             Dictionary<string, string> body = new Dictionary<string, string>();
             Dictionary<string, string> head = new Dictionary<string, string>();
             Dictionary<string, Dictionary<string, string>> requestBody = new Dictionary<string, Dictionary<string, string>>();
@@ -151,7 +156,7 @@ namespace Hospital.WebAPI.Controllers
             {
                 responseData = responseReader.ReadToEnd();
             }
-            var perscriptionOrder = _hospitalServices.GetPrescriptionOrder(OrderId);
+            var perscriptionOrder = _hospitalServices.GetPrescriptionOrder(_OrderId);
             using JsonDocument doc = JsonDocument.Parse(responseData);
             JsonElement root = doc.RootElement;
 
@@ -185,7 +190,7 @@ namespace Hospital.WebAPI.Controllers
             _hospitalServices.AddPaymentHistory(_payHistory.PaymentHistory);
 
             var PR = new PrintReceiptResult();
-            PR = _hospitalServices.GetPrintReceipt(OrderId);
+            PR = _hospitalServices.GetPrintReceipt(_OrderId);
             _payHistory.PrintReceiptResult = PR;
            
             

@@ -80,7 +80,6 @@ export class ListsWidget10Component implements OnInit {
     this.dashboardServices.getMappedRoles()
       .subscribe(data => {
         this.menuRoleMappingmodel = data;
-        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -102,9 +101,6 @@ export class ListsWidget10Component implements OnInit {
 
   }
    
-  getSelectedValue(){
-    console.log(this.selected);
-  }
 
   @ViewChild('roleMap', {static: false}) MyForm: NgForm;
   

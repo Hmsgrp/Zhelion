@@ -33,49 +33,35 @@
 
           <form class="form" novalidate="novalidate" id="ResultForm" #myForm1="ngForm" (submit)="submitOrderID()">
 
-            <!-- <div class="form-group col-md-3">
-              <label for="uname">Select Hospital</label>
-              <ng-select #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selected"
-                name="selectHospital" [multiple]="false" required>
-                <ng-option [value]="hospital.hospitalId" *ngFor="let hospital of hospitals">
-                  {{hospital.hospitalName}}
-                </ng-option>
-              </ng-select>
-              <div class="invalid-feedback">Oops, you missed this one.</div>
-            </div> -->
-
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-3">
+              <label for="roleSelection" class="font-weight-bolder">Select Patient</label>
+              <ng-select bindLabel="name" placeholder="Select Patient" name="selectedPatient" appendTo="body"
+                    [searchable]="true" [clearable]="true" [(ngModel)]="selectedPatient" required>
+                    <ng-option [value]="lp.patientId"  [disabled]="false" *ngFor="let lp of labPatients">
+                      {{lp.patientId}}
+                    </ng-option>
+                  </ng-select>
+                  <br>
+                  <button type="submit" class="btn btn-primary" [disabled]="myForm1.invalid">Search</button>
+            </div>
+  
+            <!-- <div class="form-group col-md-6">
               <label for="roleName" class="font-weight-bolder">Enter the PatientID</label>
               <input type="text" autocomplete="off" id="patientID" name="patientID" #patientID="ngModel"
-                placeholder="Patient ID" ngModel class="form-control col-md-6" minlength="10" maxlength="30" required>
+                placeholder="Patient ID" ngModel class="form-control col-md-6" minlength="1" required>
               <div *ngIf="patientID.invalid && (patientID.dirty || patientID.touched)" style="color: red;">
                 <div *ngIf="patientID.errors.required">
                   PatientID is required.
                 </div>
                 <div *ngIf="patientID.errors.minlength">
-                  PatientID cannot be less than 10 characters.
-                </div>
-                <div *ngIf="patientID.errors.maxlength">
-                  PatientID does not exceed 30 characters.
+                  PatientID cannot be less than 1 characters.
                 </div>
               </div>
-            </div>
-
-            <div class="form-group col-md-6">
-              <button type="submit" class="btn btn-primary" [disabled]="myForm1.invalid">Search</button>
-            </div>
-            <!-- 
-            <div class="form-group">
-              <label for="roleName" class="font-weight-bolder">Enter the OrderID</label>
-              <input type="text" class="form-control col-md-6" id="OrderID" name="OrderID" formControlName="OrderID"
-                autocomplete="off" placeholder="OrderID">
-              <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
-                    validation: 'required',
-                    message: 'OrderID is required',
-                    control: ResultForm.controls['OrderID']
-                  }"></ng-container>
             </div> -->
 
+            <!-- <div class="form-group col-md-6">
+              <button type="submit" class="btn btn-primary" [disabled]="myForm1.invalid">Search</button>
+            </div> -->
           </form>
 
           <div *ngIf="showOrders">
@@ -123,7 +109,7 @@
                 <div class="col-md-3">
                   <br>
                   <label for="patientName" class="font-weight-bolder">Enter the Patient Name</label>
-                  <input type="text" autocomplete="off" id="patientName" name="patientName" #patientName="ngModel"
+                  <input type="text" [disabled]="disablefields" autocomplete="off" id="patientName" name="patientName" #patientName="ngModel"
                     placeholder="patient Name" ngModel class="form-control" minlength="2" maxlength="30" required>
                   <div *ngIf="patientName.invalid && (patientName.dirty || patientName.touched)" style="color: red;">
                     <div *ngIf="patientName.errors.required">
@@ -134,7 +120,7 @@
                 <div class="col-md-3">
                   <br>
                   <label for="Age" class="font-weight-bolder">Age</label>
-                  <input type="number" autocomplete="off" id="age" name="age" #age="ngModel" placeholder="Age" ngModel
+                  <input [disabled]="disablefields" type="number" autocomplete="off" id="age" name="age" #age="ngModel" placeholder="Age" ngModel
                     class="form-control" minlength="10" maxlength="30" required>
                   <div *ngIf="age.invalid && (age.dirty || age.touched)" style="color: red;">
                     <div *ngIf="age.errors.required">
@@ -147,7 +133,7 @@
                 <div class="col-md-3">
                   <br>
                   <label class="font-weight-bolder" for="uname">Gender</label>
-                  <ng-select #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selectedgender"
+                  <ng-select [disabled]="disablefields" #MyNgSelect bindLabel="name" placeholder="Select item" [(ngModel)]="selectedgender"
                     name="select Gender" [multiple]="false" required>
                     <ng-option [value]="g.Id" *ngFor="let g of GenderVal">
                       {{g.Name}}
@@ -288,7 +274,7 @@
                   <div class="col-md-3">
                     <br>
                     <label for="TPD" class="font-weight-bolder">Test Reported Date</label>
-                    <input type="text" autocomplete="off" id="TPD" name="TPD" #TPD="ngModel"
+                    <input type="date" autocomplete="off" id="TPD" name="TPD" #TPD="ngModel"
                       placeholder="Test Reported Date" ngModel class="form-control" minlength="2" maxlength="30" required>
                     <div *ngIf="TPD.invalid && (TPD.dirty || TPD.touched)" style="color: red;">
                       <div *ngIf="TPD.errors.required">
@@ -299,7 +285,7 @@
                   <div class="col-md-3">
                     <br>
                     <label for="TRD" class="font-weight-bolder">Test Received Date</label>
-                    <input type="text" autocomplete="off" id="TRD" name="TRD" #TRD="ngModel"
+                    <input type="date" autocomplete="off" id="TRD" name="TRD" #TRD="ngModel"
                       placeholder="Test Received Date" ngModel class="form-control" minlength="2" maxlength="30" required>
                     <div *ngIf="TRD.invalid && (TRD.dirty || TRD.touched)" style="color: red;">
                       <div *ngIf="TRD.errors.required">
@@ -334,7 +320,7 @@
                       <span>{{pl.rangesFrom}} to {{pl.rangesTo}}</span>
                     </td>
                     <td>
-                      <input type="text" [(ngModel)]="orderResult.parameterList[in].testedResult" name="name{{in}}"
+                      <input type="text" (keypress)="numberOnly($event)" [(ngModel)]="orderResult.parameterList[in].testedResult" name="name{{in}}"
                         class="form-control col-md-6" #name="ngModel" required />
                   </tr>
                 </tbody>

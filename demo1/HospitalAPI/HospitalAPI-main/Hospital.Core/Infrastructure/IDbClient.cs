@@ -29,5 +29,7 @@ namespace Hospital.Core.Infrastructure
         IMongoCollection<Notification> GetNotificationCollection();
         IMongoCollection<LabMapping> GetLabMappingCollection();
 
+        IMongoCollection<RetryOrder> GeRetryOrderCollection();
+
     }
 }

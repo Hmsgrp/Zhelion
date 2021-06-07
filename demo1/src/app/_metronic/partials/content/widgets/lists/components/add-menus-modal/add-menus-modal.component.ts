@@ -84,7 +84,6 @@ export class AddmenusModalComponent implements OnInit, OnDestroy {
     this.dashboardServices.getMenus()
       .subscribe(data => {
         this.Menu = data;
-        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -94,7 +93,6 @@ export class AddmenusModalComponent implements OnInit, OnDestroy {
 
    delete(menuid:string)
   {
-    console.log(menuid);
     this.dashboardServices.deleteMenu(menuid)
     .subscribe(data => {
       this.handleDelete();

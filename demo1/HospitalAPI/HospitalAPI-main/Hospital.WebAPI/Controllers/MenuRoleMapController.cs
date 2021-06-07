@@ -56,5 +56,13 @@ namespace Hospital.WebAPI.Controllers
         {
             return Ok(_hospitalServices.UpdateMenuRoleMap(menuRole));
         }
+
+
+        [HttpGet]
+        [Route("GetAllMappingURL", Name = "GetAllMappingURL")]
+        public IActionResult GetAllMappingURL()
+        {
+            return Ok(_hospitalServices.GetAllMappingURL());
+        }
     }
 }

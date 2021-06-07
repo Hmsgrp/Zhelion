@@ -15,7 +15,8 @@
             <hr>
             <h2 style="color: red;text-align: center;">Test Report</h2>
             <br>
-            <span>Created Date : {{ResultDetails.createdOn | date}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span><b>Reported Date</b> : {{ResultDetails.testReceivedDate | date}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            <span><b>Received Date</b> : {{ResultDetails.testReportedDate | date}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span style="margin-left:81px">ReportID : {{ResultDetails.orderId}} </span>
             <br><br>
             <h4>Patient Information</h4>
@@ -195,17 +196,17 @@
                 result. It is recommended to correlate the results with clinical findings. Repeat sampling and testing
                 after a gap of 2-4 days of the specimen is strongly recommended in severe or progressive disease.</p>
               <br>
-              <span>Test Done by : {{ResultDetails.approvedBy}}</span>
-              <span style="float: right;">Verified by : {{ResultDetails.approvedBy}}</span>
+              <span>Test Done by : {{ResultDetails.testDoneBy}}</span>
+              <span style="float: right;">Verified by : {{ResultDetails.testApprovedBy}}</span>
               <hr>
               <h4 style="text-align: center;">Declaration</h4>
               <p>I hereby certify that; this test certificate is for the specimen received as per the above work order
                 number</p>
               <span>Issued to : {{ResultDetails.patientName}}</span>
-              <span style="float: right;">Issued by : {{ResultDetails.approvedBy}}</span><br><br><br>
+              <span style="float: right;">Issued by : {{ResultDetails.testDoneBy}}</span><br><br><br>
 
 
-              <span style="font-weight: bold;">Signature</span><br><br><br>
+              <span>This is a computer generated reported hence no signature required</span><br><br><br>
             </div>
           </div>
 

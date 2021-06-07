@@ -78,7 +78,6 @@ export class CommonServicesService {
       // store jwt token in local storage to keep user logged in between page refreshes
       const helper = new JwtHelperService();
       const decodedToken = helper.decodeToken((<any> response).jwtToken);
-      console.log(decodedToken);
       localStorage.setItem("access_token",(<any> response).jwtToken);
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
       localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
@@ -90,6 +89,34 @@ export class CommonServicesService {
   }));
 
   }
+
+  LoginLab(UserName:string,Password:string)
+  {
+    this.removeCookie();
+    const credentials = {
+      'username':UserName,
+      'password':Password
+    }
+
+    return this.http.post(environment.apiUrl+'api/Auth/LoginV3',credentials)
+    .pipe(map(response => {
+      // store jwt token in local storage to keep user logged in between page refreshes
+      const helper = new JwtHelperService();
+      const decodedToken = helper.decodeToken((<any> response).jwtToken);
+
+      localStorage.setItem("access_token",(<any> response).jwtToken);
+      localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
+      localStorage.setItem("userID",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"]);
+      localStorage.setItem("UserName",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"]);
+      localStorage.setItem("RoleName",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
+      localStorage.setItem("HospitalID",decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata"]);
+      localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
+      
+      return response;
+  }));
+
+  }
+
 
 
   LoginUser(UserName:string,Password:string)
@@ -105,7 +132,7 @@ export class CommonServicesService {
       // store jwt token in local storage to keep user logged in between page refreshes
       const helper = new JwtHelperService();
       const decodedToken = helper.decodeToken((<any> response).jwtToken);
-      console.log(decodedToken);
+
       localStorage.setItem("access_token",(<any> response).jwtToken);
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
       localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);
@@ -152,7 +179,7 @@ UpdatePatient(FormGroup:FormGroup,hospitalID:string,userID:string,passwordtick:b
       // store jwt token in local storage to keep user logged in between page refreshes
       const helper = new JwtHelperService();
       const decodedToken = helper.decodeToken((<any> response).jwtToken);
-      console.log(decodedToken);
+
       localStorage.setItem("access_token",(<any> response).jwtToken);
       localStorage.setItem("Menus",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/anonymous"]);
       localStorage.setItem("Hospitals",decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri"]);

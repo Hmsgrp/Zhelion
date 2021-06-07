@@ -36,6 +36,8 @@ namespace Hospital.Core.Services
         void DeleteLab(string id);
         Lab UpdateLab(Lab lab);
         Hospitaal GetSelectedHospitalforLabUser(string UserID);
+        List<Hospitaal> GetLabMappedHospitalList(string UserId);
+        List<PrescriptionOrder> GetPatientsforLabEntry(string hospitalID);
 
 
         List<Test> GetTests();
@@ -73,6 +75,7 @@ namespace Hospital.Core.Services
         ExceptionResult IsMenuReferenced(string menuId);
         void DeleteMenu(string id);
         Menu UpdateMenu(Menu menu);
+        List<MappingURL> GetAllMappingURL();
 
 
         List<MenuRoleMapResult> GetMenuRoleMaps();
@@ -129,7 +132,9 @@ namespace Hospital.Core.Services
         bool ReAdmintPatient(string HospitalID, string Hospital_PID);
 
         bool DischargePatient(string HospitalID, string Hospital_PID);
+        string AddRetryOrder(string orderID);
+        bool isMaxRetry(string orderID);
 
-
+        string getRetryOrderID(string orderID);
     }
 }

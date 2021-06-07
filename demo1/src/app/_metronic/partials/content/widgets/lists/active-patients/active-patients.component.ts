@@ -29,7 +29,6 @@ export class ActivePatientsComponent implements OnInit {
     this.dashboardServices.GetpatientList()
       .subscribe(data => {
         this.results = data;
-        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{

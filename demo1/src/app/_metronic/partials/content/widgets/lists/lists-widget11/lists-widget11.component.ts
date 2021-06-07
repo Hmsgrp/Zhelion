@@ -232,7 +232,6 @@ export class ListsWidget11Component implements OnInit {
   editProfileForm: FormGroup;
   openModel(id:string)
   {
-    console.log(id);
     const modalRef = this.modalService.open(EditParameterModalComponent,
     {
       scrollable: true,

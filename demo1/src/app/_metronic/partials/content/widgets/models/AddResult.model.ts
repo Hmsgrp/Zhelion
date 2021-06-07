@@ -16,5 +16,9 @@ export class AddResult {
     testDoneBy:string;
     resultStatus:string;
     hospitalID:string;
+    testApprovedBy:string;
+    testCollectedWard:string;
+    testReportedDate:Date;
+    testReceivedDate:Date;
 }
   

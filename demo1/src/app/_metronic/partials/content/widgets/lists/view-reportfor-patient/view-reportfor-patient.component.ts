@@ -56,7 +56,6 @@ export class ViewReportforPatientComponent implements OnInit {
       .subscribe(data => {
         this.results = data;
         this.filteredresult = this.results;
-        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -72,7 +71,7 @@ export class ViewReportforPatientComponent implements OnInit {
     const url = this.router.serializeUrl(
       this.router.createUrlTree([urlprint])
     );
-    //console.log(url);
+
     window.open(url.replace("1", "#"), '_blank');
   }
 

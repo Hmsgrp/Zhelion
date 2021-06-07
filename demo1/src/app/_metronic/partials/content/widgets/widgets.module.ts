@@ -68,6 +68,7 @@ import { ViewReportforDoctorComponent } from './lists/view-reportfor-doctor/view
 import { ViewReportforPatientComponent } from './lists/view-reportfor-patient/view-reportfor-patient.component';
 import { NgxUiLoaderModule } from  'ngx-ui-loader';
 import { ActivePatientsComponent } from './lists/active-patients/active-patients.component';
+import { MappingUrlsComponent } from './lists/mapping-urls/mapping-urls.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { ActivePatientsComponent } from './lists/active-patients/active-patients
     PrintResultComponent,
     ViewReportforDoctorComponent,
     ViewReportforPatientComponent,
-    ActivePatientsComponent
+    ActivePatientsComponent,
+    MappingUrlsComponent
   ],
   imports: [
     CommonModule,

@@ -23,12 +23,14 @@ export class PaymentRedirectComponent implements OnInit {
   testName:string;
   noOftest:number;
   OrderID:string;
+  hospitalname:string;
 
   ngOnInit(): void { 
     this.transactionstatus = "inprogress"
     this.route.params.subscribe(params => {
       this.OrderID = params['term1'].toString();
     });
+    this.hospitalname = localStorage.getItem("HospitalName").toString();
     this.getPaymentStatus();
   }
 
@@ -47,7 +49,8 @@ export class PaymentRedirectComponent implements OnInit {
         this.patientName = data.printReceiptResult.patientName;
         this.testName = data.printReceiptResult.testName;
         this.noOftest = data.printReceiptResult.noOfTest;
-        console.log(this.resultStatus);
+        this.OrderID = data.paymentHistory.orderId;
+
         if(this.resultStatus == "TXN_FAILURE")
         {
           this.transactionstatus = "failed"
