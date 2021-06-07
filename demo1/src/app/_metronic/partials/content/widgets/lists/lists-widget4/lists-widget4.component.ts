@@ -145,6 +145,7 @@ export class ListsWidget4Component implements OnInit {
   refreshData() {
     this.dashboardServices.getHospital()
       .subscribe(data => {
+        console.log(data);
         this.hospitals = data;
         this.cd.detectChanges();
       },

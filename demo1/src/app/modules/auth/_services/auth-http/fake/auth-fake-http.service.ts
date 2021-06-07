@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { UserModel } from '../../../_models/user.model';
 import { UsersModel } from '../../../_models/users.model';
 import { AuthModel } from '../../../_models/auth.model';
+import { UsersTable } from '../../../../../_fake/fake-db/users.table';
 import { environment } from '../../../../../../environments/environment';
 
 const API_USERS_URL = `${environment.apiUrl}/users`;
@@ -67,6 +68,18 @@ export class AuthHTTPService {
         return user !== undefined;
       })
     );
+  }
+
+  getUserByToken(token: string): Observable<UserModel> {
+    const user = UsersTable.users.find((u) => {
+      return u.accessToken === token;
+    });
+
+    if (!user) {
+      return of(undefined);
+    }
+
+    return of(user);
   }
 
   getAllUsers(): Observable<UserModel[]> {

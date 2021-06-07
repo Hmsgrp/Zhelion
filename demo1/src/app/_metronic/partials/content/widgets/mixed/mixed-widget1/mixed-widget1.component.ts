@@ -37,6 +37,7 @@ export class MixedWidget1Component implements OnInit {
   getmenus()
   {
     this.menus= this.dashboardServices.tokenGetterforMEnus()
+    console.log(this.menus);
   }
  
 }

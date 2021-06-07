@@ -14,129 +14,134 @@ import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
   styleUrls: ['./doctor-login.component.scss']
 })
 export class DoctorLoginComponent implements OnInit {
-  // KeenThemes mock, change it to:
-  spinnerType = SPINNER.wanderingCubes;
-  defaultAuth = {
-    username: '',
-    password: '',
-  };
-  // defaultAuth: any = {
-  //   username: 'admin',
-  //   password: 'demo',
-  // };
-  loginForm: FormGroup;
-  hasError: boolean;
-  returnUrl: string;
-  isLoading$: Observable<boolean>;
+// KeenThemes mock, change it to:
+spinnerType = SPINNER.wanderingCubes;
+defaultAuth = {
+  username: '',
+  password: '',
+};
+// defaultAuth: any = {
+//   username: 'admin',
+//   password: 'demo',
+// };
+loginForm: FormGroup;
+hasError: boolean;
+returnUrl: string;
+isLoading$: Observable<boolean>;
 
-  // private fields
-  private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
+// private fields
+private unsubscribe: Subscription[] = []; // Read more: => https://brianflove.com/2016/12/11/anguar-2-unsubscribe-observables/
 
-  showPasswordFields: boolean;
-  showOTPField: boolean;
-  isSignUpwithOTPDisabled: boolean;
-  isSignUpwithPasswordDisabled: boolean;
-  FieldError: boolean;
+showPasswordFields:boolean;
+showOTPField:boolean;
+isSignUpwithOTPDisabled:boolean;
+isSignUpwithPasswordDisabled:boolean;
+FieldError:boolean;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private CommonServices: CommonServicesService,
-    private cd: ChangeDetectorRef,
-    private ngxService: NgxUiLoaderService
-  ) {
-    this.isLoading$ = this.authService.isLoading$;
-    // redirect to home if already logged in
-    if (this.authService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+constructor(
+ private fb: FormBuilder,
+ private authService: AuthService,
+ private route: ActivatedRoute,
+ private router: Router,
+ private CommonServices: CommonServicesService,
+ private cd: ChangeDetectorRef,
+ private ngxService: NgxUiLoaderService
+) {
+ this.isLoading$ = this.authService.isLoading$;
+ // redirect to home if already logged in
+ if (this.authService.currentUserValue) {
+   this.router.navigate(['/']);
+ }
+}
+
+ngOnInit(): void {
+ this.initForm();
+ this.FieldError=false;
+
+ this.showPasswordFields = true;
+ this.showOTPField = false;
+
+ localStorage.removeItem("access_token");
+ localStorage.removeItem("Menus");
+ // get return url from route parameters or default to '/'
+ this.returnUrl =
+     this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+ }
+
+// convenience getter for easy access to form fields
+get f() {
+ return this.loginForm.controls;
+}
+
+initForm() {
+ this.loginForm = this.fb.group({
+   username: [
+     this.defaultAuth.username,
+     Validators.compose([
+       Validators.required
+     ]),
+   ],
+   password: [
+     this.defaultAuth.password,
+     Validators.compose([
+       
+     ]),
+   ],
+   OTP: [
+    '',
+    Validators.compose([
+      
+    ]),
+  ],
+  sgwithPassword: [false, Validators.compose([])],
+ });
+}
+
+
+isChangesgwithOTPToggle(val:string)
+{
+  if(val == 'true')
+  {
+    this.showPasswordFields = false;
+    this.showOTPField =true; 
   }
-
-  ngOnInit(): void {
-    this.initForm();
-    this.FieldError = false;
-
+  else
+  {
     this.showPasswordFields = true;
-    this.showOTPField = false;
-
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("Menus");
-    // get return url from route parameters or default to '/'
-    this.returnUrl =
-      this.route.snapshot.queryParams['returnUrl'.toString()] || '/';
+    this.showOTPField = false; 
   }
+  this.cd.detectChanges();
+}
 
-  // convenience getter for easy access to form fields
-  get f() {
-    return this.loginForm.controls;
-  }
+getOTP()
+{
+  this.loginForm.controls.OTP.setValue("5678788");
+}
 
-  initForm() {
-    this.loginForm = this.fb.group({
-      username: [
-        this.defaultAuth.username,
-        Validators.compose([
-          Validators.required
-        ]),
-      ],
-      password: [
-        this.defaultAuth.password,
-        Validators.compose([
+submit(){
+  this.hasError = false;
+console.log(this.f.password.value);
+ if(this.f.password.value =="" && this.f.OTP.value =="")
+ {
+  this.FieldError=true;
+ }
+ else{
+  this.ngxService.start(); 
+  this.CommonServices.LoginUser(this.f.username.value, this.f.password.value)
+   .subscribe(
+              data => {
+                this.ngxService.stop(); 
+                this.hasError = false;
+                this.router.navigate(["auth/doctor/doctorNextStep"]);
+              },
+              error => {
+                this.hasError = true;
+              });
+ }
+}
 
-        ]),
-      ],
-      OTP: [
-        '',
-        Validators.compose([
-
-        ]),
-      ],
-      sgwithPassword: [false, Validators.compose([])],
-    });
-  }
-
-
-  isChangesgwithOTPToggle(val: string) {
-    if (val == 'true') {
-      this.showPasswordFields = false;
-      this.showOTPField = true;
-    }
-    else {
-      this.showPasswordFields = true;
-      this.showOTPField = false;
-    }
-    this.cd.detectChanges();
-  }
-
-  getOTP() {
-    this.loginForm.controls.OTP.setValue("5678788");
-  }
-
-  submit() {
-    this.hasError = false;
-    if (this.f.password.value == "" && this.f.OTP.value == "") {
-      this.FieldError = true;
-    }
-    else {
-      this.ngxService.start();
-      this.CommonServices.LoginUser(this.f.username.value, this.f.password.value)
-        .subscribe(
-          data => {
-            this.ngxService.stop();
-            this.hasError = false;
-            this.router.navigate(["auth/doctor/doctorNextStep"]);
-          },
-          error => {
-            this.ngxService.stop();
-            this.hasError = true;
-          });
-    }
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe());
-  }
+ngOnDestroy() {
+ this.unsubscribe.forEach((sb) => sb.unsubscribe());
+}
 
 }

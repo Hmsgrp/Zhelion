@@ -42,6 +42,7 @@ export class DashboardServicsService {
 
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(role);
+    console.log(body)
     return this.http.post(environment.apiUrl + 'api/Roles/AddRole', body,{'headers':headers})
   }
 
@@ -103,6 +104,7 @@ export class DashboardServicsService {
   }
 
   EditUser(FormGroup:FormGroup,userID:string): Observable<any>{
+    console.log(userID);
     const user = new UserModel();
     user.UserID = userID;
     user.UserName = FormGroup.controls.userName.value;
@@ -518,12 +520,6 @@ export class DashboardServicsService {
       return this.http.get<any>(environment.apiUrl + endPoints + hospitalID)
     }
 
-    GetPatientsforLabEntry(): Observable<any> {
-      let hospitalID = localStorage.getItem("HospitalID").toString(); 
-      let endPoints = "api/Lab/GetPatientsforLabEntry/";
-      return this.http.get<any>(environment.apiUrl + endPoints + hospitalID)
-    }
-
     AddResult(Result:any ,FormGroup:FormGroup, cashReceiptNo:string,gender:string,orderID:string,selectedSpecimen:string,selectedResult:string): Observable<any> {
 
       const result = new AddResult();
@@ -544,11 +540,6 @@ export class DashboardServicsService {
       result.testDoneBy= FormGroup.controls.testdoneby.value;
       result.resultStatus= selectedResult;
       result.hospitalID = localStorage.getItem("HospitalID").toString();
-      result.testApprovedBy = FormGroup.controls.testapprovedby.value;
-      result.testCollectedWard = FormGroup.controls.testcollectedat.value;
-      result.testDoneBy =  FormGroup.controls.testdoneby.value;
-      result.testReportedDate =  FormGroup.controls.TPD.value;
-      result.testReceivedDate = FormGroup.controls.TRD.value;
 
       const headers = { 'content-type': 'application/json'}  
 
@@ -610,11 +601,6 @@ export class DashboardServicsService {
     ReAdmintPatient(hospitalID:string,hospital_PID:string): Observable<any> {
       let endPoints = "api/Doctor/ReAdmintPatient?HospitalID="+hospitalID+"&Hospital_PID=";
       return this.http.get<any>(environment.apiUrl + endPoints + hospital_PID)
-    }
-
-    GetAllMappingURL(): Observable<any> {
-      let endPoints = "api/MenuRoleMap/GetAllMappingURL"
-      return this.http.get<any>(environment.apiUrl + endPoints)
     }
 }
 

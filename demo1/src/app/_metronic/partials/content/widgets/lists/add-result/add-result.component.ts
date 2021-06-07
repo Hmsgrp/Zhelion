@@ -11,7 +11,7 @@ import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
   styleUrls: ['./add-result.component.scss']
 })
 export class AddResultComponent implements OnInit {
-  spinnerType = SPINNER.wanderingCubes;
+  spinnerType = SPINNER.squareLoader;
   ResultForm: FormGroup;
   hasError: boolean;
   OrderResults:any;
@@ -29,16 +29,14 @@ export class AddResultComponent implements OnInit {
   selectedOrder:string;
   showOrders:boolean;
   @ViewChild('myForm1', {static: false}) MyForm1: NgForm;
-  @ViewChild('formRef', {static: false}) formRef: NgForm;
+  @ViewChild('formRef', {static: false}) MyForm: NgForm;
   orderResult:any;
-  orderResulttoarr:[];
   patientId:string;
   testName:string;
   selectedgender:string;
   selectedSpecimen:string;
   allOrders:any
   testUnit : string;
-  labPatients:any;
   GenderVal : Gender[] = [{
     Id: 'Male',
     Name: 'Male'
@@ -66,27 +64,19 @@ export class AddResultComponent implements OnInit {
     Name: 'InSignificant'
   }];
   selectedResult:string;
-  selectedPatient:string;
-  PatientName:string;
-  age:string;
-  sex:string;
-  disablefields:boolean;
 
   constructor(private dashboardServices: DashboardServicsService,private fb: FormBuilder,private cd: ChangeDetectorRef,private ngxService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
 
     //this.getHospital();
-    this.getPatientsforLabReport();
     this.initForm();
     this.ispaid = true;
     this.showform = false;
     this.cashReceiptNo = "";
     this.showOrders = false;
-    this.disablefields = false;
   }
 
-  
   defaultVal = {
     patientID: '',
   };
@@ -106,20 +96,17 @@ export class AddResultComponent implements OnInit {
     });
   }
 
-  getPatientsforLabReport()
-  {
-    this.ngxService.start(); 
-    this.dashboardServices.GetPatientsforLabEntry()
-      .subscribe(data => {
-        this.labPatients = data;
-        this.ngxService.stop(); 
-        this.cd.detectChanges();
-      },
-      HttpErrorResponse =>{
-        //this.handleError(HttpErrorResponse.message+" Check Api");
-      }
-      )
-  }
+  // getHospital() {
+  //   this.dashboardServices.getHospital()
+  //     .subscribe(data => {
+  //       this.hospitals = data;
+      
+  //       this.cd.detectChanges();
+  //     },
+  //     HttpErrorResponse =>{
+  //       this.handleError(HttpErrorResponse.message+" Check Api");
+  //     });    
+  // }
 
   submitOrderID()
   {
@@ -129,20 +116,13 @@ export class AddResultComponent implements OnInit {
 
   getAllOrder()
   {
-      this.dashboardServices.GetAllByPatientID(this.selectedPatient)
+      this.dashboardServices.GetAllByPatientID(this.MyForm1.form.controls.patientID.value)
       .subscribe(data => {
         this.ngxService.stop(); 
         this.showOrders = true;
         this.OrderResults = data;
-        console.log(this.OrderResults);
-        if(this.OrderResults[0].result)
-        {
-          this.disablefields = true;
-          this.PatientName = this.OrderResults[0].result.patientName;
-          this.age = this.OrderResults[0].result.age;
-          this.sex = this.OrderResults[0].result.sex;
-        }
         this.testUnit = data[0].testUnit;
+        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -154,11 +134,10 @@ export class AddResultComponent implements OnInit {
   add()
   {
     if(this.NoOfResultAdded < this.TotalNumberOfResult){
-      this.dashboardServices.AddResult(this.OrderResults.filter(x=>x.orderId == this.selectedOrder) ,this.formRef.form ,this.cashReceiptNo,this.selectedgender,this.selectedOrder,this.selectedSpecimen,this.selectedResult)
+      this.dashboardServices.AddResult(this.OrderResults ,this.MyForm.form ,this.cashReceiptNo,this.selectedgender,this.selectedOrder,this.selectedSpecimen,this.selectedResult)
       .subscribe(data => {
         this.NoOfResultAdded = this.NoOfResultAdded + 1;
         this.handleSuccessforPost();
-        this.showform  = false;
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -188,7 +167,6 @@ export class AddResultComponent implements OnInit {
       if(this.ispaid)
       {
         this.showform  = true;
-        this.setformValue();
       }
       else
       {
@@ -205,22 +183,11 @@ export class AddResultComponent implements OnInit {
       this.cashReceiptNo = receiptNo;
       this.ispaid = true;
       this.showform = true;
-      this.setformValue();
     }
     else
     {
       this.handleError("Please enter cashReceiptNo");
     }
-  }
-
-  setformValue()
-  {
-    setTimeout(() => {
-      this.formRef.controls.patientName.setValue(this.PatientName); 
-      this.formRef.controls.age.setValue(this.age);
-      this.selectedgender = this.sex;
-      this.cd.detectChanges();
-    }, 1000);
   }
 
   closeNotification()
@@ -251,10 +218,7 @@ export class AddResultComponent implements OnInit {
     this.postSuccessText = "Added Successfully";
     this.selectedgender = "";
     //this.selected = "";
-    this.showOrders = false;
-    this.selectedOrder = "";
-    this.selectedPatient = "";
-    this.formRef.form.reset();
+    this.MyForm.form.reset();
     this.showSuccessNotification = true;
     this.closeAllNotification();
   }
@@ -266,14 +230,5 @@ export class AddResultComponent implements OnInit {
       this.showSuccessNotification = false;
       this.cd.detectChanges();
     }, 3000);
-  }
-
-  numberOnly(event): boolean {
-    const charCode = (event.which) ? event.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      return false;
-    }
-    return true;
-
   }
 }

@@ -17,7 +17,7 @@ export class ReferPatientComponent implements OnInit {
       if (params['term1']) { (1)
         //this.doSearch(params['term'])
       }
-      this.refID = params['term1'].toString();
+      this.refID = params['term3'].toString();
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("Menus");
@@ -25,6 +25,7 @@ export class ReferPatientComponent implements OnInit {
   }
 
   refreshData() {
+    console.log(1);
     this.CommonServices.GetUserMappingDetails(this.refID)
       .subscribe(data => {
         localStorage.setItem("Hospital_PID",data.hospital_PID);

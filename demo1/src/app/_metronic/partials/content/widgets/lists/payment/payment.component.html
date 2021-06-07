@@ -1,16 +1,15 @@
-<!-- 
-<div *ngIf="disablePayment" class="row">
-    <div class="col-md-12">
-        <div class="container rounded bg-white" style="margin-bottom: 50px">
-            <p>No Pending Payments</p>
-        </div>
-    </div>
-</div> -->
+
+     
   <div class="row">
     <div class="col-md-12">
       <div class="container rounded bg-white" style="margin-bottom: 50px">
         <div class="row d-flex justify-content-center pb-5">
-            <div class="col-sm-5 col-md-6 ml-1" style="margin-top: 40px; margin-bottom: 50px">
+            
+            <div class="col-sm-5 col-md-5 ml-1" style="margin-top: 40px; margin-bottom: 50px">
+                <div class="py-4 d-flex flex-row">
+                    <h5><span class="fa fa-check-square-o"></span><b>ELIGIBLE</b> | </h5><span class="pl-2">Pay</span>
+                </div>
+
                 <form *ngIf="showpendingTest">
                     <label for="roleSelection" style="color:red" class="font-weight-bolder">Payment Pending</label>
                     <ng-select bindLabel="name" placeholder="Select Test" name="selected" appendTo="body"
@@ -24,52 +23,16 @@
                          </div>
                         <br>
                    </form>
+              
 
-                <div class="py-4 d-flex flex-row">
-                    <h5><span class="fa fa-check-square-o"></span><b>ELIGIBLE</b> | </h5><span class="pl-2">Pay</span>
-                </div>
-
-                <div class="bg-light rounded d-flex flex-column">
-                    <div class="p-2 ml-3">
-                        <h4>Order Recap</h4>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">OrderID</div>
-                        <div class="ml-auto">{{OrderID}}</div>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">Hospital Name</div>
-                        <div class="ml-auto">{{hospitalname}}</div>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">Suggested Test</div>
-                        <div class="ml-auto">{{testName}}</div>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">Price for a test</div>
-                        <div class="ml-auto">₹ {{amountforOnetest}}</div>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">No of tests Suggested</div>
-                        <div class="ml-auto">{{Nooftests}}</div>
-                    </div>
-                    <div class="p-2 d-flex">
-                        <div class="col-8">Total Amount</div>
-                        <div class="ml-auto">{{totalAmount}}</div>
-                    </div>
-                    <div class="border-top px-4 mx-3"></div>
-                    <div class="p-2 d-flex pt-3">
-                        <div class="col-8"><b>Amount to Pay</b></div>
-                        <div class="ml-auto"><b class="green">₹ {{totalAmount}}</b></div>
-                    </div>
-                </div>
-
-          
-              <br>
-                 <h4>{{testName}}</h4>
                 <h4 class="green">₹ {{totalAmount}}</h4>
-                
- 
+                <h4>{{testName}}</h4>
+                <div class="d-flex pt-2">
+                    <div>
+                        <p><b>Insurance Responsibility.</b><span class="green">₹ 0</span></p>
+                    </div>
+                </div>
+                <p>Insurance claims and all necessary dependencies will be submitted to your insurer for the coverred portion of this order</p>
                 <div class="rounded bg-light d-flex">
                     <div class="p-2">Payment mode</div>
                     <div class="ml-auto p-2">Online</div>
@@ -77,11 +40,14 @@
                 <hr>
                 <div class="pt-2">
                     <div class="d-flex">
+                        <div>
+                            <p><b>Patient Balance.</b><span class="green">₹ {{totalAmount}}</span></p>
+                        </div>
                         <!-- <div class="ml-auto p-2">
                             <p class="text-primary"><i class="fa fa-plus-circle text-primary"></i>Add payment card</p>
                         </div> -->
                     </div>
-                    <p> This is an estimate for the portion of your order  due today . </p>
+                    <p> This is an estimate for the portion of your order (not covered by insurance) due today . once insurance finalizes their review refunds and/or balances will reconcile automatically. </p>
                     <!-- <form class="pb-3">
                         <div class="d-flex flex-row align-content-center">
                             <div class="pt-2 pr-2"><input type="radio" name="radio1" id="r1" checked></div>
@@ -110,7 +76,37 @@
                   <span class="spinner spinner-primary ml-5"></span>
                 </div>
             </div>
-         
+            <div class="col-sm-3 col-md-4 offset-md-1 mobile"  style="margin-top: 40px;">
+                <div class="py-4 d-flex justify-content-end">
+                    <h6><a href="#"></a></h6>
+                </div>
+                <div class="bg-light rounded d-flex flex-column">
+                    <div class="p-2 ml-3">
+                        <h4>Order Recap</h4>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Suggested Test</div>
+                        <div class="ml-auto">{{testName}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Price for a test</div>
+                        <div class="ml-auto">₹ {{amountforOnetest}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">No of tests Suggested</div>
+                        <div class="ml-auto">{{Nooftests}}</div>
+                    </div>
+                    <div class="p-2 d-flex">
+                        <div class="col-8">Total Amount</div>
+                        <div class="ml-auto">{{totalAmount}}</div>
+                    </div>
+                    <div class="border-top px-4 mx-3"></div>
+                    <div class="p-2 d-flex pt-3">
+                        <div class="col-8"><b>Amount to Pay</b></div>
+                        <div class="ml-auto"><b class="green">₹ {{totalAmount}}</b></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>

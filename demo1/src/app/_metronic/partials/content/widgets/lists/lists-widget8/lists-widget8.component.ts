@@ -12,7 +12,7 @@ import { NgxUiLoaderService, SPINNER } from 'ngx-ui-loader';
   templateUrl: './lists-widget8.component.html',
 })
 export class ListsWidget8Component {
-  spinnerType = SPINNER.wanderingCubes;
+  spinnerType = SPINNER.cubeGrid;
   @Input() cssClass;
   LabRegistration: FormGroup;
   isEdit:boolean;

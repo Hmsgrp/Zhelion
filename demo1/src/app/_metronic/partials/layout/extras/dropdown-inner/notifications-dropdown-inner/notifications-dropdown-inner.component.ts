@@ -43,6 +43,7 @@ export class NotificationsDropdownInnerComponent implements OnInit {
       .subscribe(data => {
         this.notifications = data;
         this.totalcount = this.notifications.length;
+        console.log(data);
         this.cd.detectChanges();
       },
       HttpErrorResponse =>{
@@ -56,6 +57,7 @@ export class NotificationsDropdownInnerComponent implements OnInit {
      this.dashboardServices.CloseNotification(notificationID)
       .subscribe(data => {
         this.refreshData();
+        console.log(data);
       },
       HttpErrorResponse =>{
       //  this.handleError(HttpErrorResponse.message+" Check Api");

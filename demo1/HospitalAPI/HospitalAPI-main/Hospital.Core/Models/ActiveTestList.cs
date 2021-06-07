@@ -14,8 +14,6 @@ namespace Hospital.Core.Models
 
         public string OrderId { get; set; }
 
-        public string RetryOrderId { get; set; }
-
         public string HospitalId { get; set; }
 
         public int NoOfTestSugested { get; set; }

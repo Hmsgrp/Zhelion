@@ -48,6 +48,7 @@ export class EditParameterModalComponent implements OnInit, OnDestroy {
     this.initForm();
     this.refreshData();
     this.Initializevariables();
+    console.log(this.fromParent);
     this.testID = this.fromParent;
   }
 

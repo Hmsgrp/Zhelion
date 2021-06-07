@@ -117,7 +117,6 @@ export class LoginComponent implements OnInit, OnDestroy {
                   this.router.navigate(["/dashboard"]);
                 },
                 error => {
-                  this.ngxService.stop(); 
                   this.hasError = true;
                 });
    }

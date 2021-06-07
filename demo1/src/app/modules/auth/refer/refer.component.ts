@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { ActivatedRoute } from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import { CommonServicesService } from '../_services/common-services.service';
 import { Router } from '@angular/router';
 
@@ -10,18 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./refer.component.scss']
 })
 export class ReferComponent implements OnInit {
-  refID: string;
-  constructor(private route: ActivatedRoute, private CommonServices: CommonServicesService, private router: Router) {
+  refID:string;
+  constructor(private route: ActivatedRoute ,private CommonServices: CommonServicesService,private router : Router) { 
 
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if (params['term1']) {
-        (1)
+      console.log(params);
+      if (params['term1']) { (1)
         //this.doSearch(params['term'])
       }
-      this.refID = params['term1'].toString();
+      this.refID = params['term3'].toString();
+      console.log(this.refID);
     });
     localStorage.removeItem("access_token");
     localStorage.removeItem("Menus");
@@ -31,21 +32,24 @@ export class ReferComponent implements OnInit {
   refreshData() {
     this.CommonServices.GetSignUpLink(this.refID)
       .subscribe(data => {
-        if (data.isActive == true) {
-          var gotoURL = window.location.origin + "/#/auth" + data.rediectionLink;
+        if(data.isActive == true)
+        {
+          var gotoURL= window.location.origin + "/#/auth" + data.rediectionLink;
           window.location.href = gotoURL;
         }
-        else if (data.rediectionLink.includes("patient")) {
-          var gotoURL = window.location.origin + "/#/auth/patient/login/" + data.userID;
+        else if(data.rediectionLink.includes("patient"))
+        {
+          var gotoURL= window.location.origin + "/#//auth/patient/login/" + data.userID ;
           window.location.href = gotoURL;
         }
-        else {
-          var gotoURL = window.location.origin + "/#/auth/doctor/login";
+        else
+        {
+          var gotoURL= window.location.origin + "/#//auth/doctor/login";
           window.location.href = gotoURL;
         }
       },
-        error => {
-          //this.handleError(error.message);
-        });
+      error => {
+        //this.handleError(error.message);
+      });    
   }
 }

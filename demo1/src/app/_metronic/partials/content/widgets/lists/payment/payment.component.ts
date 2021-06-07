@@ -29,7 +29,6 @@ export class PaymentComponent implements OnInit {
   amountforOnetest:number;
   showpendingTest:boolean;
   errorSelected:boolean;
-  hospitalname:string;
 
   constructor(private route: ActivatedRoute , private router: Router,private dashboardServices: DashboardServicsService,private cd: ChangeDetectorRef) { }
 
@@ -46,7 +45,6 @@ export class PaymentComponent implements OnInit {
     this.disablePayment = false;
     this.showpendingTest= false;
     this.errorSelected = false;
-    this.hospitalname = localStorage.getItem("HospitalName").toString();
   }
 
   // getTests() {
@@ -119,14 +117,14 @@ export class PaymentComponent implements OnInit {
   {
    this.showLoader = true;
    this.cd.detectChanges();
-   this.dashboardServices.GoToPayment(this.totalAmount , this.Currency, this.CustomerID, this.OrderID)
+   this.dashboardServices.GoToPayment( this.totalAmount , this.Currency, this.CustomerID, this.OrderID)
       .subscribe(data => {
-        var json = JSON.parse(data.response);
-        this.token = json.body.txnToken;
-        this.OrderID = data.orderID;
+        console.log(data);
+        this.token = data.body.txnToken;
         this.submitData(this.token);
       },
       error => {
+        console.log(error);
       }  
     );
   }

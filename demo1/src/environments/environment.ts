@@ -9,8 +9,7 @@ export const environment = {
   isMockEnabled: true,
   apiUrl: 'https://localhost:44317/',
   paytmUrl:'https://securegw-stage.paytm.in/theia/api/v1/showPaymentPage?',
-  mid:'VnuRWW38945630279333',
-  mylocalhosturl:"http://localhost:4200/#/auth"
+  mid:'VnuRWW38945630279333'
 };
 
 /*

@@ -24,7 +24,6 @@ namespace Hospital.Core.Infrastructure
         private readonly IMongoCollection<Result> _results;
         private readonly IMongoCollection<Notification> _notifications;
         private readonly IMongoCollection<LabMapping> _labMapping;
-        private readonly IMongoCollection<RetryOrder> _retryOrder;
 
         public DbClient(IOptions<HospitalDbConfig> hospitalDbConfig)
         {
@@ -49,7 +48,6 @@ namespace Hospital.Core.Infrastructure
             _results = database.GetCollection<Result>("Result");
             _notifications = database.GetCollection<Notification>("Notification");
             _labMapping = database.GetCollection<LabMapping>("LabMapping");
-            _retryOrder = database.GetCollection<RetryOrder>("RetryOrderID");
         }
 
         public IMongoCollection<Hospitaal> GetHospitalsCollection()
@@ -131,11 +129,6 @@ namespace Hospital.Core.Infrastructure
         public IMongoCollection<LabMapping> GetLabMappingCollection()
         {
             return _labMapping;
-        }
-
-        public IMongoCollection<RetryOrder> GeRetryOrderCollection()
-        {
-            return _retryOrder;
         }
     }
 }

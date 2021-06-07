@@ -23,7 +23,7 @@ export class PrintResultComponent implements OnInit {
    dataloaded:boolean;
    testdata:any[] = [];
    craa:chart[] = [];
-   spinnerType = SPINNER.wanderingCubes;
+   spinnerType = SPINNER.chasingDots;
    resultSummary:any;
 
    defaultVal = {
@@ -104,7 +104,6 @@ export class PrintResultComponent implements OnInit {
       .subscribe(data => {
         this.dataloaded = true;
         this.ResultDetails = data.currentResult;
-        console.log(this.ResultDetails);
         this.getindividualReport = data.currentResult.resultJSON;
         this.resultSummary = data.last30DaysResultsList;
         this.parameterNames = [];
@@ -113,7 +112,10 @@ export class PrintResultComponent implements OnInit {
           this.parameterNames.push(val.parameterName)
           this.defaultVal.data.push(val.testedResult);
        }
+       console.log(data.last30DaysResultsList);
 
+     
+        
        for (var val of data.last30DaysResultsList) {
          this.lineChartLabels.push(this.datePipe.transform(val.createdOn,"MMM-dd"));
          if(val.resultJSON)

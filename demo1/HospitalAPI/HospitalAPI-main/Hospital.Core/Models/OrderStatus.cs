@@ -24,6 +24,5 @@ namespace Hospital.Core.Services
         public List<TestParameterResult> ParameterList { get; set; }
 
         public string TestName { get; set; }
-        public Result Result { get; set; }
     }
 }

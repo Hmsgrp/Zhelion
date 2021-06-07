@@ -40,6 +40,8 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject = new BehaviorSubject<UserModel>(undefined);
     this.currentUser$ = this.currentUserSubject.asObservable();
     this.isLoading$ = this.isLoadingSubject.asObservable();
+    const subscr = this.getUserByToken().subscribe();
+    this.unsubscribe.push(subscr);
   }
 
   // public methods
@@ -59,21 +61,29 @@ export class AuthService implements OnDestroy {
   }
 
    logout(){
-    this.deleteAllCookies();
+    localStorage.removeItem("access_token");
     this.router.navigate(["/auth/login"]);
    }
 
-   deleteAllCookies() {
-    localStorage.clear();
-    // var cookies = document.cookie.split(";");
+  getUserByToken(): Observable<UserModel> {
+    const auth = this.getAuthFromLocalStorage();
+    if (!auth || !auth.accessToken) {
+      return of(undefined);
+    }
 
-    // for (var i = 0; i < cookies.length; i++) {
-    //     var cookie = cookies[i];
-    //     var eqPos = cookie.indexOf("=");
-    //     var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-    //     document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    // }
-}
+    this.isLoadingSubject.next(true);
+    return this.authHttpService.getUserByToken(auth.accessToken).pipe(
+      map((user: UserModel) => {
+        if (user) {
+          this.currentUserSubject = new BehaviorSubject<UserModel>(user);
+        } else {
+          this.logout();
+        }
+        return user;
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
 
   // need create new user then login
   registration(user: UserModel): Observable<any> {
@@ -133,6 +143,7 @@ export class AuthService implements OnDestroy {
   showmenus(menuname:string)
   {
     this.menus = localStorage.getItem("Menus");
+    console.log(menuname);
     if (this.menus.toLowerCase().search(menuname.toLowerCase()) == -1 ) { 
       return false;
     } else { 
